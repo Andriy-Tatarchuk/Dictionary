@@ -81,11 +81,6 @@
   <ItemGroup>
     <Compile Include="Models\MDictionary.cs" />
     <Compile Include="Models\MWord.cs" />
-    <Compile Include="Models\WordModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WordModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -103,13 +98,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Models\WordModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WordModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Models\WordModel.edmx.diagram">
-      <DependentUpon>WordModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
