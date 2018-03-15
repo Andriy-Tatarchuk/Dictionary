@@ -24,6 +24,7 @@ namespace DictionatyWpf
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
         public virtual DbSet<MDictionary> Dictionaries { get; set; }
+        public virtual DbSet<MWord> Words { get; set; }
     }
 
     //public class MyEntity

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Documents;
 using DictionatyWpf.Models;
 
 namespace DictionatyWpf.Data
@@ -34,9 +36,19 @@ namespace DictionatyWpf.Data
 
         #region Public Methods
 
-        public void AddDictionary(string name)
+        public MDictionary AddDictionary(string name)
         {
-            DataContext.Dictionaries.Add(new MDictionary(name));
+            var dic = new MDictionary(name);
+            DataContext.Dictionaries.Add(dic);
+            return dic;
+        }
+
+        public void AddWord(string name, string translation)
+        {
+            if (!DataContext.Words.ToList().Exists(w => w.Name == name))
+            {
+                DataContext.Words.Add(new MWord(name, translation));
+            }
         }
 
         public void AddWordToDictionary(int id, MWord word)
@@ -45,6 +57,16 @@ namespace DictionatyWpf.Data
             {
                 DataContext.Dictionaries.Find(id).Words.Add(word);
             }
+        }
+
+        public List<MDictionary> GetAllDictionaries()
+        {
+            return DataContext.Dictionaries.ToList();
+        }
+
+        public List<MWord> GetAllWords()
+        {
+            return DataContext.Words.ToList();
         }
 
         public void Save()
