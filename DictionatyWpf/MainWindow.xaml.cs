@@ -27,8 +27,10 @@ namespace DictionatyWpf
 
             var DM = new DataManager(new DataContext());
 
-            DM.AddDictionary("First_Dictionary");
-            DM.Save();
+            if (DM.AddDictionary("First_Dictionary") != null)
+            {
+                DM.Save();
+            }
         }
     }
 }

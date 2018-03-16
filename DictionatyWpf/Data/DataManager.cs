@@ -38,9 +38,14 @@ namespace DictionatyWpf.Data
 
         public MDictionary AddDictionary(string name)
         {
-            var dic = new MDictionary(name);
-            DataContext.Dictionaries.Add(dic);
-            return dic;
+            if (!DataContext.Dictionaries.ToList().Exists(d => d.Name == name))
+            {
+                var dic = new MDictionary(name);
+                DataContext.Dictionaries.Add(dic);
+                return dic;
+            }
+
+            return null;
         }
 
         public void AddWord(string name, string translation)
