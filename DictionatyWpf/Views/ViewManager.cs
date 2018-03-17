@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DictionatyWpf.Data;
 
 namespace DictionatyWpf.Views
 {
@@ -11,18 +12,24 @@ namespace DictionatyWpf.Views
         
         #region Declarations
 
+        private Dictionary<ScreenId, ViewBase> ScreenDic = new Dictionary<ScreenId, ViewBase>();
+
+        private DataManager DM { get; set; }
+
         #endregion
 
         #region Properties
 
-        private Dictionary<ScreenId, ViewBase> ScreenDic = new Dictionary<ScreenId, ViewBase>();
        
 
         #endregion
 
         #region Constructorss
 
-       
+        public ViewManager(DataManager dm)
+        {
+            DM = dm;
+        }
 
         #endregion
 

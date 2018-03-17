@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DictionatyWpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
+        Title="MainWindow" Height="450" Width="725"
         x:Name="_this">
     
     <Grid>
@@ -16,12 +16,18 @@
         </Grid.ColumnDefinitions>
         
         <Grid Grid.Column="0">
-            <ListView ItemsSource="{Binding ElementName=_this, Path=MenuItemsSource}">
+            <ListView ItemsSource="{Binding ElementName=_this, Path=MenuItemsSource}" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding Text}" Command="MenuCommand" CommandParameter="{Binding ScreenId}"></Button>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <Button Content="{Binding Text}" 
+                                Command="local:MainWindow.MenuCommand" 
+                                CommandParameter="{Binding ScreenId}"
+                                HorizontalAlignment="Stretch"></Button>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+               
             </ListView>
         </Grid>
         
