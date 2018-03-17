@@ -21,16 +21,30 @@ namespace DictionatyWpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static ICommand MenuCommand;
+
+        static MainWindow()
+        {
+            MenuCommand = new RoutedCommand();
+        }
+
         public MainWindow()
         {
             InitializeComponent();
 
-            var DM = new DataManager(new DataContext());
+            CommandBindings.Add(new CommandBinding(MenuCommand, MenuCommand_Executed, MenuCommand_CanExecute));
 
-            if (DM.AddDictionary("First_Dictionary") != null)
-            {
-                DM.Save();
-            }
+            var DM = new DataManager();
+
+            DM.AddDictionary("First_Dictionary");
+        }
+
+        private void MenuCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+        }
+
+        private void MenuCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
         }
     }
 }

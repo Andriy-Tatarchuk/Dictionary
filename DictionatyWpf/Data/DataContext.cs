@@ -23,8 +23,8 @@ namespace DictionatyWpf
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
-        public virtual DbSet<MDictionary> Dictionaries { get; set; }
-        public virtual DbSet<MWord> Words { get; set; }
+        public virtual DbSet<Dictionary> Dictionaries { get; set; }
+        public virtual DbSet<Word> Words { get; set; }
     }
 
     //public class MyEntity

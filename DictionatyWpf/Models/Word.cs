@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DictionatyWpf.Models
 {
-    public class MWord
+    public class Word
     {
 
         #region Declarations
@@ -16,24 +16,24 @@ namespace DictionatyWpf.Models
         public string Translation { get; set; }
         public DateTime AddingDate { get; private set; }
 
-        public List<MDictionary> Dictionaries { get; set; }
+        public List<Dictionary> Dictionaries { get; set; }
 
         #endregion
 
         #region Constructorss
 
-        public MWord() : this(String.Empty, String.Empty)
+        public Word() : this(String.Empty, String.Empty)
         {
 
         }
 
-        public MWord(string name, string translation)
+        public Word(string name, string translation)
         {
             Name = name;
             Translation = translation;
             AddingDate = DateTime.Now;
 
-            Dictionaries = new List<MDictionary>();
+            Dictionaries = new List<Dictionary>();
         }
 
         #endregion

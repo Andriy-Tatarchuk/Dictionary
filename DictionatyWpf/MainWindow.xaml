@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DictionatyWpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        x:Name="_this">
+    
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         
+        <Grid Grid.Column="0">
+            <ListView ItemsSource="{Binding ElementName=_this, Path=MenuItemsSource}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Text}" Command="MenuCommand" CommandParameter="{Binding ScreenId}"></Button>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        
+        <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"></GridSplitter>
+        
+        <ContentPresenter x:Name="Content" Grid.Column="2">
+            
+        </ContentPresenter>
     </Grid>
 </Window>

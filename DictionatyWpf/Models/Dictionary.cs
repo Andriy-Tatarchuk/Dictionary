@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DictionatyWpf.Models
 {
-    public class MDictionary
+    public class Dictionary
     {
 
         #region Declarations
@@ -16,19 +16,19 @@ namespace DictionatyWpf.Models
 
         public string Name { get; set; }
 
-        public List<MWord> Words { get; private set; }
+        public List<Word> Words { get; private set; }
 
         #endregion
 
         #region Constructorss
 
-        public MDictionary() : this(String.Empty)
+        public Dictionary() : this(String.Empty)
         {
         }
 
-        public MDictionary(string name)
+        public Dictionary(string name)
         {
-            Words = new List<MWord>();
+            Words = new List<Word>();
             Name = name;
         }
 

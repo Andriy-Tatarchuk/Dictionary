@@ -14,70 +14,86 @@ namespace DictionatyWpf.Data
 
         #region Properties
 
-        public DataContext DataContext { get; private set; }
+        //public DataContext DataContext { get; private set; }
 
         #endregion
 
         #region Constructorss
 
-        public DataManager(DataContext dataContext)
+        /*public DataManager(DataContext dataContext)
         {
             DataContext = dataContext;
-        }
+        }*/
 
         #endregion
 
 
         #region Private Methods
 
-
+        private DataContext GetDataContext()
+        {
+            return new DataContext();
+        }
 
         #endregion
 
         #region Public Methods
 
-        public MDictionary AddDictionary(string name)
+        public Dictionary AddDictionary(string name)
         {
-            if (!DataContext.Dictionaries.ToList().Exists(d => d.Name == name))
+            using (var dataContext = GetDataContext())
             {
-                var dic = new MDictionary(name);
-                DataContext.Dictionaries.Add(dic);
-                return dic;
+                if (!dataContext.Dictionaries.ToList().Exists(d => d.Name == name))
+                {
+                    var dic = new Dictionary(name);
+                    dataContext.Dictionaries.Add(dic);
+                    dataContext.SaveChanges();
+                    return dic;
+                }
             }
-
             return null;
         }
 
         public void AddWord(string name, string translation)
         {
-            if (!DataContext.Words.ToList().Exists(w => w.Name == name))
+            using (var dataContext = GetDataContext())
             {
-                DataContext.Words.Add(new MWord(name, translation));
+                if (!dataContext.Words.ToList().Exists(w => w.Name == name))
+                {
+                    dataContext.Words.Add(new Word(name, translation));
+                    dataContext.SaveChanges();
+                }
             }
         }
 
-        public void AddWordToDictionary(int id, MWord word)
+        public void AddWordToDictionary(int id, Word word)
         {
-            if (DataContext.Dictionaries.Find(id) != null)
+            using (var dataContext = GetDataContext())
             {
-                DataContext.Dictionaries.Find(id).Words.Add(word);
+                if (dataContext.Dictionaries.Find(id) != null)
+                {
+                    dataContext.Dictionaries.Find(id).Words.Add(word);
+                    dataContext.SaveChanges();
+                }
             }
         }
 
-        public List<MDictionary> GetAllDictionaries()
+        public List<Dictionary> GetAllDictionaries()
         {
-            return DataContext.Dictionaries.ToList();
+            using (var dataContext = GetDataContext())
+            {
+                return dataContext.Dictionaries.ToList();
+            }
         }
 
-        public List<MWord> GetAllWords()
+        public List<Word> GetAllWords()
         {
-            return DataContext.Words.ToList();
+            using (var dataContext = GetDataContext())
+            {
+                return dataContext.Words.ToList();
+            }
         }
 
-        public void Save()
-        {
-            DataContext.SaveChanges();
-        }
         #endregion
 
         #region Events
