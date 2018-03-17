@@ -63,9 +63,6 @@ namespace DictionatyWpf
 
             CreateLeftMenu();
 
-            //DM.AddWord("Word 1", "translation 1");
-            //DM.AddWord("Word 2", "translation 2");
-            //DM.AddWord("Word 3", "translation 3");
         }
 
         private void CreateLeftMenu()
