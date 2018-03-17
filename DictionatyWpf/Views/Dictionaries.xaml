@@ -21,6 +21,26 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Center"></TextBlock>
         </Border>
+
+        <Border Grid.Row="1">
+            <ListView ItemsSource="{Binding ItemsSource}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                            <Border>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </Border>
+
+        <Border Grid.Row="2"
+                HorizontalAlignment="Stretch">
+            <Button HorizontalAlignment="Right"
+                    Content="Add New"
+                    Margin="5"></Button>
+        </Border>
     </Grid>
 </views:ViewBase>
 
