@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DictionatyWpf.Data;
+using DictionatyWpf.ViewModels;
 
 namespace DictionatyWpf.Views
 {
@@ -12,7 +13,7 @@ namespace DictionatyWpf.Views
         
         #region Declarations
 
-        private Dictionary<ScreenId, ViewBase> ScreenDic = new Dictionary<ScreenId, ViewBase>();
+        private Dictionary<ScreenId, Dictionary<object, ViewBase>> ScreenDic = new Dictionary<ScreenId, Dictionary<object, ViewBase>>();
 
         private DataManager DM { get; set; }
 
@@ -36,10 +37,17 @@ namespace DictionatyWpf.Views
 
         #region Private Methods
 
-        private ViewBase CreateScreen(ScreenId screenId)
+        private ViewBase CreateScreen(ScreenId screenId, object param)
         {
             ViewBase res = null;
-
+            if (screenId == ScreenId.Dictionaries)
+            {
+                res = new Dictionaries(){ViewModel = new VMDictionaries(DM){Header = "Dictionaries"}};
+            }
+            else if (screenId == ScreenId.Words)
+            {
+                res = new Words() { ViewModel = new VMWords(DM, param) { Header = "Words" } };
+            }
             return res;
         }
 
@@ -47,16 +55,16 @@ namespace DictionatyWpf.Views
 
         #region Public Methods
 
-        public ViewBase GetScreen(ScreenId screenId)
+        public ViewBase GetScreen(ScreenId screenId, object param = null)
         {
             ViewBase res = null;
-            if(ScreenDic.ContainsKey(screenId))
+            if (ScreenDic.ContainsKey(screenId) && ScreenDic[screenId].ContainsKey(param))
             {
-                res = ScreenDic[screenId];
+                res = ScreenDic[screenId][param];
             }
             else
             {
-                res = CreateScreen(screenId);
+                res = CreateScreen(screenId, param);
             }
 
             return res;

@@ -35,6 +35,15 @@ namespace DictionatyWpf
             set { SetValue(MenuItemsSourceProperty, value); }
         }
 
+        public static readonly DependencyProperty CurrentViewProperty = DependencyProperty.Register(
+            "CurrentView", typeof(DictionatyWpf.Views.ViewBase), typeof(MainWindow), new PropertyMetadata(default(DictionatyWpf.Views.ViewBase)));
+
+        public DictionatyWpf.Views.ViewBase CurrentView
+        {
+            get { return (DictionatyWpf.Views.ViewBase) GetValue(CurrentViewProperty); }
+            set { SetValue(CurrentViewProperty, value); }
+        }
+
         public static ICommand MenuCommand;
 
         static MainWindow()
@@ -53,6 +62,10 @@ namespace DictionatyWpf
             ViewManager = new ViewManager(DM);
 
             CreateLeftMenu();
+
+            //DM.AddWord("Word 1", "translation 1");
+            //DM.AddWord("Word 2", "translation 2");
+            //DM.AddWord("Word 3", "translation 3");
         }
 
         private void CreateLeftMenu()
@@ -75,7 +88,18 @@ namespace DictionatyWpf
 
         private void MenuCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            if (e != null && e.Parameter != null)
+            {
+                var screen = ScreenId.None;
+                if (ScreenId.TryParse(e.Parameter.ToString(), out screen) && screen != ScreenId.None)
+                {
+                    var view = ViewManager.GetScreen(screen);
+                    if (view != null)
+                    {
+                        CurrentView = view;
+                    }
+                }
+            }
         }
     }
 }

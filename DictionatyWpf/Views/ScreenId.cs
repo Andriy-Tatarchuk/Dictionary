@@ -8,6 +8,7 @@ namespace DictionatyWpf.Views
 {
     public enum ScreenId
     {
+        None,
         Dictionaries,
         Words,
         AddEditDictionary,

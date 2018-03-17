@@ -58,7 +58,7 @@ namespace DictionatyWpf.Data
         {
             using (var dataContext = GetDataContext())
             {
-                if (!dataContext.Words.ToList().Exists(w => w.Name == name))
+                //if (!dataContext.Words.ToList().Exists(w => w.Name == name))
                 {
                     dataContext.Words.Add(new Word(name, translation));
                     dataContext.SaveChanges();

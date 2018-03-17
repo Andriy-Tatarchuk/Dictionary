@@ -31,9 +31,12 @@
             </ListView>
         </Grid>
         
-        <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns"></GridSplitter>
+        <GridSplitter Grid.Column="1" 
+                      ResizeBehavior="PreviousAndNext" 
+                      ResizeDirection="Columns"
+                      Width="3"></GridSplitter>
         
-        <ContentPresenter x:Name="Content" Grid.Column="2">
+        <ContentPresenter x:Name="Content" Grid.Column="2" Content="{Binding ElementName=_this, Path=CurrentView}">
             
         </ContentPresenter>
     </Grid>
