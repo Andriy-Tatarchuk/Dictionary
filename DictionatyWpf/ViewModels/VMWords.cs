@@ -2,6 +2,7 @@
 using System.Windows;
 using DictionatyWpf.Data;
 using DictionatyWpf.Models;
+using DictionatyWpf.Views;
 
 namespace DictionatyWpf.ViewModels
 {
@@ -41,6 +42,33 @@ namespace DictionatyWpf.ViewModels
             if (DM != null)
             {
                 ItemsSource = new ObservableCollection<Word>(DM.GetAllWords());
+            }
+        }
+
+        public override bool Command_CanExecute(Command command, object param)
+        {
+            var res = false;
+            if (command == Command.AddEditWord)
+            {
+                res = true;
+            }
+            else
+            {
+                res = base.Command_CanExecute(command, param);
+            }
+
+            return res;
+        }
+
+        public override void Command_Executed(Command command, object param)
+        {
+            if (command == Command.AddEditWord)
+            {
+                OpenScreen(ScreenId.AddEditWord, param);
+            }
+            else
+            {
+                base.Command_Executed(command, param);
             }
         }
 

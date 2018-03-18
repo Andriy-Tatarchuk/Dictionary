@@ -94,6 +94,38 @@ namespace DictionatyWpf.Data
             }
         }
 
+        public Word GetWord(int id)
+        {
+            using (var dataContext = GetDataContext())
+            {
+                return dataContext.Words.Find(id);
+            }
+        }
+
+        public void SaveWord(int ID, string Name, string Translation)
+        {
+            using (var dataContext = GetDataContext())
+            {
+                var newWord = false;
+                var word = dataContext.Words.Find(ID);
+                if (word == null)
+                {
+                    word = dataContext.Words.Create();
+                    newWord = true;
+                }
+
+                word.Name = Name;
+                word.Translation = Translation;
+
+                if (newWord)
+                {
+                    dataContext.Words.Add(word);
+                }
+
+                dataContext.SaveChanges();
+            }
+        }
+
         #endregion
 
         #region Events
@@ -101,7 +133,6 @@ namespace DictionatyWpf.Data
 
 
         #endregion
-
-
+        
     }
 }

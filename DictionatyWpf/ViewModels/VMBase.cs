@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using DictionatyWpf.Data;
+using DictionatyWpf.Views;
 
 namespace DictionatyWpf.ViewModels
 {
@@ -46,8 +47,26 @@ namespace DictionatyWpf.ViewModels
 
         #region Public Methods
 
+        public virtual bool Command_CanExecute(Command command, object param)
+        {
+            var res = false;
+
+            return res;
+        }
+
+        public virtual void Command_Executed(Command command, object param)
+        {
+        }
 
 
+        public void OpenScreen(ScreenId screenId, object param = null)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
+            {
+                mainWindow.OpenScreen(screenId, param);
+            }
+        }
 
         #endregion
 
@@ -56,5 +75,7 @@ namespace DictionatyWpf.ViewModels
 
 
         #endregion
+
+        
     }
 }

@@ -48,6 +48,10 @@ namespace DictionatyWpf.Views
             {
                 res = new Words() { ViewModel = new VMWords(DM, param) { Header = "Words" } };
             }
+            else if (screenId == ScreenId.AddEditWord)
+            {
+                res = new AddEditWord() { ViewModel = new VMAddEditWord(DM, param) { Header = "Word Editor" } };
+            }
             return res;
         }
 

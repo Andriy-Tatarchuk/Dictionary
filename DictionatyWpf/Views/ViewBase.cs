@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using DictionatyWpf.Data;
 using DictionatyWpf.ViewModels;
 
@@ -14,6 +15,7 @@ namespace DictionatyWpf.Views
     {
         #region Declarations
 
+        public static ICommand Command;
 
         #endregion
 
@@ -40,13 +42,44 @@ namespace DictionatyWpf.Views
 
         #region Constructorss
 
+        static ViewBase()
+        {
+            Command = new RoutedCommand();
+        }
+
+        public ViewBase()
+        {
+            CommandBindings.Add(new CommandBinding(Command, Command_Executed, Command_CanExecute));
+        }
 
         #endregion
 
 
         #region Private Methods
 
+        private void Command_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                var command = Views.Command.None;
+                if (Views.Command.TryParse(e.Parameter.ToString(), out command) && command != Views.Command.None)
+                {
+                    e.CanExecute = ViewModel.Command_CanExecute(command, e.Parameter);
+                }
+            }
+        }
 
+        private void Command_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                var command = Views.Command.None;
+                if (Views.Command.TryParse(e.Parameter.ToString(), out command) && command != Views.Command.None)
+                {
+                    ViewModel.Command_Executed(command, e.Parameter);
+                }
+            }
+        }
 
         #endregion
 

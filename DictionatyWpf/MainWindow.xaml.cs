@@ -69,8 +69,8 @@ namespace DictionatyWpf
         {
             MenuItemsSource = new ObservableCollection<LeftMenuItem>();
 
-            CreateLeftMenuItem("Dictionaries", ScreenId.Dictionaries);
-            CreateLeftMenuItem("Words", ScreenId.Words);
+            CreateLeftMenuItem("Manage Dictionaries", ScreenId.Dictionaries);
+            CreateLeftMenuItem("Manage Words", ScreenId.Words);
         }
 
         private void CreateLeftMenuItem(string text, ScreenId screenId)
@@ -90,12 +90,17 @@ namespace DictionatyWpf
                 var screen = ScreenId.None;
                 if (ScreenId.TryParse(e.Parameter.ToString(), out screen) && screen != ScreenId.None)
                 {
-                    var view = ViewManager.GetScreen(screen);
-                    if (view != null)
-                    {
-                        CurrentView = view;
-                    }
+                    OpenScreen(screen);
                 }
+            }
+        }
+
+        public void OpenScreen(ScreenId screenId, object param = null)
+        {
+            var view = ViewManager.GetScreen(screenId, param);
+            if (view != null)
+            {
+                CurrentView = view;
             }
         }
     }

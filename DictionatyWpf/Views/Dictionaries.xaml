@@ -6,6 +6,13 @@
       xmlns:views="clr-namespace:DictionatyWpf.Views"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300">
+    <views:ViewBase.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonStyle.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </views:ViewBase.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,8 +34,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                             <Border>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </Border>
+                                <Button Style="{StaticResource LinkButton}">
+                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                </Button>
+                        </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
@@ -39,6 +48,7 @@
                 HorizontalAlignment="Stretch">
             <Button HorizontalAlignment="Right"
                     Content="Add New"
+                    Style="{StaticResource LinkButton}"
                     Margin="5"></Button>
         </Border>
     </Grid>

@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="725"
         x:Name="_this">
+    <Window.Resources>
+<ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Views/CommonStyle.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
+    </Window.Resources>
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,6 +30,7 @@
                         <Button Content="{Binding Text}" 
                                 Command="local:MainWindow.MenuCommand" 
                                 CommandParameter="{Binding ScreenId}"
+                                Style="{StaticResource LinkButton}"
                                 HorizontalAlignment="Stretch"></Button>
                         </StackPanel>
                     </DataTemplate>

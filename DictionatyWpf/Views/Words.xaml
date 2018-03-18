@@ -5,7 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:views="clr-namespace:DictionatyWpf.Views"
       mc:Ignorable="d" 
+      x:Name="_this"
       d:DesignHeight="300" d:DesignWidth="300">
+    <views:ViewBase.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonStyle.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </views:ViewBase.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -23,24 +31,46 @@
         </Border>
         
         <Border Grid.Row="1">
-            <ListView ItemsSource="{Binding ItemsSource}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0">
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </Border>
-                            <Border Grid.Column="1">
-                                <TextBlock Text="{Binding Translation}"></TextBlock>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+           
 
+            <ListView ItemsSource="{Binding ItemsSource}"
+                      HorizontalAlignment="Stretch">
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.View >
+                    <GridView >
+                        <GridViewColumn Header="Name" Width="NaN">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Name}" 
+                                            Command="{x:Static views:Words.AddEditWordCommand}"
+                                            CommandParameter="{Binding Id}"
+                                            Style="{StaticResource LinkButton}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Translation" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Translation}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" Style="{StaticResource LinkButton}"></Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
             </ListView>
         </Border>
 
@@ -48,6 +78,8 @@
                 HorizontalAlignment="Stretch">
             <Button HorizontalAlignment="Right"
                     Content="Add New"
+                    Command="{x:Static views:Words.AddEditWordCommand}"
+                    Style="{StaticResource LinkButton}"
                     Margin="5"></Button>
         </Border>
     </Grid>
