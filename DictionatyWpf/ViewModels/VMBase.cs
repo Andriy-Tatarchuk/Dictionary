@@ -27,6 +27,38 @@ namespace DictionatyWpf.ViewModels
             set { SetValue(HeaderProperty, value); }
         }
 
+        public static readonly DependencyProperty IsLoadingProperty = DependencyProperty.Register(
+            "IsLoading", typeof(bool), typeof(VMBase), new PropertyMetadata(default(bool), (o, args) =>
+            {
+                var obj = o as VMBase;
+                if (obj != null)
+                {
+                    if ((bool) args.NewValue)
+                    {
+                        obj.StatusBarText = "Loading...";
+                    }
+                    else
+                    {
+                        obj.StatusBarText = string.Empty;
+                    }
+                }
+            }));
+
+        public bool IsLoading
+        {
+            get { return (bool) GetValue(IsLoadingProperty); }
+            set { SetValue(IsLoadingProperty, value); }
+        }
+
+        public static readonly DependencyProperty StatusBarTextProperty = DependencyProperty.Register(
+            "StatusBarText", typeof(string), typeof(VMBase), new PropertyMetadata(default(string)));
+
+        public string StatusBarText
+        {
+            get { return (string) GetValue(StatusBarTextProperty); }
+            set { SetValue(StatusBarTextProperty, value); }
+        }
+
         #endregion
 
         #region Constructorss

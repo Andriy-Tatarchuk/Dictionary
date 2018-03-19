@@ -41,8 +41,16 @@ namespace DictionatyWpf.ViewModels
         {
             if (DM != null)
             {
-                ItemsSource = new ObservableCollection<Word>(DM.GetAllWords());
+                IsLoading = true;
+                DM.GetAllWordsAsync(WordsLoaded);
+                //ItemsSource = new ObservableCollection<Word>(DM.GetAllWords());
             }
+        }
+
+        private void WordsLoaded(System.Collections.Generic.List<Word> obj)
+        {
+            IsLoading = false;
+            ItemsSource = new ObservableCollection<Word>(obj);
         }
 
         public override bool Command_CanExecute(Command command, object param)

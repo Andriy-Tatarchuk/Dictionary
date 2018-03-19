@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Documents;
 using DictionatyWpf.Models;
 
@@ -91,6 +93,21 @@ namespace DictionatyWpf.Data
             using (var dataContext = GetDataContext())
             {
                 return dataContext.Words.ToList();
+            }
+        }
+
+        public async void GetAllWordsAsync(Action<List<Word>> callback)
+        {
+            if (callback != null)
+            {
+                var result = await Task<List<Word>>.Factory.StartNew(() =>
+                {
+                    using (var dataContext = GetDataContext())
+                    {
+                        return dataContext.Words.ToList();
+                    }
+                });
+                callback(result);
             }
         }
 

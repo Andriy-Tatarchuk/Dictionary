@@ -12,6 +12,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CommonStyle.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"></BooleanToVisibilityConverter>
         </ResourceDictionary>
     </views:ViewBase.Resources>
 
@@ -76,11 +78,22 @@
 
         <Border Grid.Row="2"
                 HorizontalAlignment="Stretch">
-            <Button HorizontalAlignment="Right"
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Loading..."
+                           Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+                           VerticalAlignment="Center"></TextBlock>
+            <Button Grid.Column="1"
+                    HorizontalAlignment="Right"
                     Content="Add New"
                     Command="{x:Static views:Words.AddEditWordCommand}"
                     Style="{StaticResource LinkButton}"
                     Margin="5"></Button>
+            </Grid>
         </Border>
     </Grid>
 </views:ViewBase>
