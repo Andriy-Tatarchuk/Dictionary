@@ -11,6 +11,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CommonStyle.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"></BooleanToVisibilityConverter>
         </ResourceDictionary>
     </views:ViewBase.Resources>
 
@@ -30,26 +32,58 @@
         </Border>
 
         <Border Grid.Row="1">
-            <ListView ItemsSource="{Binding ItemsSource}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                            <Border>
-                                <Button Style="{StaticResource LinkButton}">
-                                    <TextBlock Text="{Binding Name}"></TextBlock>
-                                </Button>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+            <ListView ItemsSource="{Binding ItemsSource}"
+                      HorizontalAlignment="Stretch">
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.Resources>
 
+                <ListView.View >
+                    <GridView >
+                        <GridViewColumn Header="Name" Width="NaN">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Name}" 
+                                            Command="{x:Static views:Dictionaries.AddEditDicCommand}"
+                                            CommandParameter="{Binding Id}"
+                                            Style="{StaticResource LinkButton}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+
+                        <GridViewColumn Header="" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" Style="{StaticResource LinkButton}"></Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
             </ListView>
         </Border>
 
         <Border Grid.Row="2"
                 HorizontalAlignment="Stretch">
-            <Button HorizontalAlignment="Right"
-                    Content="Add New"
-                    Style="{StaticResource LinkButton}"
-                    Margin="5"></Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Loading..."
+                           Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+                           VerticalAlignment="Center"></TextBlock>
+                <Button Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Content="Add New"
+                        Command="{x:Static views:Dictionaries.AddEditDicCommand}"
+                        Style="{StaticResource LinkButton}"
+                        Margin="5"></Button>
+            </Grid>
         </Border>
     </Grid>
 </views:ViewBase>

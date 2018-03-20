@@ -41,50 +41,103 @@ namespace DictionatyWpf.Data
 
         #region Public Methods
 
-        public Dictionary AddDictionary(string name)
+        //public Dictionary AddDictionary(string name)
+        //{
+        //    using (var dataContext = GetDataContext())
+        //    {
+        //        if (!dataContext.Dictionaries.ToList().Exists(d => d.Name == name))
+        //        {
+        //            var dic = new Dictionary(name);
+        //            dataContext.Dictionaries.Add(dic);
+        //            dataContext.SaveChanges();
+        //            return dic;
+        //        }
+        //    }
+        //    return null;
+        //}
+
+        public OperationResult SaveDictionary(int id, string name)
         {
+            var res = new OperationResult(null, false, "");
             using (var dataContext = GetDataContext())
             {
-                if (!dataContext.Dictionaries.ToList().Exists(d => d.Name == name))
+                var newDic = false;
+                var dic = dataContext.Dictionaries.Find(id);
+                if (dic == null)
                 {
-                    var dic = new Dictionary(name);
-                    dataContext.Dictionaries.Add(dic);
-                    dataContext.SaveChanges();
-                    return dic;
+                    if (dataContext.Dictionaries.Any(d => d.Name == name))
+                    {
+                        res.HasError = true;
+                        res.Message = "This name already exists";
+                        
+                    }
+                    else
+                    {
+                        dic = dataContext.Dictionaries.Create();
+                        newDic = true;
+                    }
+                }
+
+                if (!res.HasError)
+                {
+                    dic.Name = name;
+
+                    if (newDic)
+                    {
+                        dataContext.Dictionaries.Add(dic);
+                    }
+
+                    res.HasError = dataContext.SaveChanges() < 1;
+                    if (res.HasError)
+                    {
+                        res.Message = "Can't save dictionary";
+                    }
+                    else
+                    {
+                        res.Message = string.Empty;
+                    }
                 }
             }
-            return null;
+
+            return res;
         }
 
-        public void AddWord(string name, string translation)
+        public async void SaveDictionaryAsync(int id, string name, Action<OperationResult> callback)
         {
-            using (var dataContext = GetDataContext())
+            if (callback != null)
             {
-                //if (!dataContext.Words.ToList().Exists(w => w.Name == name))
-                {
-                    dataContext.Words.Add(new Word(name, translation));
-                    dataContext.SaveChanges();
-                }
+                var result = await Task<OperationResult>.Factory.StartNew(() => { return SaveDictionary(id, name); });
+
+                callback(result);
             }
         }
 
-        public void AddWordToDictionary(int id, Word word)
-        {
-            using (var dataContext = GetDataContext())
-            {
-                if (dataContext.Dictionaries.Find(id) != null)
-                {
-                    dataContext.Dictionaries.Find(id).Words.Add(word);
-                    dataContext.SaveChanges();
-                }
-            }
-        }
+        //public void AddWordToDictionary(int id, Word word)
+        //{
+        //    using (var dataContext = GetDataContext())
+        //    {
+        //        if (dataContext.Dictionaries.Find(id) != null)
+        //        {
+        //            dataContext.Dictionaries.Find(id).Words.Add(word);
+        //            dataContext.SaveChanges();
+        //        }
+        //    }
+        //}
 
         public List<Dictionary> GetAllDictionaries()
         {
             using (var dataContext = GetDataContext())
             {
                 return dataContext.Dictionaries.ToList();
+            }
+        }
+
+        public async void GetAllDictionariesAsync(Action<List<Dictionary>> callback)
+        {
+            if (callback != null)
+            {
+                var result = await Task<List<Dictionary>>.Factory.StartNew(() => { return GetAllDictionaries(); });
+                callback(result);
             }
         }
 
@@ -100,13 +153,7 @@ namespace DictionatyWpf.Data
         {
             if (callback != null)
             {
-                var result = await Task<List<Word>>.Factory.StartNew(() =>
-                {
-                    using (var dataContext = GetDataContext())
-                    {
-                        return dataContext.Words.ToList();
-                    }
-                });
+                var result = await Task<List<Word>>.Factory.StartNew(() => { return GetAllWords(); });
                 callback(result);
             }
         }
@@ -119,20 +166,46 @@ namespace DictionatyWpf.Data
             }
         }
 
-        public void SaveWord(int ID, string Name, string Translation)
+        public async void GetWordAsync(int id, Action<Word> callback)
+        {
+            if (callback != null)
+            {
+                var result = await Task<Word>.Factory.StartNew(() => { return GetWord(id); });
+                callback(result);
+            }
+        }
+
+        public Dictionary GetDictionary(int id)
+        {
+            using (var dataContext = GetDataContext())
+            {
+                return dataContext.Dictionaries.Find(id);
+            }
+        }
+
+        public async void GetDictionaryAsync(int id, Action<Dictionary> callback)
+        {
+            if (callback != null)
+            {
+                var result = await Task<Dictionary>.Factory.StartNew(() => { return GetDictionary(id); });
+                callback(result);
+            }
+        }
+
+        public void SaveWord(int id, string name, string translation)
         {
             using (var dataContext = GetDataContext())
             {
                 var newWord = false;
-                var word = dataContext.Words.Find(ID);
+                var word = dataContext.Words.Find(id);
                 if (word == null)
                 {
                     word = dataContext.Words.Create();
                     newWord = true;
                 }
 
-                word.Name = Name;
-                word.Translation = Translation;
+                word.Name = name;
+                word.Translation = translation;
 
                 if (newWord)
                 {
@@ -141,6 +214,11 @@ namespace DictionatyWpf.Data
 
                 dataContext.SaveChanges();
             }
+        }
+
+        public async void SaveWordAsync(int id, string name, string translation)
+        {
+            await Task.Factory.StartNew(() => { SaveWord(id, name, translation); });
         }
 
         #endregion

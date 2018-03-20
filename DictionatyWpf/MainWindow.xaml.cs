@@ -63,6 +63,10 @@ namespace DictionatyWpf
 
             CreateLeftMenu();
 
+            //IUnityContainer unitycontainer = new UnityContainer();
+            //unitycontainer.RegisterType<ICompany, Company>();
+
+            //Employee emp = unitycontainer.Resolve<Employee>();
         }
 
         private void CreateLeftMenu()

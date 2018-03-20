@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using DictionatyWpf.Data;
 using DictionatyWpf.Models;
+using DictionatyWpf.Views;
 
 namespace DictionatyWpf.ViewModels
 {
@@ -40,8 +43,16 @@ namespace DictionatyWpf.ViewModels
         {
             if (DM != null)
             {
-                ItemsSource = new ObservableCollection<Dictionary>(DM.GetAllDictionaries());
+                IsLoading = true;
+                DM.GetAllDictionariesAsync(Dictionaries_Loaded);
+                //ItemsSource = new ObservableCollection<Dictionary>(DM.GetAllDictionaries());
             }
+        }
+
+        private void Dictionaries_Loaded(List<Dictionary> dictionaries)
+        {
+            IsLoading = false;
+            ItemsSource = new ObservableCollection<Dictionary>(dictionaries);
         }
 
         #endregion
@@ -49,6 +60,32 @@ namespace DictionatyWpf.ViewModels
         #region Public Methods
 
 
+        public override bool Command_CanExecute(Command command, object param)
+        {
+            var res = false;
+            if (command == Command.AddEditDic)
+            {
+                res = true;
+            }
+            else
+            {
+                res = base.Command_CanExecute(command, param);
+            }
+
+            return res;
+        }
+
+        public override void Command_Executed(Command command, object param)
+        {
+            if (command == Command.AddEditDic)
+            {
+                OpenScreen(ScreenId.AddEditDictionary, param);
+            }
+            else
+            {
+                base.Command_Executed(command, param);
+            }
+        }
 
 
         #endregion

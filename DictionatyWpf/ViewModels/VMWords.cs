@@ -53,6 +53,11 @@ namespace DictionatyWpf.ViewModels
             ItemsSource = new ObservableCollection<Word>(obj);
         }
 
+
+        #endregion
+
+        #region Public Methods
+
         public override bool Command_CanExecute(Command command, object param)
         {
             var res = false;
@@ -79,12 +84,6 @@ namespace DictionatyWpf.ViewModels
                 base.Command_Executed(command, param);
             }
         }
-
-        #endregion
-
-        #region Public Methods
-
-
 
 
         #endregion

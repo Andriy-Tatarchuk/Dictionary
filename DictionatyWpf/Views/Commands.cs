@@ -11,6 +11,7 @@ namespace DictionatyWpf.Views
         None,
         Save,
         Cancel,
-        AddEditWord
+        AddEditWord,
+        AddEditDic
     } 
 }

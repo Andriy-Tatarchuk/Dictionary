@@ -50,6 +50,24 @@ namespace DictionatyWpf.ViewModels
             set { SetValue(IsLoadingProperty, value); }
         }
 
+        public static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register(
+            "HasError", typeof(bool), typeof(VMBase), new PropertyMetadata(default(bool)));
+
+        public bool HasError
+        {
+            get { return (bool) GetValue(HasErrorProperty); }
+            set { SetValue(HasErrorProperty, value); }
+        }
+
+        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(
+            "Message", typeof(string), typeof(VMBase), new PropertyMetadata(default(string)));
+
+        public string Message
+        {
+            get { return (string) GetValue(MessageProperty); }
+            set { SetValue(MessageProperty, value); }
+        }
+
         public static readonly DependencyProperty StatusBarTextProperty = DependencyProperty.Register(
             "StatusBarText", typeof(string), typeof(VMBase), new PropertyMetadata(default(string)));
 
