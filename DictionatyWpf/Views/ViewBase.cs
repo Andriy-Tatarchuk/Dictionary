@@ -16,6 +16,7 @@ namespace DictionatyWpf.Views
         #region Declarations
 
         public static ICommand Command;
+        public static ICommand DeleteCommand;
 
         #endregion
 
@@ -45,11 +46,29 @@ namespace DictionatyWpf.Views
         static ViewBase()
         {
             Command = new RoutedCommand();
+            DeleteCommand = new RoutedCommand();
         }
 
         public ViewBase()
         {
             CommandBindings.Add(new CommandBinding(Command, Command_Executed, Command_CanExecute));
+            CommandBindings.Add(new CommandBinding(DeleteCommand, DeleteCommand_Executed, DeleteCommand_CanExecute));
+        }
+
+        private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                e.CanExecute = ViewModel.Command_CanExecute(Views.Command.Delete, e.Parameter);
+            }
+        }
+
+        private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.Command_Executed(Views.Command.Delete, e.Parameter);
+            }
         }
 
         #endregion

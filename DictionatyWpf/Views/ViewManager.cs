@@ -56,6 +56,10 @@ namespace DictionatyWpf.Views
             {
                 res = new AddEditDictionary() { ViewModel = new VMAddEditDictionary(DM, param) { Header = "Dictionary Editor" } };
             }
+            else if (screenId == ScreenId.AddWordToDictionary)
+            {
+                res = new AddEditWord() { ViewModel = new VMAddEditWord(DM, param, true) { Header = "Add Word To Dictionary" } };
+            }
             return res;
         }
 

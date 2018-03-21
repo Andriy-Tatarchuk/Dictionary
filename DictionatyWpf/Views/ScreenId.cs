@@ -12,6 +12,7 @@ namespace DictionatyWpf.Views
         Dictionaries,
         Words,
         AddEditDictionary,
-        AddEditWord
+        AddEditWord,
+        AddWordToDictionary
     }
 }

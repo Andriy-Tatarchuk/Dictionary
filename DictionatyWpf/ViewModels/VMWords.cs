@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using DictionatyWpf.Data;
 using DictionatyWpf.Models;
@@ -65,6 +66,10 @@ namespace DictionatyWpf.ViewModels
             {
                 res = true;
             }
+            else if (command == Command.Delete)
+            {
+                res = true;
+            }
             else
             {
                 res = base.Command_CanExecute(command, param);
@@ -79,9 +84,32 @@ namespace DictionatyWpf.ViewModels
             {
                 OpenScreen(ScreenId.AddEditWord, param);
             }
+            else if (command == Command.Delete)
+            {
+                if (MessageBox.Show("Are you ssure you want delete this word?", "Confirmation", MessageBoxButton.YesNo,
+                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    DeleteWord(param);
+                }
+            }
             else
             {
                 base.Command_Executed(command, param);
+            }
+        }
+
+        private void DeleteWord(object param)
+        {
+            if (DM != null)
+            {
+                int id = -1;
+                if (param != null)
+                {
+                    Int32.TryParse(param.ToString(), out id);
+                }
+                DM.DeleteWord(id);
+
+                LoadWords();
             }
         }
 

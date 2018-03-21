@@ -12,11 +12,19 @@ namespace DictionatyWpf.ViewModels
     {
         #region Declarations
 
-        private int ID { get; set; }
 
         #endregion
 
         #region Properties
+
+        public static readonly DependencyProperty IDProperty = DependencyProperty.Register(
+            "ID", typeof(int), typeof(VMAddEditDictionary), new PropertyMetadata(default(int)));
+
+        public int ID
+        {
+            get { return (int) GetValue(IDProperty); }
+            set { SetValue(IDProperty, value); }
+        }
 
         public static readonly DependencyProperty NameProperty = DependencyProperty.Register(
             "Name", typeof(string), typeof(VMAddEditDictionary), new PropertyMetadata(default(string)));
@@ -27,6 +35,14 @@ namespace DictionatyWpf.ViewModels
             set { SetValue(NameProperty, value); }
         }
 
+        public static readonly DependencyProperty WordsProperty = DependencyProperty.Register(
+            "Words", typeof(ObservableCollection<Word>), typeof(VMAddEditDictionary), new PropertyMetadata(default(ObservableCollection<Word>)));
+
+        public ObservableCollection<Word> Words
+        {
+            get { return (ObservableCollection<Word>) GetValue(WordsProperty); }
+            set { SetValue(WordsProperty, value); }
+        }
 
         #endregion
 
@@ -57,6 +73,7 @@ namespace DictionatyWpf.ViewModels
                         {
                             ID = id;
                             Name = dic.Name;
+                            Words = new ObservableCollection<Word>(dic.Words);
                         }
                     });
                     
@@ -72,6 +89,10 @@ namespace DictionatyWpf.ViewModels
                 res = true;
             }
             else if(command == Command.Cancel)
+            {
+                res = true;
+            }
+            else if (command == Command.AddWordToDic)
             {
                 res = true;
             }
@@ -93,28 +114,31 @@ namespace DictionatyWpf.ViewModels
             {
                 OpenScreen(ScreenId.Dictionaries);
             }
+            else if (command == Command.AddWordToDic)
+            {
+                OpenScreen(ScreenId.AddWordToDictionary, param);
+            }
             else
             {
                 base.Command_Executed(command, param);
             }
         }
 
-        private void SaveDictionary()
+        private async void SaveDictionary()
         {
             if (DM != null && !string.IsNullOrEmpty(Name))
             {
-                DM.SaveDictionaryAsync(ID, Name, oRes =>
+                var oRes = await DM.SaveDictionaryAsync(ID, Name);
+
+                if (!oRes.HasError)
                 {
-                    //if (!oRes.HasError)
-                    //{
-                        OpenScreen(ScreenId.Dictionaries);
-                    //}
-                    //else
-                    //{
-                    //    HasError = true;
-                    //    Message = oRes.Message;
-                    //}
-                });
+                    OpenScreen(ScreenId.Dictionaries);
+                }
+                else
+                {
+                    HasError = true;
+                    Message = oRes.Message;
+                }
             }
         }
 

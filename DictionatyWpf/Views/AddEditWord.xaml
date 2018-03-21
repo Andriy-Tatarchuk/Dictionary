@@ -48,7 +48,7 @@
                        Margin="5"></TextBlock>
                 <TextBox Grid.Row="0"
                          Grid.Column="1"
-                         Text="{Binding Name}"
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="5"></TextBox>
 
                <TextBlock Grid.Row="1"
@@ -57,7 +57,7 @@
                           Margin="5"></TextBlock>
                <TextBox Grid.Row="1"
                         Grid.Column="1"
-                        Text="{Binding Translation}"
+                        Text="{Binding Translation, UpdateSourceTrigger=PropertyChanged}"
                         Margin="5"></TextBox>
 
             </Grid>

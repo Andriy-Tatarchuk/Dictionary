@@ -31,6 +31,7 @@ namespace DictionatyWpf.ViewModels
 
         public VMDictionaries(DataManager dm) : base(dm)
         {
+            IsLoading = true;
             LoadDictionaries();
         }
 
@@ -39,20 +40,15 @@ namespace DictionatyWpf.ViewModels
 
         #region Private Methods
 
-        private void LoadDictionaries()
+        private async void LoadDictionaries()
         {
             if (DM != null)
             {
                 IsLoading = true;
-                DM.GetAllDictionariesAsync(Dictionaries_Loaded);
-                //ItemsSource = new ObservableCollection<Dictionary>(DM.GetAllDictionaries());
+                var dictionaries = await DM.GetAllDictionariesAsync();
+                ItemsSource = new ObservableCollection<Dictionary>(dictionaries);
+                IsLoading = false;
             }
-        }
-
-        private void Dictionaries_Loaded(List<Dictionary> dictionaries)
-        {
-            IsLoading = false;
-            ItemsSource = new ObservableCollection<Dictionary>(dictionaries);
         }
 
         #endregion

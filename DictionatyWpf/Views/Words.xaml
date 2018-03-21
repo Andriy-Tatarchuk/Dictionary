@@ -67,7 +67,10 @@
                         <GridViewColumn Header="" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Delete" Style="{StaticResource LinkButton}"></Button>
+                                    <Button Content="Delete" 
+                                            Command="{x:Static views:ViewBase.DeleteCommand}"
+                                            CommandParameter="{Binding Id}"
+                                            Style="{StaticResource LinkButton}"></Button>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace DictionatyWpf.Models
 {
-    public class OperationResult : DependencyObject
+    public class OperationResult
     {
         #region Declarations
 
@@ -15,32 +15,11 @@ namespace DictionatyWpf.Models
 
         #region Properties
 
-        public static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register(
-            "HasError", typeof(bool), typeof(OperationResult), new PropertyMetadata(default(bool)));
+        public bool HasError { get; set; }
 
-        public bool HasError
-        {
-            get { return (bool) GetValue(HasErrorProperty); }
-            set { SetValue(HasErrorProperty, value); }
-        }
+        public string Message { get; set; }
 
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(
-            "Message", typeof(string), typeof(OperationResult), new PropertyMetadata(default(string)));
-
-        public string Message
-        {
-            get { return (string) GetValue(MessageProperty); }
-            set { SetValue(MessageProperty, value); }
-        }
-
-        public static readonly DependencyProperty ResultProperty = DependencyProperty.Register(
-            "Result", typeof(object), typeof(OperationResult), new PropertyMetadata(default(object)));
-
-        public object Result
-        {
-            get { return (object) GetValue(ResultProperty); }
-            set { SetValue(ResultProperty, value); }
-        }
+        public object Result { get; set; }
 
         #endregion
 

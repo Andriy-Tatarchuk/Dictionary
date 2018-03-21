@@ -13,6 +13,7 @@ namespace DictionatyWpf.ViewModels
         #region Declarations
 
         private int ID { get; set; }
+        private int DictionaryID { get; set; }
 
         #endregion
 
@@ -36,15 +37,38 @@ namespace DictionatyWpf.ViewModels
             set { SetValue(TranslationProperty, value); }
         }
 
+        public static readonly DependencyProperty IsAddToDictionaryProperty = DependencyProperty.Register(
+            "IsAddToDictionary", typeof(bool), typeof(VMAddEditWord), new PropertyMetadata(default(bool)));
+
+        public bool IsAddToDictionary
+        {
+            get { return (bool) GetValue(IsAddToDictionaryProperty); }
+            set { SetValue(IsAddToDictionaryProperty, value); }
+        }
+
 
         #endregion
 
         #region Constructorss
 
-        public VMAddEditWord(DataManager dm, object param)
+        public VMAddEditWord(DataManager dm, object param, bool isAddToDictionary = false)
             : base(dm)
         {
-            InitializeParams(param);
+            IsAddToDictionary = isAddToDictionary;
+
+            if (!isAddToDictionary)
+            {
+                InitializeParams(param);
+            }
+            else
+            {
+                int id = -1;
+                if (param != null)
+                {
+                    Int32.TryParse(param.ToString(), out id);
+                }
+                DictionaryID = id;
+            }
         }
 
         #endregion
@@ -76,7 +100,7 @@ namespace DictionatyWpf.ViewModels
             var res = false;
             if (command == Command.Save)
             {
-                res = true;
+                res = DM != null && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Translation);
             }
             else if(command == Command.Cancel)
             {
@@ -95,11 +119,11 @@ namespace DictionatyWpf.ViewModels
             if (command == Command.Save)
             {
                 SaveWord();
-                OpenScreen(ScreenId.Words);
+                OpenNextScreen();
             }
             else if(command == Command.Cancel)
             {
-                OpenScreen(ScreenId.Words);
+                OpenNextScreen();
             }
             else
             {
@@ -111,10 +135,21 @@ namespace DictionatyWpf.ViewModels
         {
             if (DM != null && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Translation))
             {
-                DM.SaveWord(ID, Name, Translation);
+                DM.SaveWord(ID, Name, Translation, DictionaryID);
             }
         }
 
+        private void OpenNextScreen()
+        {
+            if (!IsAddToDictionary)
+            {
+                OpenScreen(ScreenId.Words);
+            }
+            else
+            {
+                OpenScreen(ScreenId.AddEditDictionary, DictionaryID);
+            }
+        }
 
         #endregion
 
