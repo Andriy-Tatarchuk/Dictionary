@@ -46,6 +46,14 @@ namespace DictionatyWpf.ViewModels
             set { SetValue(IsAddToDictionaryProperty, value); }
         }
 
+        public static readonly DependencyProperty DictionariesProperty = DependencyProperty.Register(
+            "Dictionaries", typeof(ObservableCollection<Dictionary>), typeof(VMAddEditWord), new PropertyMetadata(default(ObservableCollection<Dictionary>)));
+
+        public ObservableCollection<Dictionary> Dictionaries
+        {
+            get { return (ObservableCollection<Dictionary>)GetValue(DictionariesProperty); }
+            set { SetValue(DictionariesProperty, value); }
+        }
 
         #endregion
 
@@ -76,20 +84,20 @@ namespace DictionatyWpf.ViewModels
 
         #region Private Methods
 
-        private void InitializeParams(object param)
+        private async void InitializeParams(object param)
         {
-            ID = -1;
             if (param != null && DM != null)
             {
-                int id = -1;
+                int id;
                 if (Int32.TryParse(param.ToString(), out id) && id >= 0)
                 {
-                    var word = DM.GetWord(id);
+                    var word = await DM.GetWordAsync(id);
                     if (word != null)
                     {
                         ID = id;
                         Name = word.Name;
                         Translation = word.Translation;
+                        Dictionaries = new ObservableCollection<Dictionary>(word.Dictionaries);
                     }
                 }
             }
@@ -135,7 +143,7 @@ namespace DictionatyWpf.ViewModels
         {
             if (DM != null && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Translation))
             {
-                DM.SaveWord(ID, Name, Translation, DictionaryID);
+                DM.SaveWordAsync(ID, Name, Translation, DictionaryID);
             }
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using DictionatyWpf.Models;
 
 namespace DictionatyWpf.Data
@@ -36,6 +35,11 @@ namespace DictionatyWpf.Data
         private DataContext GetDataContext()
         {
             return new DataContext();
+        }
+
+        private async Task<DataContext> GetDataContextAsync()
+        {
+            return await Task<DataContext>.Factory.StartNew(() => { return GetDataContext(); });
         }
 
         #endregion
@@ -103,17 +107,12 @@ namespace DictionatyWpf.Data
             return res;
         }
 
-        //public async void SaveDictionaryAsync(int id, string name, Action<OperationResult> callback)
-        //{
-        //    if (callback != null)
-        //    {
-        //        var result = await Task<OperationResult>.Factory.StartNew(() => { return SaveDictionary(id, name); });
-
-        //        callback(result);
-        //    }
-        //}
-
         public async Task<OperationResult> SaveDictionaryAsync(int id, string name)
+        {
+            return await Task<OperationResult>.Factory.StartNew(() => { return SaveDictionary(id, name); });
+        }
+
+        public async Task<OperationResult> SaveDictionaryAsync2(int id, string name)
         {
             var res = new OperationResult(null, false, "");
             using (var dataContext = GetDataContext())
@@ -181,20 +180,8 @@ namespace DictionatyWpf.Data
 
         public async Task<List<Dictionary>> GetAllDictionariesAsync()
         {
-            using (var dataContext = GetDataContext())
-            {
-                return await dataContext.Dictionaries.ToListAsync();
-            }
+            return await Task<List<Dictionary>>.Factory.StartNew(() => { return GetAllDictionaries(); });
         }
-
-        //public async void GetAllDictionariesAsync(Action<List<Dictionary>> callback)
-        //{
-        //    if (callback != null)
-        //    {
-        //        var result = await Task<List<Dictionary>>.Factory.StartNew(() => { return GetAllDictionaries(); });
-        //        callback(result);
-        //    }
-        //}
 
         public List<Word> GetAllWords()
         {
@@ -204,47 +191,35 @@ namespace DictionatyWpf.Data
             }
         }
 
-        public async void GetAllWordsAsync(Action<List<Word>> callback)
+        public async Task<List<Word>> GetAllWordsAsync()
         {
-            if (callback != null)
-            {
-                var result = await Task<List<Word>>.Factory.StartNew(() => { return GetAllWords(); });
-                callback(result);
-            }
+            return await Task<List<Word>>.Factory.StartNew(() => { return GetAllWords(); });
         }
 
         public Word GetWord(int id)
         {
             using (var dataContext = GetDataContext())
             {
-                return dataContext.Words.Find(id);
+                return dataContext.Words.Where(w=>w.Id == id).Include(w=>w.Dictionaries).FirstOrDefault();
             }
         }
 
-        public async void GetWordAsync(int id, Action<Word> callback)
+        public async Task<Word> GetWordAsync(int id)
         {
-            if (callback != null)
-            {
-                var result = await Task<Word>.Factory.StartNew(() => { return GetWord(id); });
-                callback(result);
-            }
+            return await Task<Word>.Factory.StartNew(() => { return GetWord(id); });
         }
 
         public Dictionary GetDictionary(int id)
         {
             using (var dataContext = GetDataContext())
             {
-                return dataContext.Dictionaries.Find(id);
+                return dataContext.Dictionaries.Where(d => d.Id == id).Include(d => d.Words).FirstOrDefault();
             }
         }
 
-        public async void GetDictionaryAsync(int id, Action<Dictionary> callback)
+        public async Task<Dictionary> GetDictionaryAsync(int id)
         {
-            if (callback != null)
-            {
-                var result = await Task<Dictionary>.Factory.StartNew(() => { return GetDictionary(id); });
-                callback(result);
-            }
+            return await Task<Dictionary>.Factory.StartNew(() => { return GetDictionary(id); });
         }
 
         public void SaveWord(int id, string name, string translation, int dictionaryId)
@@ -255,17 +230,14 @@ namespace DictionatyWpf.Data
                 var word = dataContext.Words.Find(id);
                 if (word == null)
                 {
-                    word = dataContext.Words.Create();
+                    word = new Word(name, translation);
                     newWord = true;
                 }
-
-                word.Name = name;
-                word.Translation = translation;
 
                 var dic = dataContext.Dictionaries.Find(dictionaryId);
                 if (dic != null)
                 {
-                    word.Dictionaries.Add(dic);
+                    dic.Words.Add(word);
                 }
 
                 if (newWord)

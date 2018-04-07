@@ -38,22 +38,16 @@ namespace DictionatyWpf.ViewModels
 
         #region Private Methods
 
-        private void LoadWords()
+        private async void LoadWords()
         {
             if (DM != null)
             {
                 IsLoading = true;
-                DM.GetAllWordsAsync(WordsLoaded);
-                //ItemsSource = new ObservableCollection<Word>(DM.GetAllWords());
+                var words = await DM.GetAllWordsAsync();
+                ItemsSource = new ObservableCollection<Word>(words);
+                IsLoading = false;
             }
         }
-
-        private void WordsLoaded(System.Collections.Generic.List<Word> obj)
-        {
-            IsLoading = false;
-            ItemsSource = new ObservableCollection<Word>(obj);
-        }
-
 
         #endregion
 

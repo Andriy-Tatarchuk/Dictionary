@@ -59,24 +59,20 @@ namespace DictionatyWpf.ViewModels
 
         #region Private Methods
 
-        private void InitializeParams(object param)
+        private async void InitializeParams(object param)
         {
-            ID = -1;
             if (param != null && DM != null)
             {
-                int id = -1;
-                if (Int32.TryParse(param.ToString(), out id) && id >= 0)
+                int id;
+                if (Int32.TryParse(param.ToString(), out id))
                 {
-                    DM.GetDictionaryAsync(id, dic =>
+                    var dic = await DM.GetDictionaryAsync(id);
+                    if (dic != null)
                     {
-                        if (dic != null)
-                        {
-                            ID = id;
-                            Name = dic.Name;
-                            Words = new ObservableCollection<Word>(dic.Words);
-                        }
-                    });
-                    
+                        ID = id;
+                        Name = dic.Name;
+                        Words = new ObservableCollection<Word>(dic.Words);
+                    }
                 }
             }
         }

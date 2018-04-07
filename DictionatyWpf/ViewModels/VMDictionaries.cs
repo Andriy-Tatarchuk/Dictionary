@@ -31,7 +31,6 @@ namespace DictionatyWpf.ViewModels
 
         public VMDictionaries(DataManager dm) : base(dm)
         {
-            IsLoading = true;
             LoadDictionaries();
         }
 

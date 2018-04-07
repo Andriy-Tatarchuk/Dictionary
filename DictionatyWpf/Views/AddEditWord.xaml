@@ -64,6 +64,64 @@
 
         </Border>
 
+        <Border Grid.Row="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0">
+
+                    <GroupBox Header="Linked Dictionaries">
+                        <ListView ItemsSource="{Binding Dictionaries}"
+                      HorizontalAlignment="Stretch">
+                            <ListView.Resources>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.Resources>
+
+                            <ListView.View >
+                                <GridView >
+                                    <GridViewColumn Header="Name" Width="150">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" />
+                                                <!--<Button Content="{Binding Name}" 
+                                            Command="{x:Static views:Words.AddEditWordCommand}"
+                                            CommandParameter="{Binding Id}"
+                                            Style="{StaticResource LinkButton}"/>-->
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Header="" >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Delete" Style="{StaticResource LinkButton}"></Button>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
+                </Border>
+
+                <Border Grid.Row="1"
+                HorizontalAlignment="Stretch">
+                    <Button
+                            HorizontalAlignment="Left"
+                            Content="Add Word to Dictionary"
+                            Command="{x:Static views:AddEditWord.AddDicToWordCommand}"
+                            CommandParameter="{Binding ID}"
+                            Style="{StaticResource LinkButton}"
+                            Margin="5"></Button>
+                </Border>
+            </Grid>
+        </Border>
+
         <Border Grid.Row="3"
                 HorizontalAlignment="Right">
             <StackPanel Orientation="Horizontal">
