@@ -59,8 +59,8 @@ namespace DictionatyWpf.ViewModels
 
         #region Constructorss
 
-        public VMAddEditWord(DataManager dm, object param, bool isAddToDictionary = false)
-            : base(dm)
+        public VMAddEditWord(ViewManager viewManager, DataManager dm, object param, bool isAddToDictionary = false)
+            : base(viewManager, dm)
         {
             IsAddToDictionary = isAddToDictionary;
 

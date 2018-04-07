@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using DictionatyWpf.ViewModels;
 
 namespace DictionatyWpf.Views
 {
-    public class ViewManager
+    public class ViewManager : INotifyPropertyChanged
     {
         
         #region Declarations
@@ -21,7 +22,21 @@ namespace DictionatyWpf.Views
 
         #region Properties
 
-       
+        private ViewBase _CurrentView;
+
+        public ViewBase CurrentView
+        {
+            get { return _CurrentView; }
+            set
+            {
+                var dif = _CurrentView != value;
+                if (dif)
+                {
+                    _CurrentView = value;
+                    FirePropertyChanged("CurrentView");
+                }
+            }
+        }
 
         #endregion
 
@@ -42,25 +57,33 @@ namespace DictionatyWpf.Views
             ViewBase res = null;
             if (screenId == ScreenId.Dictionaries)
             {
-                res = new Dictionaries(){ViewModel = new VMDictionaries(DM){Header = "Dictionaries"}};
+                res = new Dictionaries(){ViewModel = new VMDictionaries(this, DM){Header = "Dictionaries"}};
             }
             else if (screenId == ScreenId.Words)
             {
-                res = new Words() { ViewModel = new VMWords(DM, param) { Header = "Words" } };
+                res = new Words() { ViewModel = new VMWords(this, DM, param) { Header = "Words" } };
             }
             else if (screenId == ScreenId.AddEditWord)
             {
-                res = new AddEditWord() { ViewModel = new VMAddEditWord(DM, param) { Header = "Word Editor" } };
+                res = new AddEditWord() { ViewModel = new VMAddEditWord(this, DM, param) { Header = "Word Editor" } };
             }
             else if (screenId == ScreenId.AddEditDictionary)
             {
-                res = new AddEditDictionary() { ViewModel = new VMAddEditDictionary(DM, param) { Header = "Dictionary Editor" } };
+                res = new AddEditDictionary() { ViewModel = new VMAddEditDictionary(this, DM, param) { Header = "Dictionary Editor" } };
             }
             else if (screenId == ScreenId.AddWordToDictionary)
             {
-                res = new AddEditWord() { ViewModel = new VMAddEditWord(DM, param, true) { Header = "Add Word To Dictionary" } };
+                res = new AddEditWord() { ViewModel = new VMAddEditWord(this, DM, param, true) { Header = "Add Word To Dictionary" } };
             }
             return res;
+        }
+
+        private void FirePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         #endregion
@@ -82,13 +105,23 @@ namespace DictionatyWpf.Views
             return res;
         }
 
+        public void OpenScreen(ScreenId screenId, object param = null)
+        {
+            var view = GetScreen(screenId, param);
+            if (view != null)
+            {
+                CurrentView = view;
+            }
+        }
 
         #endregion
 
         #region Events
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
 
         #endregion
+
     }
 }

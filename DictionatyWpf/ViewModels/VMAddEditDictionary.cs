@@ -48,8 +48,8 @@ namespace DictionatyWpf.ViewModels
 
         #region Constructorss
 
-        public VMAddEditDictionary(DataManager dm, object param)
-            : base(dm)
+        public VMAddEditDictionary(ViewManager viewManager, DataManager dm, object param)
+            : base(viewManager, dm)
         {
             InitializeParams(param);
         }

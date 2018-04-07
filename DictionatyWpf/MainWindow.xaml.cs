@@ -61,6 +61,14 @@ namespace DictionatyWpf
 
             ViewManager = new ViewManager(DM);
 
+            ViewManager.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "CurrentView")
+                {
+                    CurrentView = ViewManager.CurrentView;
+                }
+            };
+
             CreateLeftMenu();
 
             //IUnityContainer unitycontainer = new UnityContainer();
@@ -94,18 +102,10 @@ namespace DictionatyWpf
                 var screen = ScreenId.None;
                 if (ScreenId.TryParse(e.Parameter.ToString(), out screen) && screen != ScreenId.None)
                 {
-                    OpenScreen(screen);
+                    ViewManager.OpenScreen(screen);
                 }
             }
         }
 
-        public void OpenScreen(ScreenId screenId, object param = null)
-        {
-            var view = ViewManager.GetScreen(screenId, param);
-            if (view != null)
-            {
-                CurrentView = view;
-            }
-        }
     }
 }

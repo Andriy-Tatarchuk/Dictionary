@@ -28,7 +28,7 @@ namespace DictionatyWpf.ViewModels
 
         #region Constructorss
 
-        public VMWords(DataManager dm, object param) : base(dm)
+        public VMWords(ViewManager viewManager, DataManager dm, object param) : base(viewManager, dm)
         {
             LoadWords();
         }

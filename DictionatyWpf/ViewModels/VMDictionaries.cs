@@ -29,7 +29,8 @@ namespace DictionatyWpf.ViewModels
 
         #region Constructorss
 
-        public VMDictionaries(DataManager dm) : base(dm)
+        public VMDictionaries(ViewManager viewManager, DataManager dm)
+            : base(viewManager, dm)
         {
             LoadDictionaries();
         }

@@ -13,6 +13,7 @@ namespace DictionatyWpf.ViewModels
     {
         #region Declarations
         protected DataManager DM { get; set; }
+        protected ViewManager ViewManager { get; set; }
 
         #endregion
 
@@ -81,8 +82,9 @@ namespace DictionatyWpf.ViewModels
 
         #region Constructorss
 
-        public VMBase(DataManager dm)
+        public VMBase(ViewManager viewManager, DataManager dm)
         {
+            ViewManager = viewManager;
             DM = dm;
         }
 
@@ -111,10 +113,9 @@ namespace DictionatyWpf.ViewModels
 
         public void OpenScreen(ScreenId screenId, object param = null)
         {
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            if (mainWindow != null)
+            if (ViewManager != null)
             {
-                mainWindow.OpenScreen(screenId, param);
+                ViewManager.OpenScreen(screenId, param);
             }
         }
 
