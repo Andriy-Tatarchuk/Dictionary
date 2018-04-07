@@ -1,9 +1,9 @@
-﻿<views:ViewBase x:Class="DictionatyWpf.Views.Words"
+﻿<views:ViewBase x:Class="ViewLayer.Views.Words"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:views="clr-namespace:DictionatyWpf.Views"
+      xmlns:views="clr-namespace:ViewLayer.Views"
       mc:Ignorable="d" 
       x:Name="_this"
       d:DesignHeight="300" d:DesignWidth="300">

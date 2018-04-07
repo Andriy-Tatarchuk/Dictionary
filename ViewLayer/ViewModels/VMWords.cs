@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using DictionatyWpf.Data;
-using DictionatyWpf.Models;
-using DictionatyWpf.Views;
+using DataLayer;
+using DataLayer.DataModels;
+using ViewLayer.Models;
 
-namespace DictionatyWpf.ViewModels
+namespace ViewLayer.ViewModels
 {
     public class VMWords : VMBase
     {

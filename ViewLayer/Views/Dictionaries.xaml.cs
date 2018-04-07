@@ -1,8 +1,9 @@
 ﻿
 
 using System.Windows.Input;
+using ViewLayer.Views;
 
-namespace DictionatyWpf.Views
+namespace ViewLayer.Views
 {
     /// <summary>
     /// Interaction logic for Dictionaries.xaml
@@ -27,7 +28,7 @@ namespace DictionatyWpf.Views
         {
             if (ViewModel != null)
             {
-                e.CanExecute = ViewModel.Command_CanExecute(Views.Command.AddEditDic, e.Parameter);
+                e.CanExecute = ViewModel.Command_CanExecute(ViewLayer.Models.Command.AddEditDic, e.Parameter);
             }
         }
 
@@ -35,7 +36,7 @@ namespace DictionatyWpf.Views
         {
             if (ViewModel != null)
             {
-                ViewModel.Command_Executed(Views.Command.AddEditDic, e.Parameter);
+                ViewModel.Command_Executed(ViewLayer.Models.Command.AddEditDic, e.Parameter);
             }
         }
     }

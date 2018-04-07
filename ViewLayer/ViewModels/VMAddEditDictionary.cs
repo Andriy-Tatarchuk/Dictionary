@@ -2,11 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using DictionatyWpf.Data;
-using DictionatyWpf.Models;
-using DictionatyWpf.Views;
+using DataLayer;
+using DataLayer.DataModels;
+using ViewLayer.Models;
+using ViewLayer.Views;
 
-namespace DictionatyWpf.ViewModels
+namespace ViewLayer.ViewModels
 {
     public class VMAddEditDictionary : VMBase
     {

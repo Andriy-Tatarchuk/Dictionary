@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace DictionatyWpf.Models
+namespace DataLayer.DataModels
 {
     public class OperationResult
     {

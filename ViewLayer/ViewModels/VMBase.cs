@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using DictionatyWpf.Data;
-using DictionatyWpf.Views;
+using DataLayer;
+using DataLayer.DataModels;
+using ViewLayer.Models;
 
-namespace DictionatyWpf.ViewModels
+namespace ViewLayer.ViewModels
 {
     public class VMBase : DependencyObject
     {

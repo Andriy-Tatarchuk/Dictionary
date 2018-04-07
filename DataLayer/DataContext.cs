@@ -1,6 +1,6 @@
-using DictionatyWpf.Models;
+using DataLayer.DataModels;
 
-namespace DictionatyWpf
+namespace DataLayer
 {
     using System;
     using System.Data.Entity;
@@ -26,10 +26,4 @@ namespace DictionatyWpf
         public virtual DbSet<Dictionary> Dictionaries { get; set; }
         public virtual DbSet<Word> Words { get; set; }
     }
-
-    //public class MyEntity
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //}
 }

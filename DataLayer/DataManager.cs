@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using DictionatyWpf.Models;
+using DataLayer.DataModels;
 
-namespace DictionatyWpf.Data
+namespace DataLayer
 {
     public class DataManager
     {

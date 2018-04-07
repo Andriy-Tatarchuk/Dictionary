@@ -13,9 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DictionatyWpf.Data;
 using DictionatyWpf.Models;
-using DictionatyWpf.Views;
+using DictionatyWpf.Models;
+using ViewLayer;
+using ViewLayer.Models;
 
 namespace DictionatyWpf
 {
@@ -36,11 +37,11 @@ namespace DictionatyWpf
         }
 
         public static readonly DependencyProperty CurrentViewProperty = DependencyProperty.Register(
-            "CurrentView", typeof(DictionatyWpf.Views.ViewBase), typeof(MainWindow), new PropertyMetadata(default(DictionatyWpf.Views.ViewBase)));
+            "CurrentView", typeof(ViewLayer.Views.ViewBase), typeof(MainWindow), new PropertyMetadata(default(ViewLayer.Views.ViewBase)));
 
-        public DictionatyWpf.Views.ViewBase CurrentView
+        public ViewLayer.Views.ViewBase CurrentView
         {
-            get { return (DictionatyWpf.Views.ViewBase) GetValue(CurrentViewProperty); }
+            get { return (ViewLayer.Views.ViewBase)GetValue(CurrentViewProperty); }
             set { SetValue(CurrentViewProperty, value); }
         }
 
@@ -57,9 +58,7 @@ namespace DictionatyWpf
 
             CommandBindings.Add(new CommandBinding(MenuCommand, MenuCommand_Executed, MenuCommand_CanExecute));
 
-            var DM = new DataManager();
-
-            ViewManager = new ViewManager(DM);
+            ViewManager = new ViewManager();
 
             ViewManager.PropertyChanged += (sender, args) =>
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace DictionatyWpf.Converters
+namespace ViewLayer.Converters
 {
     public class BoolToVisibilityConverter : IValueConverter
     {

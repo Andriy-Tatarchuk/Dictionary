@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DictionatyWpf.Data;
-using DictionatyWpf.ViewModels;
+using DataLayer;
+using ViewLayer.Models;
+using ViewLayer.ViewModels;
+using ViewLayer.Views;
 
-namespace DictionatyWpf.Views
+namespace ViewLayer
 {
     public class ViewManager : INotifyPropertyChanged
     {
@@ -42,9 +44,9 @@ namespace DictionatyWpf.Views
 
         #region Constructorss
 
-        public ViewManager(DataManager dm)
+        public ViewManager()
         {
-            DM = dm;
+            DM = new DataManager();
         }
 
         #endregion

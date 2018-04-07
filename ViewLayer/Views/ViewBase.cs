@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using DictionatyWpf.Data;
-using DictionatyWpf.ViewModels;
+using ViewLayer.ViewModels;
 
-namespace DictionatyWpf.Views
+namespace ViewLayer.Views
 {
     public class ViewBase : UserControl  
     {
@@ -59,7 +58,7 @@ namespace DictionatyWpf.Views
         {
             if (ViewModel != null)
             {
-                e.CanExecute = ViewModel.Command_CanExecute(Views.Command.Delete, e.Parameter);
+                e.CanExecute = ViewModel.Command_CanExecute(ViewLayer.Models.Command.Delete, e.Parameter);
             }
         }
 
@@ -67,7 +66,7 @@ namespace DictionatyWpf.Views
         {
             if (ViewModel != null)
             {
-                ViewModel.Command_Executed(Views.Command.Delete, e.Parameter);
+                ViewModel.Command_Executed(ViewLayer.Models.Command.Delete, e.Parameter);
             }
         }
 
@@ -80,8 +79,8 @@ namespace DictionatyWpf.Views
         {
             if (ViewModel != null)
             {
-                var command = Views.Command.None;
-                if (Views.Command.TryParse(e.Parameter.ToString(), out command) && command != Views.Command.None)
+                var command = ViewLayer.Models.Command.None;
+                if (ViewLayer.Models.Command.TryParse(e.Parameter.ToString(), out command) && command != ViewLayer.Models.Command.None)
                 {
                     e.CanExecute = ViewModel.Command_CanExecute(command, e.Parameter);
                 }
@@ -92,8 +91,8 @@ namespace DictionatyWpf.Views
         {
             if (ViewModel != null)
             {
-                var command = Views.Command.None;
-                if (Views.Command.TryParse(e.Parameter.ToString(), out command) && command != Views.Command.None)
+                var command = ViewLayer.Models.Command.None;
+                if (ViewLayer.Models.Command.TryParse(e.Parameter.ToString(), out command) && command != ViewLayer.Models.Command.None)
                 {
                     ViewModel.Command_Executed(command, e.Parameter);
                 }

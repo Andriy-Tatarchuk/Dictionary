@@ -10,7 +10,7 @@
     <Window.Resources>
 <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Views/CommonStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="CommonStyle.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     </Window.Resources>

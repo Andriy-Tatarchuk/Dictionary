@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace DictionatyWpf.Models
+namespace DataLayer.DataModels
 {
     public class Dictionary : INotifyPropertyChanged
     {
