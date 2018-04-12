@@ -101,7 +101,7 @@ namespace ViewLayer.ViewModels
                 {
                     Int32.TryParse(param.ToString(), out id);
                 }
-                DM.DeleteWord(id);
+                DM.DeleteWordAsync(id);
 
                 LoadWords();
             }

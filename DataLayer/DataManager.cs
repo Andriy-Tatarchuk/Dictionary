@@ -170,7 +170,7 @@ namespace DataLayer
         //    }
         //}
 
-        public List<Dictionary> GetAllDictionaries()
+        private List<Dictionary> GetAllDictionaries()
         {
             using (var dataContext = GetDataContext())
             {
@@ -183,7 +183,7 @@ namespace DataLayer
             return await Task<List<Dictionary>>.Factory.StartNew(() => { return GetAllDictionaries(); });
         }
 
-        public List<Word> GetAllWords()
+        private List<Word> GetAllWords()
         {
             using (var dataContext = GetDataContext())
             {
@@ -196,7 +196,7 @@ namespace DataLayer
             return await Task<List<Word>>.Factory.StartNew(() => { return GetAllWords(); });
         }
 
-        public Word GetWord(int id)
+        private Word GetWord(int id)
         {
             using (var dataContext = GetDataContext())
             {
@@ -209,7 +209,7 @@ namespace DataLayer
             return await Task<Word>.Factory.StartNew(() => { return GetWord(id); });
         }
 
-        public Dictionary GetDictionary(int id)
+        private Dictionary GetDictionary(int id)
         {
             using (var dataContext = GetDataContext())
             {
@@ -222,7 +222,7 @@ namespace DataLayer
             return await Task<Dictionary>.Factory.StartNew(() => { return GetDictionary(id); });
         }
 
-        public void SaveWord(int id, string name, string translation, int dictionaryId)
+        private void SaveWord(int id, string name, string translation, int dictionaryId)
         {
             using (var dataContext = GetDataContext())
             {
@@ -254,7 +254,7 @@ namespace DataLayer
             await Task.Factory.StartNew(() => { SaveWord(id, name, translation, dictionaryId); });
         }
 
-        public void DeleteWord(int id)
+        private void DeleteWord(int id)
         {
             using (var dataContext = GetDataContext())
             {
@@ -266,6 +266,12 @@ namespace DataLayer
                 }
             }
         }
+
+        public async void DeleteWordAsync(int id)
+        {
+            await Task.Factory.StartNew(() => { DeleteWord(id); });
+        }
+
 
         #endregion
 
