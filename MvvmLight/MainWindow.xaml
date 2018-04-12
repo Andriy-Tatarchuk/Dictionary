@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
+        xmlns:views="clr-namespace:MvvmLight.Views"
         mc:Ignorable="d ignore"
-        Height="300"
-        Width="300"
-        Title="MVVM Light Application"
+        Height="400"
+        Width="500"
+        Title="Dictionary on MVVM Light"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
     <Window.Resources>
@@ -20,13 +21,7 @@
 
     <Grid x:Name="LayoutRoot">
 
-        <TextBlock FontSize="36"
-                   FontWeight="Bold"
-                   Foreground="Purple"
-                   Text="{Binding WelcomeTitle}"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   TextWrapping="Wrap" />
+        <views:WordsView></views:WordsView>
 
     </Grid>
 </Window>
