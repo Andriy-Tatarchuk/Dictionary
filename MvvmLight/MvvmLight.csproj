@@ -81,6 +81,14 @@
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
+    <Compile Include="Navigation\FrameNavigationService.cs" />
+    <Compile Include="Navigation\IFrameNavigationService.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\DictionariesViewModel.cs" />
+    <Compile Include="Views\BaseView.cs" />
+    <Compile Include="Views\DictionariesView.xaml.cs">
+      <DependentUpon>DictionariesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WordsView.xaml.cs">
       <DependentUpon>WordsView.xaml</DependentUpon>
     </Compile>
@@ -102,6 +110,10 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DictionariesView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WordsView.xaml">
       <SubType>Form</SubType>
@@ -140,6 +152,10 @@
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
       <Project>{4166bdf2-492c-4e75-92b3-c652e454d6a8}</Project>
       <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityLayer\EntityLayer.csproj">
+      <Project>{5922b156-8590-4749-b64a-13f3cf82013e}</Project>
+      <Name>EntityLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

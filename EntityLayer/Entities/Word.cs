@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace DataLayer.DataModels
+namespace EntityLayer.Entities
 {
     public class Word : INotifyPropertyChanged
     {

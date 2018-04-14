@@ -1,17 +1,16 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace MvvmLight.Views
 {
     /// <summary>
-    /// Description for WordsView.
+    /// Description for DictionariesView.
     /// </summary>
-    public partial class WordsView : BaseView
+    public partial class DictionariesView : BaseView
     {
         /// <summary>
-        /// Initializes a new instance of the WordsView class.
+        /// Initializes a new instance of the DictionariesView class.
         /// </summary>
-        public WordsView()
+        public DictionariesView()
         {
             InitializeComponent();
         }

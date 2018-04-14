@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using DataLayer;
-using DataLayer.DataModels;
-using GalaSoft.MvvmLight;
+using EntityLayer.Entities;
 using GalaSoft.MvvmLight.Command;
 
 namespace MvvmLight.ViewModel
@@ -12,7 +11,7 @@ namespace MvvmLight.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class WordsViewModel : ViewModelBase
+    public class WordsViewModel : BaseViewModel
     {
         private DataManager _DataManager;
 
@@ -38,6 +37,11 @@ namespace MvvmLight.ViewModel
             ReadAllCommand = new RelayCommand(GetWords);
         }
 
+        public override void LoadData()
+        {
+            GetWords();
+        }
+
         public async void GetWords()
         {
             if (Words != null)
@@ -45,8 +49,10 @@ namespace MvvmLight.ViewModel
                 Words.Clear();
             }
 
+            IsLoading = true;
             var words = await _DataManager.GetAllWordsAsync();
             Words = new ObservableCollection<Word>(words);
+            IsLoading = false;
         }
     }
 }

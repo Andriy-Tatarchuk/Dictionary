@@ -16,6 +16,8 @@ using CommonServiceLocator;
 using DataLayer;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using MvvmLight.Navigation;
+using System;
 
 namespace MvvmLight.ViewModel
 {
@@ -47,6 +49,9 @@ namespace MvvmLight.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<WordsViewModel>();
+            SimpleIoc.Default.Register<DictionariesViewModel>();
+
+            SetupNavigation();
         }
 
         public MainViewModel Main
@@ -63,6 +68,23 @@ namespace MvvmLight.ViewModel
             {
                 return ServiceLocator.Current.GetInstance<WordsViewModel>();
             }
+        }
+
+        public DictionariesViewModel Dictionaries
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DictionariesViewModel>();
+            }
+        }
+
+        private static void SetupNavigation()
+        {
+            var navigationService = new FrameNavigationService();
+            navigationService.Configure("WordsView", new Uri("../Views/WordsView.xaml", UriKind.Relative));
+            //navigationService.Configure("Notes", new Uri("../Views/NotesView.xaml", UriKind.Relative));
+
+            SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }
 
         public static void Cleanup()

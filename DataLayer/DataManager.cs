@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using DataLayer.DataModels;
+using EntityLayer.Entities;
 
 namespace DataLayer
 {
@@ -16,16 +17,15 @@ namespace DataLayer
 
         #region Properties
 
-        //public DataContext DataContext { get; private set; }
+        public static bool IsDataContextInisialized = false;
 
         #endregion
 
         #region Constructorss
 
-        /*public DataManager(DataContext dataContext)
+        public DataManager()
         {
-            DataContext = dataContext;
-        }*/
+        }
 
         #endregion
 
@@ -34,7 +34,17 @@ namespace DataLayer
 
         private DataContext GetDataContext()
         {
-            return new DataContext();
+            DataContext dataContext = null;
+            try
+            {
+                dataContext = new DataContext();
+            }
+            catch (Exception e)
+            {
+                
+            }
+
+            return dataContext;
         }
 
         private async Task<DataContext> GetDataContextAsync()
@@ -45,6 +55,26 @@ namespace DataLayer
         #endregion
 
         #region Public Methods
+
+        public async Task<bool> InitializeDataContextAsync()
+        {
+            if (!IsDataContextInisialized)
+            {
+                IsDataContextInisialized = await Task<bool>.Factory.StartNew(() =>
+                {
+                    var dataContext = GetDataContext();
+                    var res = dataContext != null;
+                    if (res)
+                    {
+                       dataContext.Words.Any();
+                    }
+
+                    return res;
+                });
+            }
+
+            return IsDataContextInisialized;
+        }
 
         //public Dictionary AddDictionary(string name)
         //{

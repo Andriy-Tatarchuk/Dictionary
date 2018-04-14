@@ -1,4 +1,7 @@
+using System;
+using DataLayer;
 using GalaSoft.MvvmLight;
+using MvvmLight.Navigation;
 
 namespace MvvmLight.ViewModel
 {
@@ -16,11 +19,32 @@ namespace MvvmLight.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        private DataManager _DataManager;
+        private IFrameNavigationService _navigationService;
+
+        private string _StatusMsg;
+
+        public string StatusMsg
+        {
+            get { return _StatusMsg; }
+            set
+            {
+                _StatusMsg = value;
+                RaisePropertyChanged("StatusMsg");
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
         {
+            _DataManager = dataMgr;
+            _navigationService = navigationService; 
+
+            InitializeDBConnecction();
+
+
             ////if (IsInDesignMode)
             ////{
             ////    // Code runs in Blend --> create design time data.
@@ -29,6 +53,24 @@ namespace MvvmLight.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
+            
+            
+        }
+
+        private async void InitializeDBConnecction()
+        {
+            StatusMsg = "Connecting to DB...";
+            if (!await _DataManager.InitializeDataContextAsync())
+            {
+                StatusMsg = "Connection error";
+            }
+            else
+            {
+                StatusMsg = String.Empty;
+            }
+
+            _navigationService.NavigateTo("WordsView", null);
+
         }
     }
 }

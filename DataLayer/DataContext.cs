@@ -1,4 +1,5 @@
 using DataLayer.DataModels;
+using EntityLayer.Entities;
 
 namespace DataLayer
 {

@@ -8,6 +8,7 @@
         mc:Ignorable="d ignore"
         Height="400"
         Width="500"
+        Name="_this"
         Title="Dictionary on MVVM Light"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
@@ -20,8 +21,49 @@
     </Window.Resources>
 
     <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <views:WordsView></views:WordsView>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
+            <TabControl Grid.Column="0">
+                <TabControl.Items>
+                    <TabItem Header="Dictonaries">
+                        <TabItem.Content>
+                            <views:DictionariesView></views:DictionariesView>
+                        </TabItem.Content>
+                    </TabItem>
+
+                    <TabItem Header="Words">
+                        <TabItem.Content>
+                            <views:WordsView></views:WordsView>
+                        </TabItem.Content>
+                    </TabItem>
+                </TabControl.Items>
+            </TabControl>
+
+            <GridSplitter Grid.Column="1"
+                          ResizeBehavior="PreviousAndNext"
+                          ResizeDirection="Columns"
+                          Background="DarkGray"
+                          Width="2"
+                          Margin="0,5,0,5"
+                          ></GridSplitter>
+
+        <Frame Name="MainFrame" 
+               Grid.Column="2"
+               Source="{Binding ElementName=_this, Path=MainFrameSource}"></Frame>
+
+            </Grid>
+
+        <TextBlock Grid.Row="1" 
+                   Text="{Binding StatusMsg}"></TextBlock>
     </Grid>
 </Window>
