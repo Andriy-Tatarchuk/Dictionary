@@ -82,7 +82,7 @@ namespace MvvmLight.ViewModel
         {
             var navigationService = new FrameNavigationService();
             navigationService.Configure("WordsView", new Uri("../Views/WordsView.xaml", UriKind.Relative));
-            //navigationService.Configure("Notes", new Uri("../Views/NotesView.xaml", UriKind.Relative));
+            navigationService.Configure("DictionariesView", new Uri("../Views/DictionariesView.xaml", UriKind.Relative));
 
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }

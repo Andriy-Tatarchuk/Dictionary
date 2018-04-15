@@ -28,6 +28,9 @@ namespace MvvmLight.ViewModel
                 RaisePropertyChanged("Words");
             }
         }
+
+        private int DictionaryId { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the WordsViewModel class.
         /// </summary>

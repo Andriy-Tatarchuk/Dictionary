@@ -14,10 +14,13 @@ namespace MvvmLight.Navigation
     class FrameNavigationService : IFrameNavigationService, INotifyPropertyChanged
     {
         #region Fields
+
         private readonly Dictionary<string, Uri> _pagesByKey;
         private readonly List<string> _historic;
         private string _currentPageKey;
+
         #endregion
+
         #region Properties
         public string CurrentPageKey
         {
@@ -68,15 +71,6 @@ namespace MvvmLight.Navigation
                     throw new ArgumentException(string.Format("No such page: {0} ", pageKey), "pageKey");
                 }
 
-                //var frame = GetDescendantFromName(Application.Current.MainWindow, "MainFrame") as Frame;
-
-                //var frame = Application.Current.MainWindow.FindName("MainFrame") as Frame;
-
-                //if (frame != null)
-                //{
-                //    frame.Source = _pagesByKey[pageKey];
-                //}
-
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 if (mainWindow != null)
                 {
@@ -102,35 +96,6 @@ namespace MvvmLight.Navigation
                     _pagesByKey.Add(key, pageType);
                 }
             }
-        }
-
-        private static FrameworkElement GetDescendantFromName(DependencyObject parent, string name)
-        {
-            var count = VisualTreeHelper.GetChildrenCount(parent);
-
-            if (count < 1)
-            {
-                return null;
-            }
-
-            for (var i = 0; i < count; i++)
-            {
-                var frameworkElement = VisualTreeHelper.GetChild(parent, i) as FrameworkElement;
-                if (frameworkElement != null)
-                {
-                    if (frameworkElement.Name == name)
-                    {
-                        return frameworkElement;
-                    }
-
-                    frameworkElement = GetDescendantFromName(frameworkElement, name);
-                    if (frameworkElement != null)
-                    {
-                        return frameworkElement;
-                    }
-                }
-            }
-            return null;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

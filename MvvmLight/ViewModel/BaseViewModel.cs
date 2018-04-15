@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Windows.Controls;
+using System.Windows.Navigation;
+using GalaSoft.MvvmLight;
 
 namespace MvvmLight.ViewModel
 {
