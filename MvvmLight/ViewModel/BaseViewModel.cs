@@ -1,6 +1,8 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Navigation;
+using DataLayer;
 using GalaSoft.MvvmLight;
+using MvvmLight.Navigation;
 
 namespace MvvmLight.ViewModel
 {
@@ -12,6 +14,9 @@ namespace MvvmLight.ViewModel
     /// </summary>
     public class BaseViewModel : ViewModelBase
     {
+        public DataManager DataManager { get; private set; }
+        public IFrameNavigationService NavigationService { get; private set; }
+
         private bool _IsLoading;
 
         public bool IsLoading
@@ -29,9 +34,10 @@ namespace MvvmLight.ViewModel
         /// <summary>
         /// Initializes a new instance of the BaseViewModel class.
         /// </summary>
-        public BaseViewModel()
+        public BaseViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
         {
-
+            DataManager = dataMgr;
+            NavigationService = navigationService;
         }
 
         public void OnLoaded()
@@ -44,6 +50,11 @@ namespace MvvmLight.ViewModel
         }
 
         public virtual void LoadData()
+        {
+
+        }
+
+        public virtual void Navigated(object param)
         {
 
         }

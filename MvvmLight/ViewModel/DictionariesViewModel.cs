@@ -2,6 +2,8 @@
 using DataLayer;
 using EntityLayer.Entities;
 using GalaSoft.MvvmLight;
+using MvvmLight.Model;
+using MvvmLight.Navigation;
 
 namespace MvvmLight.ViewModel
 {
@@ -13,8 +15,7 @@ namespace MvvmLight.ViewModel
     /// </summary>
     public class DictionariesViewModel : BaseViewModel
     {
-        private DataManager _DataManager;
-
+        
         private ObservableCollection<Dictionary> _Dictionaries;
 
         public ObservableCollection<Dictionary> Dictionaries
@@ -27,12 +28,25 @@ namespace MvvmLight.ViewModel
             }
         }
 
+        private Dictionary _SelectedItem;
+        public Dictionary SelectedItem
+        {
+            get { return _SelectedItem; }
+            set
+            {
+                _SelectedItem = value;
+                RaisePropertyChanged("SelectedItem");
+                SelectedDictionaryChanged();
+            }
+        }
+
+
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
         /// </summary>
-        public DictionariesViewModel(DataManager dataMgr)
+        public DictionariesViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
+            : base(dataMgr, navigationService)
         {
-            _DataManager = dataMgr; 
         }
 
         public override void LoadData()
@@ -48,9 +62,14 @@ namespace MvvmLight.ViewModel
             }
 
             IsLoading = true;
-            var dictionaries = await _DataManager.GetAllDictionariesAsync();
+            var dictionaries = await DataManager.GetAllDictionariesAsync();
             Dictionaries = new ObservableCollection<Dictionary>(dictionaries);
             IsLoading = false;
+        }
+
+        private void SelectedDictionaryChanged()
+        {
+            NavigationService.NavigateTo(ScreenId.WordsView.ToString(), SelectedItem.Id);
         }
     }
 }

@@ -58,7 +58,7 @@
                           ></GridSplitter>
 
         <Frame Name="MainFrame" 
-               Grid.Column="2"
+               Grid.Column="2" Navigated="MainFrame_OnNavigated"
                Source="{Binding ElementName=_this, Path=MainFrameSource}"></Frame>
 
             </Grid>

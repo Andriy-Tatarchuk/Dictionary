@@ -223,7 +223,20 @@ namespace DataLayer
 
         public async Task<List<Word>> GetAllWordsAsync()
         {
-            return await Task<List<Word>>.Factory.StartNew(() => { return GetAllWords(); });
+            //return await Task<List<Word>>.Factory.StartNew(() => { return GetAllWords(); });
+            using (var dataContext = GetDataContext())
+            {
+                return await dataContext.Words.ToListAsync();
+            }
+        }
+
+        public async Task<List<Word>> GetWordsByDicAsync(int dicId)
+        {
+            using (var dataContext = GetDataContext())
+            {
+                var dic = await dataContext.Dictionaries.Include(d=>d.Words).FirstAsync(d=>d.Id == dicId);
+                return dic.Words;
+            }
         }
 
         private Word GetWord(int id)

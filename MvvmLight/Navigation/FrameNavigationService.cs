@@ -74,7 +74,9 @@ namespace MvvmLight.Navigation
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 if (mainWindow != null)
                 {
-                    mainWindow.MainFrameSource = _pagesByKey[pageKey];
+                    //mainWindow.MainFrameSource = _pagesByKey[pageKey];
+                    var frame = mainWindow.MainFrame;
+                    frame.Navigate(_pagesByKey[pageKey], parameter);
                 }
 
                 Parameter = parameter;

@@ -22,7 +22,8 @@
         <DataGrid Grid.Row="1" 
                   ItemsSource="{Binding Words}" 
                   IsReadOnly="True" 
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>

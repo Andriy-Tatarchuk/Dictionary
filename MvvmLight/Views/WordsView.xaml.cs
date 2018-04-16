@@ -15,5 +15,6 @@ namespace MvvmLight.Views
         {
             InitializeComponent();
         }
+
     }
 }

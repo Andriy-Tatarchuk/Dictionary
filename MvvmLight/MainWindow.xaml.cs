@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Navigation;
 using MvvmLight.ViewModel;
 using MvvmLight.Views;
 
@@ -28,5 +29,17 @@ namespace MvvmLight
             Closing += (s, e) => ViewModelLocator.Cleanup();
         }
 
+        private void MainFrame_OnNavigated(object sender, NavigationEventArgs e)
+        {
+            var view = MainFrame.Content as BaseView;
+            if (view != null)
+            {
+                var viewModel = view.DataContext as BaseViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.Navigated(e.ExtraData);
+                }
+            }
+        }
     }
 }
