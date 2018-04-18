@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataLayer;
+using Enigma.Data;
 using ViewLayer.Models;
 using ViewLayer.ViewModels;
 using ViewLayer.Views;

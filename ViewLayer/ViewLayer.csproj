@@ -115,9 +115,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
+    <ProjectReference Include="..\Data\Enigma.Data.csproj">
       <Project>{4166bdf2-492c-4e75-92b3-c652e454d6a8}</Project>
-      <Name>DataLayer</Name>
+      <Name>Enigma.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Enigma.Entity.csproj">
+      <Project>{5922b156-8590-4749-b64a-13f3cf82013e}</Project>
+      <Name>Enigma.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

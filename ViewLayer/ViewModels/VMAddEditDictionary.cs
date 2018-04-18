@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using DataLayer;
-using DataLayer.DataModels;
+using Enigma.Data;
+using Enigma.Entity.Entities;
 using ViewLayer.Models;
 using ViewLayer.Views;
 

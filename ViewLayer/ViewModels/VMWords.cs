@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using DataLayer;
-using DataLayer.DataModels;
+using Enigma.Data;
+using Enigma.Data.DataModels;
+using Enigma.Entity.Entities;
 using ViewLayer.Models;
 
 namespace ViewLayer.ViewModels

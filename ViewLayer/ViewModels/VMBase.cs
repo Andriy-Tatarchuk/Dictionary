@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using DataLayer;
-using DataLayer.DataModels;
+using Enigma.Data;
 using ViewLayer.Models;
 
 namespace ViewLayer.ViewModels
