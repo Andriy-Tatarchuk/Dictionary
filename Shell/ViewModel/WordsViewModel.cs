@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Enigma.Data;
 using Enigma.Entity.Entities;
+using Enigma.Shell.Model;
 using GalaSoft.MvvmLight.Command;
 using Enigma.Shell.Navigation;
 
@@ -38,6 +41,10 @@ namespace Enigma.Shell.ViewModel
         }
 
         private int DictionaryId { get; set; }
+        private Dictionary Dictionary { get; set; }
+
+        public RelayCommand AddWordCommand { get; private set; }
+        public RelayCommand EditWordCommand { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the WordsViewModel class.
@@ -45,30 +52,67 @@ namespace Enigma.Shell.ViewModel
         public WordsViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
             : base(dataMgr, navigationService)
         {
+            InitializeCommands();
         }
 
-        public override void LoadData()
+        private void InitializeCommands()
         {
-            GetWords();
+            AddWordCommand = new RelayCommand(() =>
+            {
+                var word = new Word();
+                if (Dictionary != null)
+                {
+                    word.Dictionaries.Add(Dictionary);
+                }
+
+                NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
+            });
+
+            EditWordCommand = new RelayCommand(() =>
+            {
+                var word = GetWordById(SelectedItem.Id);
+                NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
+            });
         }
 
-        public async void GetWords(int dicId = -1)
+        private async Task<Word> GetWordById(int id)
         {
+            return await DataManager.GetWordAsync(id);
+        }
+
+        public override void LoadData(object parameter)
+        {
+            var id = -1;
+            if (parameter != null)
+            {
+                Int32.TryParse(parameter.ToString(), out id);
+            }
+
+            GetWords(id);
+        }
+
+        public async void GetWords(int dictionaryId = -1)
+        {
+            DictionaryId = dictionaryId;
+            if (dictionaryId >= 0)
+            {
+                Dictionary = await DataManager.GetDictionaryAsync(dictionaryId);
+            }
             if (Words != null)
             {
                 Words.Clear();
             }
 
             IsLoading = true;
-            var words = dicId >= 0 ? await DataManager.GetWordsByDicAsync(dicId) : await DataManager.GetAllWordsAsync();
+            var words = dictionaryId >= 0 ? await DataManager.GetWordsByDicAsync(dictionaryId) : await DataManager.GetAllWordsAsync();
             Words = new ObservableCollection<Word>(words);
             IsLoading = false;
         }
 
         public override void Navigated(object param)
         {
-            var dicId = param is int ? (int) param : -1;
-            GetWords(dicId);
+            var dictionaryId = param is int ? (int) param : -1;
+            GetWords(dictionaryId);
         }
     }
 }

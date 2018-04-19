@@ -31,9 +31,12 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!--<Button Grid.Row="2" 
-                Content="Load Words"
-                Command="{Binding ReadAllCommand}"></Button>-->
+        <Button Grid.Row="2"
+                HorizontalAlignment="Left"
+                Content="Add New"
+                Command="{Binding AddWordCommand}"
+                Style="{StaticResource LinkButton}"
+                Margin="1"></Button>
     </Grid>
 </views:BaseView>
 

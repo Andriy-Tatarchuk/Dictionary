@@ -3,6 +3,7 @@ using System.Windows.Navigation;
 using Enigma.Data;
 using GalaSoft.MvvmLight;
 using Enigma.Shell.Navigation;
+using GalaSoft.MvvmLight.Command;
 
 namespace Enigma.Shell.ViewModel
 {
@@ -29,7 +30,25 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        private object _Parameter;
+
+        public object Parameter
+        {
+            get { return _Parameter; }
+            set
+            {
+                _Parameter = value;
+                RaisePropertyChanged("Parameter");
+            }
+        }
+
         private bool IsDataLoaded { get; set; }
+
+        public RelayCommand GoBackCommand
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Initializes a new instance of the BaseViewModel class.
@@ -38,23 +57,34 @@ namespace Enigma.Shell.ViewModel
         {
             DataManager = dataMgr;
             NavigationService = navigationService;
+
+            GoBackCommand = new RelayCommand(() =>
+            {
+                Save();
+                NavigationService.GoBack();
+            });
         }
 
         public void OnLoaded()
         {
             if (!IsDataLoaded)
             {
-                LoadData();
+                LoadData(Parameter);
                 IsDataLoaded = true;
             }
         }
 
-        public virtual void LoadData()
+        public virtual void LoadData(object param)
         {
 
         }
 
         public virtual void Navigated(object param)
+        {
+
+        }
+
+        public virtual void Save()
         {
 
         }

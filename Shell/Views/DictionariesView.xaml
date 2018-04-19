@@ -9,16 +9,31 @@
         DataContext="{Binding Dictionaries, Source={StaticResource Locator}}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
         <DataGrid Grid.Row="0" 
                   ItemsSource="{Binding Dictionaries}" 
                   IsReadOnly="True" 
                   AutoGenerateColumns="False"
                   SelectedItem="{Binding SelectedItem}">
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick"
+                              Command="{Binding EditDictionaryCommand}" />
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <Button Grid.Row="1"
+                HorizontalAlignment="Left"
+                Content="Add New"
+                Command="{Binding AddDictionaryCommand}"
+                Style="{StaticResource LinkButton}"
+                Margin="1"></Button>
     </Grid>
 </views:BaseView>
 

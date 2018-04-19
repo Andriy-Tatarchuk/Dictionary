@@ -6,11 +6,6 @@ namespace Enigma.Entity.Entities
 {
     public class Dictionary : INotifyPropertyChanged
     {
-
-        #region Declarations
-
-        #endregion
-
         #region Properties
 
         private int id;
@@ -55,25 +50,6 @@ namespace Enigma.Entity.Entities
 
         #endregion
 
-
-        #region Private Methods
-
-
-
-        #endregion
-
-        #region Public Methods
-
-
-
-
-        #endregion
-
-        #region Events
-
-
-
-        #endregion
 
         private void FirePropertyChanged(string propertyName)
         {

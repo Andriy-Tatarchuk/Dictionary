@@ -8,7 +8,14 @@
              StartupUri="MainWindow.xaml" 
              mc:Ignorable="d ignore">
   <Application.Resources>
-    <!--Global View Model Locator-->
-    <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-  </Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/CommonStyle.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--Global View Model Locator-->
+            <vm:ViewModelLocator x:Key="Locator"
+                                 d:IsDataSource="True" />
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

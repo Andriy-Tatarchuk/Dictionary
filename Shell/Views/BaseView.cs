@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Enigma.Shell.ViewModel;
 
@@ -10,6 +11,14 @@ namespace Enigma.Shell.Views
 {
     public class BaseView : UserControl
     {
+        public static readonly DependencyProperty ParameterProperty = DependencyProperty.Register(
+            "Parameter", typeof(object), typeof(BaseView), new PropertyMetadata(default(object)));
+
+        public object Parameter
+        {
+            get { return (object) GetValue(ParameterProperty); }
+            set { SetValue(ParameterProperty, value); }
+        }
         public BaseView()
         {
             Loaded+=BaseView_Loaded;
@@ -20,6 +29,7 @@ namespace Enigma.Shell.Views
             var viewModel = DataContext as BaseViewModel;
             if (viewModel != null)
             {
+                viewModel.Parameter = Parameter;
                 viewModel.OnLoaded();
             }
         }

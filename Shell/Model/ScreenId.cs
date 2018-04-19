@@ -9,6 +9,8 @@ namespace Enigma.Shell.Model
     enum ScreenId
     {
         WordsView,
-        DictionariesView
+        DictionariesView,
+        AddEditDictionaryView,
+        AddEditWordView
     }
 }

@@ -4,6 +4,7 @@ using Enigma.Entity.Entities;
 using GalaSoft.MvvmLight;
 using Enigma.Shell.Model;
 using Enigma.Shell.Navigation;
+using GalaSoft.MvvmLight.Command;
 
 namespace Enigma.Shell.ViewModel
 {
@@ -40,6 +41,17 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        public RelayCommand AddDictionaryCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand EditDictionaryCommand
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
@@ -47,9 +59,26 @@ namespace Enigma.Shell.ViewModel
         public DictionariesViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
             : base(dataMgr, navigationService)
         {
+            InitializeCommands();
         }
 
-        public override void LoadData()
+        private void InitializeCommands()
+        {
+            AddDictionaryCommand = new RelayCommand(() =>
+            {
+                NavigationService.NavigateTo(ScreenId.AddEditDictionaryView.ToString(), new Dictionary());
+            });
+
+            EditDictionaryCommand = new RelayCommand(() =>
+            {
+                if (SelectedItem != null)
+                {
+                    NavigationService.NavigateTo(ScreenId.AddEditDictionaryView.ToString(), SelectedItem);
+                }
+            });
+        }
+
+        public override void LoadData(object parameter)
         {
             GetDictionaries();
         }

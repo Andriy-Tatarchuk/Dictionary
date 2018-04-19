@@ -49,7 +49,9 @@ namespace Enigma.Shell.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<WordsViewModel>();
-            SimpleIoc.Default.Register<DictionariesViewModel>();
+            SimpleIoc.Default.Register<DictionariesViewModel>(); 
+            SimpleIoc.Default.Register<AddEditDictionaryViewModel>();
+            SimpleIoc.Default.Register<AddEditWordViewModel>();
 
             SetupNavigation();
         }
@@ -78,11 +80,29 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        public AddEditDictionaryViewModel AddEditDictionary
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AddEditDictionaryViewModel>();
+            }
+        }
+
+        public AddEditWordViewModel AddEditWord
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AddEditWordViewModel>();
+            }
+        }
+
         private static void SetupNavigation()
         {
             var navigationService = new FrameNavigationService();
             navigationService.Configure("WordsView", new Uri("../Views/WordsView.xaml", UriKind.Relative));
             navigationService.Configure("DictionariesView", new Uri("../Views/DictionariesView.xaml", UriKind.Relative));
+            navigationService.Configure("AddEditDictionaryView", new Uri("../Views/AddEditDictionaryView.xaml", UriKind.Relative));
+            navigationService.Configure("AddEditWordView", new Uri("../Views/AddEditWordView.xaml", UriKind.Relative));
 
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }

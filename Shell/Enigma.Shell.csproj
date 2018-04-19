@@ -84,9 +84,17 @@
     <Compile Include="Model\ScreenId.cs" />
     <Compile Include="Navigation\FrameNavigationService.cs" />
     <Compile Include="Navigation\IFrameNavigationService.cs" />
+    <Compile Include="ViewModel\AddEditWordViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\AddEditDictionaryViewModel.cs" />
     <Compile Include="ViewModel\DictionariesViewModel.cs" />
+    <Compile Include="Views\AddEditWordView.xaml.cs">
+      <DependentUpon>AddEditWordView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BaseView.cs" />
+    <Compile Include="Views\AddEditDictionaryView.xaml.cs">
+      <DependentUpon>AddEditDictionaryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DictionariesView.xaml.cs">
       <DependentUpon>DictionariesView.xaml</DependentUpon>
     </Compile>
@@ -109,6 +117,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Skins\MainSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\CommonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddEditWordView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddEditDictionaryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

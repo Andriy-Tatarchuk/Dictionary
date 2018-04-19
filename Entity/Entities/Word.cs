@@ -6,11 +6,6 @@ namespace Enigma.Entity.Entities
 {
     public class Word : INotifyPropertyChanged
     {
-
-        #region Declarations
-
-        #endregion
-
         #region Properties
 
         private int id;
@@ -76,25 +71,6 @@ namespace Enigma.Entity.Entities
 
         #endregion
 
-
-        #region Private Methods
-
-
-
-        #endregion
-
-        #region Public Methods
-
-
-
-
-        #endregion
-
-        #region Events
-
-
-
-        #endregion
 
         private void FirePropertyChanged(string propertyName)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -148,6 +149,18 @@ namespace Enigma.Data
             return await Task<OperationResult>.Factory.StartNew(() => { return SaveDictionary(id, name); });
         }
 
+        public async Task<OperationResult> SaveDictionaryAsync(Dictionary dictionary)
+        {
+            var res = new OperationResult(null, false, "");
+            using (var dataContext = GetDataContext())
+            {
+                dataContext.Dictionaries.AddOrUpdate(d=>d.Id, dictionary);
+                await dataContext.SaveChangesAsync();
+            }
+
+            return res;
+        }
+
         public async Task<OperationResult> SaveDictionaryAsync2(int id, string name)
         {
             var res = new OperationResult(null, false, "");
@@ -262,7 +275,7 @@ namespace Enigma.Data
         {
             using (var dataContext = GetDataContext())
             {
-                return dataContext.Dictionaries.Where(d => d.Id == id).Include(d => d.Words).FirstOrDefault();
+                return dataContext.Dictionaries.Where(d => d.Id == id).FirstOrDefault();
             }
         }
 
@@ -301,6 +314,21 @@ namespace Enigma.Data
         public async void SaveWordAsync(int id, string name, string translation, int dictionaryId)
         {
             await Task.Factory.StartNew(() => { SaveWord(id, name, translation, dictionaryId); });
+        }
+
+        public async void SaveWordAsync(Word word)
+        {
+            await Task.Factory.StartNew(() => { SaveWord(word); });
+        }
+
+        private void SaveWord(Word word)
+        {
+            using (var dataContext = GetDataContext())
+            {
+                dataContext.Words.AddOrUpdate(w=>w.Id, word);
+
+                dataContext.SaveChanges();
+            }
         }
 
         private void DeleteWord(int id)
