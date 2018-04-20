@@ -55,7 +55,7 @@ namespace Enigma.Shell.ViewModel
 
         private async void SaveDictionary()
         {
-            await DataManager.SaveDictionaryAsync(Dictionary.Id, Dictionary.Name);
+            await DataManager.SaveDictionaryAsync(Dictionary);
         }
 
         private async void GetDictionary(int id)

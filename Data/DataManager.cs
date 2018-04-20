@@ -207,14 +207,15 @@ namespace Enigma.Data
             return res;
         }
 
-        //public void AddWordToDictionary(int id, Word word)
+        //public async void AddWordToDictionaryAsync(int id, Word word)
         //{
         //    using (var dataContext = GetDataContext())
         //    {
-        //        if (dataContext.Dictionaries.Find(id) != null)
+        //        var dictionary = dataContext.Dictionaries.Find(id);
+        //        if (dictionary != null)
         //        {
-        //            dataContext.Dictionaries.Find(id).Words.Add(word);
-        //            dataContext.SaveChanges();
+        //            dictionary.Words.Add(word);
+        //            await dataContext.SaveChangesAsync();
         //        }
         //    }
         //}
@@ -262,7 +263,7 @@ namespace Enigma.Data
         {
             using (var dataContext = GetDataContext())
             {
-                return dataContext.Words.Where(w=>w.Id == id).Include(w=>w.Dictionaries).FirstOrDefault();
+                return dataContext.Words.Where(w=>w.Id == id).FirstOrDefault();
             }
         }
 
@@ -316,18 +317,13 @@ namespace Enigma.Data
             await Task.Factory.StartNew(() => { SaveWord(id, name, translation, dictionaryId); });
         }
 
-        public async void SaveWordAsync(Word word)
-        {
-            await Task.Factory.StartNew(() => { SaveWord(word); });
-        }
-
-        private void SaveWord(Word word)
+        public async Task SaveWordAsync(Word word)
         {
             using (var dataContext = GetDataContext())
             {
                 dataContext.Words.AddOrUpdate(w=>w.Id, word);
 
-                dataContext.SaveChanges();
+                await dataContext.SaveChangesAsync();
             }
         }
 
@@ -344,11 +340,27 @@ namespace Enigma.Data
             }
         }
 
-        public async void DeleteWordAsync(int id)
+        public async Task DeleteWordAsync(int id)
         {
             await Task.Factory.StartNew(() => { DeleteWord(id); });
         }
 
+        public Word GetNewWordFormDictionary(int dictionaryId)
+        {
+            Word word = null;
+            using (var dataContext = GetDataContext())
+            {
+                var dictionary = dataContext.Dictionaries.Find(dictionaryId);
+                if (dictionary != null)
+                {
+                    word = dataContext.Words.Create();
+                    dictionary.Words.Add(word);
+                    dataContext.SaveChangesAsync();
+                }
+            }
+
+            return word;
+        }
 
         #endregion
 

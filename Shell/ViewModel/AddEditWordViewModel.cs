@@ -45,7 +45,7 @@ namespace Enigma.Shell.ViewModel
                 Int32.TryParse(parameter.ToString(), out id);
             }
 
-            GetDictionary(id);
+            GetWord(id);
         }
 
         public override void Save()
@@ -53,7 +53,7 @@ namespace Enigma.Shell.ViewModel
             DataManager.SaveWordAsync(Word);
         }
 
-        private async void GetDictionary(int id)
+        private async void GetWord(int id)
         {
             IsLoading = true;
             var word = await DataManager.GetWordAsync(id);

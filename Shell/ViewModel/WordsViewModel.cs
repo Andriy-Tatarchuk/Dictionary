@@ -59,12 +59,13 @@ namespace Enigma.Shell.ViewModel
         {
             AddWordCommand = new RelayCommand(() =>
             {
-                var word = new Word();
-                if (Dictionary != null)
-                {
-                    word.Dictionaries.Add(Dictionary);
-                }
+                //var word = new Word();
+                //if (Dictionary != null)
+                //{
+                //    word.Dictionaries.Add(Dictionary);
+                //}
 
+                var word = DataManager.GetNewWordFormDictionary(DictionaryId);
                 NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
             });
 

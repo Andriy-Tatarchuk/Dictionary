@@ -1,5 +1,6 @@
 using System;
 using Enigma.Data;
+using Enigma.Shell.Model;
 using GalaSoft.MvvmLight;
 using Enigma.Shell.Navigation;
 
@@ -43,7 +44,7 @@ namespace Enigma.Shell.ViewModel
             _navigationService = navigationService; 
 
             
-            //InitializeDBConnecction();
+            InitializeDBConnecction();
 
 
 
@@ -71,7 +72,7 @@ namespace Enigma.Shell.ViewModel
                 StatusMsg = String.Empty;
             }
 
-            _navigationService.NavigateTo("WordsView", null);
+            _navigationService.NavigateTo(ScreenId.DictionariesView.ToString(), null);
 
         }
     }
