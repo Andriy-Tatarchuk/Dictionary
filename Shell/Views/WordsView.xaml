@@ -24,10 +24,26 @@
                   IsReadOnly="True" 
                   AutoGenerateColumns="False"
                   SelectedItem="{Binding SelectedItem}">
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick"
+                              Command="{Binding EditWordCommand}" />
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Translation" Binding="{Binding Translation}"></DataGridTextColumn>
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Hyperlink Command="{Binding DataContext.DeleteWordCommand, RelativeSource={RelativeSource AncestorType={x:Type views:WordsView}}}"
+                                           CommandParameter="{Binding Id}">
+                                    <TextBlock Text="Delete" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

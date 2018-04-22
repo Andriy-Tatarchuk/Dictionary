@@ -121,52 +121,7 @@ namespace Enigma.Data
             return res;
         }
 
-        public async Task<OperationResult> SaveDictionaryAsync(int id, string name)
-        {
-            var res = new OperationResult(null, false, "");
-            using (var dataContext = GetDataContext())
-            {
-                var isNewDictionary = false;
-                var dictionary = await dataContext.Dictionaries.FindAsync(id);
-                if (dictionary == null)
-                {
-                    if (await dataContext.Dictionaries.AnyAsync(d => d.Name == name))
-                    {
-                        res.HasError = true;
-                        res.Message = "This name already exists";
-                    }
-                    else
-                    {
-                        dictionary = dataContext.Dictionaries.Create();
-                        isNewDictionary = true;
-                    }
-                }
-
-                if (!res.HasError)
-                {
-                    dictionary.Name = name;
-
-                    if (isNewDictionary)
-                    {
-                        dataContext.Dictionaries.Add(dictionary);
-                    }
-
-                    res.HasError = await dataContext.SaveChangesAsync() < 1;
-                    if (res.HasError)
-                    {
-                        res.Message = "Can't save dictionary";
-                    }
-                    else
-                    {
-                        res.Message = string.Empty;
-                    }
-                }
-            }
-
-            return res;
-        }
-
-        public async void AddWordToDictionaryAsync(int dictionaryId, Word word)
+        public async Task AddWordToDictionaryAsync(int dictionaryId, Word word)
         {
             using (var dataContext = GetDataContext())
             {
@@ -222,38 +177,6 @@ namespace Enigma.Data
             {
                 return await dataContext.Dictionaries.FirstOrDefaultAsync(d => d.Id == id);
             }
-        }
-
-        private void SaveWord(int id, string name, string translation, int dictionaryId)
-        {
-            using (var dataContext = GetDataContext())
-            {
-                var isNewWord = false;
-                var word = dataContext.Words.Find(id);
-                if (word == null)
-                {
-                    word = new Word(name, translation);
-                    isNewWord = true;
-                }
-
-                var dic = dataContext.Dictionaries.Find(dictionaryId);
-                if (dic != null)
-                {
-                    dic.Words.Add(word);
-                }
-
-                if (isNewWord)
-                {
-                    dataContext.Words.Add(word);
-                }
-
-                dataContext.SaveChanges();
-            }
-        }
-
-        public async void SaveWordAsync(int id, string name, string translation, int dictionaryId)
-        {
-            await Task.Factory.StartNew(() => { SaveWord(id, name, translation, dictionaryId); });
         }
 
         public async Task SaveWordAsync(Word word)

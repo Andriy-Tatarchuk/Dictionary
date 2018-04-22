@@ -45,6 +45,7 @@ namespace Enigma.Shell.ViewModel
 
         public RelayCommand AddWordCommand { get; private set; }
         public RelayCommand EditWordCommand { get; private set; }
+        public RelayCommand DeleteWordCommand { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the WordsViewModel class.
@@ -53,17 +54,31 @@ namespace Enigma.Shell.ViewModel
             : base(dataMgr, navigationService)
         {
             InitializeCommands();
+            DictionaryId = -1;
         }
 
         private void InitializeCommands()
         {
             AddWordCommand = new RelayCommand(ExecuteAddWordCommand);
 
-            EditWordCommand = new RelayCommand(() =>
+            EditWordCommand = new RelayCommand(ExecuteEditWordCommand);
+
+            DeleteWordCommand = new RelayCommand(ExecuteDeleteWordCommand);
+        }
+
+        private async void ExecuteEditWordCommand()
+        {
+            var word = await GetWordById(SelectedItem.Id);
+            NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
+        }
+
+        private async void ExecuteDeleteWordCommand()
+        {
+            if (SelectedItem != null)
             {
-                var word = GetWordById(SelectedItem.Id);
-                NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
-            });
+                await DataManager.DeleteWordAsync(SelectedItem.Id);
+                GetWords();
+            }
         }
 
         private async void ExecuteAddWordCommand()
@@ -85,15 +100,15 @@ namespace Enigma.Shell.ViewModel
                 Int32.TryParse(parameter.ToString(), out id);
             }
 
-            GetWords(id);
+            DictionaryId = id;
+            GetWords();
         }
 
-        public async void GetWords(int dictionaryId = -1)
+        public async Task GetWords()
         {
-            DictionaryId = dictionaryId;
-            if (dictionaryId >= 0)
+            if (DictionaryId >= 0)
             {
-                Dictionary = await DataManager.GetDictionaryAsync(dictionaryId);
+                Dictionary = await DataManager.GetDictionaryAsync(DictionaryId);
             }
             if (Words != null)
             {
@@ -101,7 +116,7 @@ namespace Enigma.Shell.ViewModel
             }
 
             IsLoading = true;
-            var words = dictionaryId >= 0 ? await DataManager.GetWordsByDictionaryAsync(dictionaryId) : await DataManager.GetAllWordsAsync();
+            var words = DictionaryId >= 0 ? await DataManager.GetWordsByDictionaryAsync(DictionaryId) : await DataManager.GetAllWordsAsync();
                 
             Words = words != null ? new ObservableCollection<Word>(words) : null;
 
@@ -110,8 +125,8 @@ namespace Enigma.Shell.ViewModel
 
         public override void Navigated(object param)
         {
-            var dictionaryId = param is int ? (int) param : -1;
-            GetWords(dictionaryId);
+            DictionaryId = param is int ? (int)param : -1; ;
+            GetWords();
         }
     }
 }
