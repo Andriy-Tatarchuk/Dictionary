@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Enigma.Data;
 using Enigma.Entity.Entities;
-using GalaSoft.MvvmLight;
 using Enigma.Shell.Model;
 using Enigma.Shell.Navigation;
 using GalaSoft.MvvmLight.Command;
@@ -35,9 +35,13 @@ namespace Enigma.Shell.ViewModel
             get { return _SelectedItem; }
             set
             {
-                _SelectedItem = value;
-                RaisePropertyChanged("SelectedItem");
-                SelectedDictionaryChanged();
+                var isChanged = _SelectedItem != value;
+                if (isChanged && !IsLoading)
+                {
+                    _SelectedItem = value;
+                    RaisePropertyChanged("SelectedItem");
+                    SelectedDictionaryChanged();
+                }
             }
         }
 
@@ -48,6 +52,12 @@ namespace Enigma.Shell.ViewModel
         }
 
         public RelayCommand EditDictionaryCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand DeleteDictionaryCommand
         {
             get;
             private set;
@@ -64,10 +74,7 @@ namespace Enigma.Shell.ViewModel
 
         private void InitializeCommands()
         {
-            AddDictionaryCommand = new RelayCommand(() =>
-            {
-                NavigationService.NavigateTo(ScreenId.AddEditDictionaryView.ToString(), new Dictionary());
-            });
+            AddDictionaryCommand = new RelayCommand(AddDictionaryCommandExecuted);
 
             EditDictionaryCommand = new RelayCommand(() =>
             {
@@ -76,6 +83,24 @@ namespace Enigma.Shell.ViewModel
                     NavigationService.NavigateTo(ScreenId.AddEditDictionaryView.ToString(), SelectedItem);
                 }
             });
+
+            DeleteDictionaryCommand = new RelayCommand(DeleteDictionaryCommandExecuted);
+        }
+
+        private async void DeleteDictionaryCommandExecuted()
+        {
+            if (SelectedItem != null)
+            {
+                await DataManager.DeleteDictionaryAsync(SelectedItem.Id);
+                GetDictionaries();
+            }
+        }
+
+        private async void AddDictionaryCommandExecuted()
+        {
+            SelectedItem = null;
+            var newDictionary = await DataManager.AddDictionaryAsynk("New dictionary");
+            NavigationService.NavigateTo(ScreenId.AddEditDictionaryView.ToString(), newDictionary);
         }
 
         public override void LoadData(object parameter)
@@ -85,6 +110,8 @@ namespace Enigma.Shell.ViewModel
 
         public async void GetDictionaries()
         {
+            var _selectedItem = SelectedItem;
+
             if (Dictionaries != null)
             {
                 Dictionaries.Clear();
@@ -94,6 +121,11 @@ namespace Enigma.Shell.ViewModel
             var dictionaries = await DataManager.GetAllDictionariesAsync();
             Dictionaries = new ObservableCollection<Dictionary>(dictionaries);
             IsLoading = false;
+
+            if (_selectedItem != null)
+            {
+                SelectedItem = Dictionaries.FirstOrDefault(d => d.Id == _selectedItem.Id);
+            }
         }
 
         private void SelectedDictionaryChanged()

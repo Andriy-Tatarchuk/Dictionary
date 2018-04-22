@@ -6,7 +6,8 @@
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:views="clr-namespace:Enigma.Shell.Views"
         mc:Ignorable="d ignore"
-        DataContext="{Binding AddEditDictionary, Source={StaticResource Locator}}">
+        DataContext="{Binding AddEditDictionary, Source={StaticResource Locator}}"
+                x:Name="_this">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -50,7 +51,7 @@
         </Border>
         <Border Grid.Row="2">
             <GroupBox Header="Words">
-                <views:WordsView Parameter="{Binding Dictionary.Id}"></views:WordsView>
+                <views:WordsView Parameter="{Binding DataContext.CurrentDictionaryId, ElementName=_this}"></views:WordsView>
             </GroupBox>
         </Border>
 

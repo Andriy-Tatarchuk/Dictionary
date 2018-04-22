@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using CommonServiceLocator;
 using Enigma.Data;
 using Enigma.Entity.Entities;
-using GalaSoft.MvvmLight;
-using Enigma.Shell.Model;
 using Enigma.Shell.Navigation;
-using GalaSoft.MvvmLight.Command;
 
 namespace Enigma.Shell.ViewModel
 {
@@ -25,8 +23,22 @@ namespace Enigma.Shell.ViewModel
             {
                 _Dictionary = value;
                 RaisePropertyChanged("Dictionary");
+                CurrentDictionaryId = _Dictionary != null ? _Dictionary.Id : -1;
             }
         }
+
+        private int _CurrentDictionaryId;
+
+        public int CurrentDictionaryId
+        {
+            get { return _CurrentDictionaryId;}
+            set
+            {
+                _CurrentDictionaryId = value;
+                RaisePropertyChanged("CurrentDictionaryId");
+            }
+        }
+
 
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
@@ -48,14 +60,10 @@ namespace Enigma.Shell.ViewModel
             GetDictionary(id);
         }
 
-        public override void Save()
-        {
-            SaveDictionary();
-        }
-
-        private async void SaveDictionary()
+        public override async Task Save()
         {
             await DataManager.SaveDictionaryAsync(Dictionary);
+            ServiceLocator.Current.GetInstance<DictionariesViewModel>().LoadData(null);
         }
 
         private async void GetDictionary(int id)

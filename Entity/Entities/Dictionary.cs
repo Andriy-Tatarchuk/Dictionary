@@ -32,7 +32,7 @@ namespace Enigma.Entity.Entities
             }
         }
 
-        public List<Word> Words { get; private set; }
+        public List<Word> Words { get; set; }
 
         #endregion
 

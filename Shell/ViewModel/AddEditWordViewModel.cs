@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Enigma.Data;
 using Enigma.Entity.Entities;
 using GalaSoft.MvvmLight;
@@ -48,9 +49,9 @@ namespace Enigma.Shell.ViewModel
             GetWord(id);
         }
 
-        public override void Save()
+        public override async Task Save()
         {
-            DataManager.SaveWordAsync(Word);
+            await DataManager.SaveWordAsync(Word);
         }
 
         private async void GetWord(int id)

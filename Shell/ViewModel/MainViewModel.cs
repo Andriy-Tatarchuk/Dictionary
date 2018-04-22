@@ -1,4 +1,6 @@
 using System;
+using System.Windows;
+using System.Windows.Threading;
 using Enigma.Data;
 using Enigma.Shell.Model;
 using GalaSoft.MvvmLight;
@@ -62,17 +64,19 @@ namespace Enigma.Shell.ViewModel
 
         public async void InitializeDBConnecction()
         {
-            StatusMsg = "Connecting to DB...";
+            Dispatcher.CurrentDispatcher.Invoke(() => { StatusMsg = "Connecting to DB..."; });
+
             if (!await DataManager.InitializeDataContextAsync())
             {
                 StatusMsg = "Connection error";
+                MessageBox.Show("Can't connect to the database", "Connection error", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
             else
             {
                 StatusMsg = String.Empty;
+                _navigationService.NavigateTo(ScreenId.DictionariesView.ToString(), null);
             }
-
-            _navigationService.NavigateTo(ScreenId.DictionariesView.ToString(), null);
 
         }
     }

@@ -57,23 +57,19 @@ namespace Enigma.Shell.ViewModel
 
         private void InitializeCommands()
         {
-            AddWordCommand = new RelayCommand(() =>
-            {
-                //var word = new Word();
-                //if (Dictionary != null)
-                //{
-                //    word.Dictionaries.Add(Dictionary);
-                //}
-
-                var word = DataManager.GetNewWordFormDictionary(DictionaryId);
-                NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
-            });
+            AddWordCommand = new RelayCommand(ExecuteAddWordCommand);
 
             EditWordCommand = new RelayCommand(() =>
             {
                 var word = GetWordById(SelectedItem.Id);
                 NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
             });
+        }
+
+        private async void ExecuteAddWordCommand()
+        {
+            var word = await DataManager.GetNewWordFormDictionaryAsync(DictionaryId);
+            NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
         }
 
         private async Task<Word> GetWordById(int id)
@@ -105,8 +101,10 @@ namespace Enigma.Shell.ViewModel
             }
 
             IsLoading = true;
-            var words = dictionaryId >= 0 ? await DataManager.GetWordsByDicAsync(dictionaryId) : await DataManager.GetAllWordsAsync();
-            Words = new ObservableCollection<Word>(words);
+            var words = dictionaryId >= 0 ? await DataManager.GetWordsByDictionaryAsync(dictionaryId) : await DataManager.GetAllWordsAsync();
+                
+            Words = words != null ? new ObservableCollection<Word>(words) : null;
+
             IsLoading = false;
         }
 

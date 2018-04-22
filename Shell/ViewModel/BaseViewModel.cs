@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using Enigma.Data;
 using GalaSoft.MvvmLight;
@@ -42,7 +43,7 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
-        private bool IsDataLoaded { get; set; }
+        public bool IsDataLoaded { get; set; }
 
         public RelayCommand GoBackCommand
         {
@@ -58,16 +59,28 @@ namespace Enigma.Shell.ViewModel
             DataManager = dataMgr;
             NavigationService = navigationService;
 
-            GoBackCommand = new RelayCommand(() =>
-            {
-                Save();
-                NavigationService.GoBack();
-            });
+            GoBackCommand = new RelayCommand(GoBackCommandExecuted);
+
+            DataManager.DataContextInisialized += DataManager_DataContextInisialized;
+        }
+
+        private async void GoBackCommandExecuted()
+        {
+            IsLoading = true;
+            await Save();
+            IsLoading = false;
+
+            NavigationService.GoBack();
+        }
+
+        void DataManager_DataContextInisialized(object sender, System.EventArgs e)
+        {
+            OnLoaded();
         }
 
         public void OnLoaded()
         {
-            if (!IsDataLoaded)
+            if (!IsDataLoaded && DataManager.IsDataContextInisialized)
             {
                 LoadData(Parameter);
                 IsDataLoaded = true;
@@ -84,9 +97,15 @@ namespace Enigma.Shell.ViewModel
 
         }
 
-        public virtual void Save()
+        public virtual async Task Save()
         {
 
+        }
+
+        public void RefreshData()
+        {
+            IsDataLoaded = false;
+            OnLoaded();
         }
     }
 }

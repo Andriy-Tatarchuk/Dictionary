@@ -12,13 +12,31 @@ namespace Enigma.Shell.Views
     public class BaseView : UserControl
     {
         public static readonly DependencyProperty ParameterProperty = DependencyProperty.Register(
-            "Parameter", typeof(object), typeof(BaseView), new PropertyMetadata(default(object)));
+            "Parameter", typeof(object), typeof(BaseView), new PropertyMetadata(default(object), (o, args) =>
+            {
+                var obj = o as BaseView;
+                if (obj != null)
+                {
+                    obj.ParameterChanged();
+                }
+            }));
 
         public object Parameter
         {
             get { return (object) GetValue(ParameterProperty); }
             set { SetValue(ParameterProperty, value); }
         }
+
+        private void ParameterChanged()
+        {
+            var viewModel = DataContext as BaseViewModel;
+            if (viewModel != null)
+            {
+                viewModel.Parameter = Parameter;
+                viewModel.RefreshData();
+            }
+        }
+
         public BaseView()
         {
             Loaded+=BaseView_Loaded;
