@@ -29,49 +29,60 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        private ObservableCollection<Dictionary> _Dictionaries;
+        public ObservableCollection<Dictionary> Dictionaries
+        {
+            get { return _Dictionaries; }
+            set
+            {
+                _Dictionaries = value;
+                RaisePropertyChanged("Dictionaries");
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
         /// </summary>
         public AddEditWordViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
             : base(dataMgr, navigationService)
         {
-           Word = new Word();
-        }
-
-        public override void LoadData(object parameter)
-        {
-            var id = -1;
-            if (parameter != null)
-            {
-                Int32.TryParse(parameter.ToString(), out id);
-            }
-
-            GetWord(id);
+           
         }
 
         public override async Task Save()
         {
-            await DataManager.SaveWordAsync(Word);
-        }
-
-        private async void GetWord(int id)
-        {
-            IsLoading = true;
-            var word = await DataManager.GetWordAsync(id);
-            if (word != null)
+            if (Word.DictionaryId > 0 && (!string.IsNullOrEmpty(Word.Name) || !string.IsNullOrEmpty(Word.Translation)))
             {
-                Word = word;
+                await DataManager.SaveWordAsync(Word);
             }
-            IsLoading = false;
         }
 
-        public override void Navigated(object param)
+        public override async Task Navigated(object param)
         {
-            var word = param as Word;
+            await LoadDictionaries();
 
-            if (word != null)
+            if (param is Word)
             {
-                Word = word;
+                Word = param as Word; 
+            }
+            else if (param is int)
+            {
+                Word = new Word();
+                Word.DictionaryId = (int)param;
+            }
+        }
+
+        private async Task LoadDictionaries()
+        {
+            var dictionaries = await DataManager.GetAllDictionariesAsync();
+            if (dictionaries != null)
+            {
+                if (Dictionaries != null)
+                {
+                    Dictionaries.Clear();
+                }
+
+                Dictionaries = new ObservableCollection<Dictionary>(dictionaries);
             }
         }
     }

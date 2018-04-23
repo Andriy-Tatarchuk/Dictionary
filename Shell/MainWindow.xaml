@@ -15,7 +15,6 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -41,9 +40,9 @@
                         </TabItem.Content>
                     </TabItem>
 
-                    <TabItem Header="Words">
+                    <TabItem Header="Search">
                         <TabItem.Content>
-                            <views:WordsView></views:WordsView>
+                           <TextBlock Text="Search"></TextBlock>
                         </TabItem.Content>
                     </TabItem>
                 </TabControl.Items>

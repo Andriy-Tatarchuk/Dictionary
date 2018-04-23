@@ -77,11 +77,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="Model\DataItem.cs" />
-    <Compile Include="Model\DataService.cs" />
-    <Compile Include="Model\IDataService.cs" />
-    <Compile Include="Model\ScreenId.cs" />
+    <Compile Include="Model\Enums\ScreenId.cs" />
     <Compile Include="Navigation\FrameNavigationService.cs" />
     <Compile Include="Navigation\IFrameNavigationService.cs" />
     <Compile Include="ViewModel\AddEditWordViewModel.cs" />
@@ -98,12 +95,12 @@
     <Compile Include="Views\DictionariesView.xaml.cs">
       <DependentUpon>DictionariesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WordsView.xaml.cs">
-      <DependentUpon>WordsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\WordsViewModel.cs" />
+    <Compile Include="Views\WordsView.xaml.cs">
+      <DependentUpon>WordsView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,10 +113,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Skins\MainSkin.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Styles\CommonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,7 +130,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WordsView.xaml">
-      <SubType>Form</SubType>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

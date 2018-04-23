@@ -69,8 +69,6 @@ namespace Enigma.Shell.ViewModel
             if (!await DataManager.InitializeDataContextAsync())
             {
                 StatusMsg = "Connection error";
-                MessageBox.Show("Can't connect to the database", "Connection error", MessageBoxButton.OK,
-                    MessageBoxImage.Error);
             }
             else
             {

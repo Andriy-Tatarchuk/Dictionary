@@ -77,7 +77,7 @@ namespace Enigma.Shell.ViewModel
             IsLoading = false;
         }
 
-        public override void Navigated(object param)
+        public override async Task Navigated(object param)
         {
             var dictionary = param as Dictionary;
             if (dictionary != null)

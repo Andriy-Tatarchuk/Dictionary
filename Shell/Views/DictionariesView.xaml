@@ -17,7 +17,7 @@
                   ItemsSource="{Binding Dictionaries}" 
                   IsReadOnly="True" 
                   AutoGenerateColumns="False"
-                  SelectedItem="{Binding SelectedItem}">
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick"
                               Command="{Binding EditDictionaryCommand}" />
@@ -29,6 +29,15 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Id}" Value="-1">
+                                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
                                 <Hyperlink Command="{Binding DataContext.DeleteDictionaryCommand, RelativeSource={RelativeSource AncestorType={x:Type views:DictionariesView}}}"
                                            CommandParameter="{Binding Id}">
                                     <TextBlock Text="Delete" />

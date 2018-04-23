@@ -68,8 +68,11 @@ namespace Enigma.Shell.ViewModel
 
         private async void ExecuteEditWordCommand()
         {
-            var word = await GetWordById(SelectedItem.Id);
-            NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
+            if (SelectedItem != null)
+            {
+                var word = await GetWordById(SelectedItem.Id);
+                NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
+            }
         }
 
         private async void ExecuteDeleteWordCommand()
@@ -83,8 +86,7 @@ namespace Enigma.Shell.ViewModel
 
         private async void ExecuteAddWordCommand()
         {
-            var word = await DataManager.GetNewWordFormDictionaryAsync(DictionaryId);
-            NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
+            NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), DictionaryId);
         }
 
         private async Task<Word> GetWordById(int id)
@@ -123,7 +125,7 @@ namespace Enigma.Shell.ViewModel
             IsLoading = false;
         }
 
-        public override void Navigated(object param)
+        public override async Task Navigated(object param)
         {
             DictionaryId = param is int ? (int)param : -1; ;
             GetWords();

@@ -15,10 +15,6 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <!--<TextBlock Grid.Row="0"
-                   Text="Words"
-                   FontWeight="Bold"></TextBlock>-->
-
         <DataGrid Grid.Row="1" 
                   ItemsSource="{Binding Words}" 
                   IsReadOnly="True" 

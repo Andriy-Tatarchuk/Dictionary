@@ -5,7 +5,6 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Enigma.Data.DataModels;
 using Enigma.Entity;
 using Enigma.Entity.Entities;
 
@@ -108,17 +107,13 @@ namespace Enigma.Data
             return null;
         }
 
-        public async Task<OperationResult> SaveDictionaryAsync(Dictionary dictionary)
+        public async Task SaveDictionaryAsync(Dictionary dictionary)
         {
-            var res = new OperationResult(null, false, "");
             using (var dataContext = GetDataContext())
             {
-                dictionary.Words = null;
                 dataContext.Dictionaries.AddOrUpdate(d=>d.Id, dictionary);
                 await dataContext.SaveChangesAsync();
             }
-
-            return res;
         }
 
         public async Task AddWordToDictionaryAsync(int dictionaryId, Word word)
@@ -183,7 +178,6 @@ namespace Enigma.Data
         {
             using (var dataContext = GetDataContext())
             {
-                word.Dictionaries = null;
                 dataContext.Words.AddOrUpdate(w => w.Id, word);
 
                 await dataContext.SaveChangesAsync();
@@ -232,6 +226,14 @@ namespace Enigma.Data
 
             return word;
         }
+
+        //public async Task<int> GetDictionaryIdByWord(Word word)
+        //{
+        //    using (var dataContext = GetDataContext())
+        //    {
+        //        dataContext.Dictionaries.
+        //    }
+        //}
 
         #endregion
 

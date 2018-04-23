@@ -92,7 +92,7 @@ namespace Enigma.Shell.ViewModel
 
         }
 
-        public virtual void Navigated(object param)
+        public virtual async Task Navigated(object param)
         {
 
         }

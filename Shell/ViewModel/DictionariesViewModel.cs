@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Enigma.Data;
 using Enigma.Entity.Entities;
 using Enigma.Shell.Model;
@@ -98,9 +99,12 @@ namespace Enigma.Shell.ViewModel
 
         private async void AddDictionaryCommandExecuted()
         {
-            SelectedItem = null;
+            //SelectedItem = null;
             var newDictionary = await DataManager.AddDictionaryAsynk("New dictionary");
+            Dictionaries.Add(newDictionary);
+            SelectedItem = newDictionary;
             NavigationService.NavigateTo(ScreenId.AddEditDictionaryView.ToString(), newDictionary);
+
         }
 
         public override void LoadData(object parameter)
@@ -108,7 +112,7 @@ namespace Enigma.Shell.ViewModel
             GetDictionaries();
         }
 
-        public async void GetDictionaries()
+        public async Task GetDictionaries()
         {
             var _selectedItem = SelectedItem;
 
@@ -119,7 +123,16 @@ namespace Enigma.Shell.ViewModel
 
             IsLoading = true;
             var dictionaries = await DataManager.GetAllDictionariesAsync();
-            Dictionaries = new ObservableCollection<Dictionary>(dictionaries);
+            if (dictionaries != null)
+            {
+                Dictionaries = new ObservableCollection<Dictionary>(dictionaries);
+            }
+            else
+            {
+                Dictionaries = new ObservableCollection<Dictionary>();                
+            }
+            Dictionaries.Insert(0, new Dictionary("All words"){Id = -1});
+
             IsLoading = false;
 
             if (_selectedItem != null)
@@ -131,7 +144,14 @@ namespace Enigma.Shell.ViewModel
         private void SelectedDictionaryChanged()
         {
             var selectedId = SelectedItem != null ? SelectedItem.Id : -1;
-            NavigationService.NavigateTo(ScreenId.WordsView.ToString(), selectedId);
+            if (selectedId >= 0)
+            {
+                NavigationService.NavigateTo(ScreenId.AddEditDictionaryView.ToString(), SelectedItem);
+            }
+            else
+            {
+                NavigationService.NavigateTo(ScreenId.WordsView.ToString(), selectedId);                
+            }
         }
     }
 }

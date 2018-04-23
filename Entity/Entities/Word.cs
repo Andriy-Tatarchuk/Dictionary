@@ -49,7 +49,19 @@ namespace Enigma.Entity.Entities
             }
         }
 
-        public List<Dictionary> Dictionaries { get; set; }
+        private int dictionaryId;
+        public int DictionaryId
+        {
+            get { return dictionaryId; }
+            set
+            {
+                if (dictionaryId != value)
+                {
+                    dictionaryId = value;
+                    FirePropertyChanged("DictionaryId");
+                }
+            }
+        }
 
         #endregion
 
@@ -65,8 +77,6 @@ namespace Enigma.Entity.Entities
             Name = name;
             Translation = translation;
             AddingDate = DateTime.Now;
-
-            Dictionaries = new List<Dictionary>();
         }
 
         #endregion

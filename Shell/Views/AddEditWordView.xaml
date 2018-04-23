@@ -29,6 +29,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"></ColumnDefinition>
@@ -54,29 +55,23 @@
                          Text="{Binding Word.Translation, UpdateSourceTrigger=PropertyChanged}"
                          Margin="5"></TextBox>
 
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Text="Dictionary"
+                           Margin="5"></TextBlock>
+                <ComboBox Grid.Row="2"
+                          Grid.Column="1"
+                          Margin="5"
+                          ItemsSource="{Binding Dictionaries}"
+                          SelectedValuePath="Id"
+                          DisplayMemberPath="Name"
+                          SelectedValue="{Binding Word.DictionaryId, Mode=TwoWay}"></ComboBox>
             </Grid>
 
         </Border>
 
         <Border Grid.Row="2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <Border Grid.Row="0">
-
-                    <GroupBox Header="Linked Dictionaries">
-                       
-                    </GroupBox>
-                </Border>
-
-                <Border Grid.Row="1"
-                        HorizontalAlignment="Stretch">
-                    
-                </Border>
-            </Grid>
+            
         </Border>
 
         <Border Grid.Row="3"
