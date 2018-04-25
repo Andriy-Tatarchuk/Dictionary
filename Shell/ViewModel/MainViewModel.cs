@@ -46,7 +46,7 @@ namespace Enigma.Shell.ViewModel
             _navigationService = navigationService; 
 
             
-            InitializeDBConnecction();
+            //InitializeDBConnecction();
 
 
 

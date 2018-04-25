@@ -26,17 +26,17 @@ namespace Enigma.Shell
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += MainWindow_Loaded;
             Closing += (s, e) => ViewModelLocator.Cleanup();
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
-        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            var vm = DataContext as MainViewModel;
-            if (vm != null)
-            {
-                //vm.InitializeDBConnecction();
-            }
+            Exception exception = (Exception)e.ExceptionObject;
+            string errorMessage = string.Format("An unhandled exception occurred: {0}", exception.Message);
+            MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Close();
         }
 
         private void MainFrame_OnNavigated(object sender, NavigationEventArgs e)
