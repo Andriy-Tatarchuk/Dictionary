@@ -60,8 +60,6 @@ namespace Enigma.Shell.ViewModel
             NavigationService = navigationService;
 
             GoBackCommand = new RelayCommand(GoBackCommandExecuted);
-
-            DataManager.DataContextInisialized += DataManager_DataContextInisialized;
         }
 
         private async void GoBackCommandExecuted()
@@ -80,7 +78,7 @@ namespace Enigma.Shell.ViewModel
 
         public void OnLoaded()
         {
-            if (!IsDataLoaded && DataManager.IsDataContextInisialized)
+            if (!IsDataLoaded)
             {
                 LoadData(Parameter);
                 IsDataLoaded = true;

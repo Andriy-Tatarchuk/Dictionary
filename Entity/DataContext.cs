@@ -1,5 +1,7 @@
 using Enigma.Entity.Entities;
 using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Enigma.Entity
 {
@@ -14,6 +16,29 @@ namespace Enigma.Entity
         public DataContext()
             : base("name=DataContext")
         {
+        }
+
+        public bool Inisialize()
+        {
+            var res = true;
+            try
+            {
+                Database.Connection.Open();
+                //Database.CreateIfNotExists();
+                if (!Dictionaries.Any())
+                {
+                    var newDictionary = new Dictionary("First Dictionary");
+                    newDictionary.Words.Add(new Word("First Word", "Translation"));
+                    Dictionaries.Add(newDictionary);
+                    SaveChanges();
+                }
+            }
+            catch
+            {
+                res = false;
+            }
+
+            return res;
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 

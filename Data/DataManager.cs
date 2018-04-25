@@ -12,26 +12,6 @@ namespace Enigma.Data
 {
     public class DataManager
     {
-
-        #region Declarations
-
-        #endregion
-
-        #region Properties
-
-        public static bool IsDataContextInisialized = false;
-
-        #endregion
-
-        #region Constructorss
-
-        public DataManager()
-        {
-        }
-
-        #endregion
-
-
         #region Private Methods
 
         private static DataContext GetDataContext()
@@ -60,38 +40,22 @@ namespace Enigma.Data
 
         public static async Task<bool> InitializeDataContextAsync()
         {
-            if (!IsDataContextInisialized)
+            var isDataContextInisialized = await Task<bool>.Factory.StartNew(() =>
             {
-                IsDataContextInisialized = await Task<bool>.Factory.StartNew(() =>
+                var res = false;
+                using (var dataContext = GetDataContext())
                 {
-                    var res = false;
-                    using (var dataContext = GetDataContext())
+                    res = dataContext != null;
+                    if (res)
                     {
-                        res = dataContext != null;
-                        if (res)
-                        {
-                            try
-                            {
-                                dataContext.Database.Connection.Open();
-                                dataContext.Database.CreateIfNotExists();
-                                dataContext.Words.Any();
-                            }
-                            catch
-                            {
-                                res = false;
-                            }
-                        }
+                        res = dataContext.Inisialize();
                     }
-                    return res;
-                });
-
-                if (IsDataContextInisialized && DataContextInisialized != null)
-                {
-                    DataContextInisialized(null, EventArgs.Empty);
                 }
-            }
 
-            return IsDataContextInisialized;
+                return res;
+            });
+
+            return isDataContextInisialized;
         }
 
         public async Task<Dictionary> AddDictionaryAsynk(string name)
@@ -227,21 +191,6 @@ namespace Enigma.Data
             return word;
         }
 
-        //public async Task<int> GetDictionaryIdByWord(Word word)
-        //{
-        //    using (var dataContext = GetDataContext())
-        //    {
-        //        dataContext.Dictionaries.
-        //    }
-        //}
-
         #endregion
-
-        #region Events
-
-        public static event EventHandler DataContextInisialized;
-
-        #endregion
-
     }
 }
