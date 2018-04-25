@@ -39,9 +39,9 @@ namespace Enigma.UnitTest
         private int AddWordToDictionary(int dictionaryId)
         {
             var dataManager = new DataManager();
-            var word = new Word();
+            var word = new Word() { DictionaryId = dictionaryId };
 
-            var task = dataManager.AddWordToDictionaryAsync(dictionaryId, word);
+            var task = dataManager.SaveWordAsync(word);
             task.Wait();
 
             return word.Id;

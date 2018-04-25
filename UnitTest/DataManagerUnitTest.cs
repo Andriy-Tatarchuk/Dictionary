@@ -90,23 +90,6 @@ namespace Enigma.UnitTest
         }
 
         [TestMethod()]
-        public void GetNewWordFormDictionaryAsyncTest()
-        {
-            var dataManager = new DataManager();
-            var dictionaryId = CreateDictionary();
-
-            var task2 = dataManager.GetNewWordFormDictionaryAsync(dictionaryId);
-            task2.Wait();
-
-            var newWord = ((Task<Word>)task2).Result;
-
-            DeleteWord(newWord.Id);
-            DeleteDictionary(dictionaryId);
-
-            Assert.IsTrue(newWord != null);
-        }
-
-        [TestMethod()]
         public void GetWordsByDictionaryAsyncTest()
         {
             var dataManager = new DataManager();
@@ -191,9 +174,9 @@ namespace Enigma.UnitTest
         private int AddWordToDictionary(int dictionaryId)
         {
             var dataManager = new DataManager();
-            var word = new Word();
+            var word = new Word() { DictionaryId = dictionaryId };
 
-            var task = dataManager.AddWordToDictionaryAsync(dictionaryId, word);
+            var task = dataManager.SaveWordAsync(word);
             task.Wait();
 
             return word.Id;

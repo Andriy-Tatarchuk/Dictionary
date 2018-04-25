@@ -10,7 +10,7 @@ using Enigma.Entity.Entities;
 
 namespace Enigma.Data
 {
-    public class DataManager
+    public class DataManager : IDataManager
     {
         #region Private Methods
 
@@ -80,22 +80,22 @@ namespace Enigma.Data
             }
         }
 
-        public async Task AddWordToDictionaryAsync(int dictionaryId, Word word)
-        {
-            using (var dataContext = GetDataContext())
-            {
-                var dictionary = await dataContext.Dictionaries.Include(d=>d.Words).FirstOrDefaultAsync(d => d.Id == dictionaryId);
+        //public async Task AddWordToDictionaryAsync(int dictionaryId, Word word)
+        //{
+        //    using (var dataContext = GetDataContext())
+        //    {
+        //        var dictionary = await dataContext.Dictionaries.Include(d=>d.Words).FirstOrDefaultAsync(d => d.Id == dictionaryId);
 
-                if (dictionary != null)
-                {
-                    if (!dictionary.Words.Any(w => w.Id == word.Id))
-                    {
-                        dictionary.Words.Add(word);
-                        await dataContext.SaveChangesAsync();
-                    }
-                }
-            }
-        }
+        //        if (dictionary != null)
+        //        {
+        //            if (!dictionary.Words.Any(w => w.Id == word.Id))
+        //            {
+        //                dictionary.Words.Add(word);
+        //                await dataContext.SaveChangesAsync();
+        //            }
+        //        }
+        //    }
+        //}
 
         public async Task<List<Dictionary>> GetAllDictionariesAsync()
         {
@@ -174,22 +174,22 @@ namespace Enigma.Data
             }
         }
 
-        public async Task<Word> GetNewWordFormDictionaryAsync(int dictionaryId)
-        {
-            Word word = null;
-            using (var dataContext = GetDataContext())
-            {
-                var dictionary = dataContext.Dictionaries.Find(dictionaryId);
-                if (dictionary != null)
-                {
-                    word = dataContext.Words.Create();
-                    dictionary.Words.Add(word);
-                    await dataContext.SaveChangesAsync();
-                }
-            }
+        //public async Task<Word> GetNewWordFormDictionaryAsync(int dictionaryId)
+        //{
+        //    Word word = null;
+        //    using (var dataContext = GetDataContext())
+        //    {
+        //        var dictionary = dataContext.Dictionaries.Find(dictionaryId);
+        //        if (dictionary != null)
+        //        {
+        //            word = dataContext.Words.Create();
+        //            dictionary.Words.Add(word);
+        //            await dataContext.SaveChangesAsync();
+        //        }
+        //    }
 
-            return word;
-        }
+        //    return word;
+        //}
 
         #endregion
     }
