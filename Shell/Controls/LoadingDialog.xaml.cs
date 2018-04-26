@@ -35,7 +35,7 @@ namespace Enigma.Shell.Controls
 
         private async void InitializeDBConnecction()
         {
-            DialogResult = await DataManager.InitializeDataContextAsync();
+            DialogResult = await (new DataManager()).InitializeDataContextAsync();
         }
     }
 }

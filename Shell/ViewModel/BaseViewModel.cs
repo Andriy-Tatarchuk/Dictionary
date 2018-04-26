@@ -16,7 +16,7 @@ namespace Enigma.Shell.ViewModel
     /// </summary>
     public class BaseViewModel : ViewModelBase
     {
-        public DataManager DataManager { get; private set; }
+        public IDataManager DataManager { get; private set; }
         public IFrameNavigationService NavigationService { get; private set; }
 
         private bool _IsLoading;
@@ -54,7 +54,7 @@ namespace Enigma.Shell.ViewModel
         /// <summary>
         /// Initializes a new instance of the BaseViewModel class.
         /// </summary>
-        public BaseViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
+        public BaseViewModel(IDataManager dataMgr, IFrameNavigationService navigationService)
         {
             DataManager = dataMgr;
             NavigationService = navigationService;

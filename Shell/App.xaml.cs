@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Enigma.Data;
 using Enigma.Shell.Controls;
+using Enigma.Shell.ViewModel;
 using GalaSoft.MvvmLight.Threading;
 
 namespace Enigma.Shell
@@ -19,7 +20,7 @@ namespace Enigma.Shell
         {
             //Disable shutdown when the dialog closes
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            
+
             var dialog = new LoadingDialog();
             
             if (dialog.ShowDialog() == true)
@@ -37,6 +38,5 @@ namespace Enigma.Shell
             }
         }
 
-       
     }
 }

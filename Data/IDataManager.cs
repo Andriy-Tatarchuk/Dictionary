@@ -10,6 +10,7 @@ namespace Enigma.Data
 {
     public interface IDataManager
     {
+        Task<bool> InitializeDataContextAsync();
         Task<Dictionary> AddDictionaryAsynk(string name);
         Task SaveDictionaryAsync(Dictionary dictionary);
         Task<List<Dictionary>> GetAllDictionariesAsync();

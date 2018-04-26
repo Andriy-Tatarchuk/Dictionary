@@ -67,7 +67,7 @@ namespace Enigma.Shell.ViewModel
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
         /// </summary>
-        public DictionariesViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
+        public DictionariesViewModel(IDataManager dataMgr, IFrameNavigationService navigationService)
             : base(dataMgr, navigationService)
         {
             InitializeCommands();

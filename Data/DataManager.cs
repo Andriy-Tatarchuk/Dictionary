@@ -38,7 +38,7 @@ namespace Enigma.Data
 
         #region Public Methods
 
-        public static async Task<bool> InitializeDataContextAsync()
+        public async Task<bool> InitializeDataContextAsync()
         {
             var isDataContextInisialized = await Task<bool>.Factory.StartNew(() =>
             {
@@ -79,23 +79,6 @@ namespace Enigma.Data
                 await dataContext.SaveChangesAsync();
             }
         }
-
-        //public async Task AddWordToDictionaryAsync(int dictionaryId, Word word)
-        //{
-        //    using (var dataContext = GetDataContext())
-        //    {
-        //        var dictionary = await dataContext.Dictionaries.Include(d=>d.Words).FirstOrDefaultAsync(d => d.Id == dictionaryId);
-
-        //        if (dictionary != null)
-        //        {
-        //            if (!dictionary.Words.Any(w => w.Id == word.Id))
-        //            {
-        //                dictionary.Words.Add(word);
-        //                await dataContext.SaveChangesAsync();
-        //            }
-        //        }
-        //    }
-        //}
 
         public async Task<List<Dictionary>> GetAllDictionariesAsync()
         {

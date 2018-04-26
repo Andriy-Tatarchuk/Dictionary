@@ -24,7 +24,7 @@ namespace Enigma.Entity
             try
             {
                 Database.Connection.Open();
-                //Database.CreateIfNotExists();
+
                 if (!Dictionaries.Any())
                 {
                     var newDictionary = new Dictionary("First Dictionary");

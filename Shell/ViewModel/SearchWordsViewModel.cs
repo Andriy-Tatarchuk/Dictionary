@@ -34,7 +34,7 @@ namespace Enigma.Shell.ViewModel
         /// <summary>
         /// Initializes a new instance of the WordsViewModel class.
         /// </summary>
-        public SearchWordsViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
+        public SearchWordsViewModel(IDataManager dataMgr, IFrameNavigationService navigationService)
             : base(dataMgr, navigationService)
         {
             InitializeCommands();

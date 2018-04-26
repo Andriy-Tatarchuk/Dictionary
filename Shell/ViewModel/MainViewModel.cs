@@ -22,7 +22,7 @@ namespace Enigma.Shell.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private DataManager _DataManager;
+        private IDataManager _DataManager;
         private IFrameNavigationService _navigationService;
 
         private string _StatusMsg;
@@ -40,16 +40,12 @@ namespace Enigma.Shell.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(DataManager dataMgr, IFrameNavigationService navigationService)
+        public MainViewModel(IDataManager dataMgr, IFrameNavigationService navigationService)
         {
             _DataManager = dataMgr;
             _navigationService = navigationService; 
 
             
-            //InitializeDBConnecction();
-
-
-
             ////if (IsInDesignMode)
             ////{
             ////    // Code runs in Blend --> create design time data.
@@ -59,23 +55,6 @@ namespace Enigma.Shell.ViewModel
             ////    // Code runs "for real"
             ////}
             
-            
-        }
-
-        public async void InitializeDBConnecction()
-        {
-            Dispatcher.CurrentDispatcher.Invoke(() => { StatusMsg = "Connecting to DB..."; });
-
-            if (!await DataManager.InitializeDataContextAsync())
-            {
-                StatusMsg = "Connection error";
-            }
-            else
-            {
-                StatusMsg = String.Empty;
-                _navigationService.NavigateTo(ScreenId.DictionariesView.ToString(), null);
-            }
-
         }
     }
 }
