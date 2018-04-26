@@ -46,7 +46,7 @@ namespace Enigma.Shell.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<DataManager>();
+            SimpleIoc.Default.Register<IDataManager, DataManager>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<WordsViewModel>();
@@ -103,6 +103,14 @@ namespace Enigma.Shell.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<SearchWordsViewModel>();
+            }
+        }
+
+        public IDataManager DataManager
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<IDataManager>();
             }
         }
 

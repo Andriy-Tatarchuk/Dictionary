@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using CommonServiceLocator;
 using Enigma.Data;
 using Enigma.Shell.Controls;
 using Enigma.Shell.ViewModel;
@@ -20,8 +21,10 @@ namespace Enigma.Shell
         {
             //Disable shutdown when the dialog closes
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            var locator = Resources["Locator"] as ViewModelLocator;
+            var dataManager = locator != null ? locator.DataManager : null;
 
-            var dialog = new LoadingDialog();
+            var dialog = new LoadingDialog(dataManager);
             
             if (dialog.ShowDialog() == true)
             {

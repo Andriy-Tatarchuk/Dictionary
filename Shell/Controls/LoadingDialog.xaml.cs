@@ -13,7 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CommonServiceLocator;
 using Enigma.Data;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace Enigma.Shell.Controls
 {
@@ -22,9 +24,11 @@ namespace Enigma.Shell.Controls
     /// </summary>
     public partial class LoadingDialog : Window
     {
-        public LoadingDialog()
+        private IDataManager _DataManager;
+        public LoadingDialog(IDataManager dataManager)
         {
             InitializeComponent();
+            _DataManager = dataManager;
             Loaded += LoadingDialog_Loaded;
         }
 
@@ -35,7 +39,7 @@ namespace Enigma.Shell.Controls
 
         private async void InitializeDBConnecction()
         {
-            DialogResult = await (new DataManager()).InitializeDataContextAsync();
+            DialogResult = _DataManager != null ? await _DataManager.InitializeDataContextAsync() : false;
         }
     }
 }
