@@ -21,6 +21,7 @@ namespace Enigma.Shell
         {
             //Disable shutdown when the dialog closes
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
             var locator = Resources["Locator"] as ViewModelLocator;
             var dataManager = locator != null ? locator.DataManager : null;
 

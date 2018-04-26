@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
 using Enigma.Shell.ViewModel;
@@ -29,11 +30,23 @@ namespace Enigma.Shell
             Closing += (s, e) => ViewModelLocator.Cleanup();
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+        }
+
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            Exception exception = (Exception)e.Exception;
+            FireException(exception);
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception exception = (Exception)e.ExceptionObject;
+            FireException(exception);
+        }
+
+        private void FireException(Exception exception)
+        {
             string errorMessage = string.Format("An unhandled exception occurred: {0}", exception.Message);
             MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             Close();
