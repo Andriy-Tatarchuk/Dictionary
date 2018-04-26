@@ -30,6 +30,15 @@ namespace Enigma.Entity
                     var newDictionary = new Dictionary("First Dictionary");
                     newDictionary.Words.Add(new Word("First Word", "Translation"));
                     Dictionaries.Add(newDictionary);
+
+                    var numericDictionary = new Dictionary("Numbers");
+                    numericDictionary.Words.Add(new Word("One", "Один"));
+                    numericDictionary.Words.Add(new Word("Two", "Два"));
+                    numericDictionary.Words.Add(new Word("Three", "Три"));
+                    numericDictionary.Words.Add(new Word("Four", "Чотири"));
+                    numericDictionary.Words.Add(new Word("Five", "П'ять"));
+                    Dictionaries.Add(numericDictionary);
+
                     SaveChanges();
                 }
             }

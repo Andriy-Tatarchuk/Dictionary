@@ -34,7 +34,7 @@
 
                     <TabItem Header="Search">
                         <TabItem.Content>
-                           <TextBlock Text="Search"></TextBlock>
+                           <views:SearchWordsView></views:SearchWordsView>
                         </TabItem.Content>
                     </TabItem>
                 </TabControl.Items>

@@ -45,10 +45,10 @@ namespace Enigma.UnitTest
         }
 
         [TestMethod()]
-        public void GetAllWordsAsyncTest()
+        public void SearchWordsAsyncTest()
         {
             var dataManager = new DataManager();
-            var task = dataManager.GetAllWordsAsync();
+            var task = dataManager.SearchWordsAsync();
             task.Wait();
             var words = task.Result;
 
@@ -87,24 +87,6 @@ namespace Enigma.UnitTest
             var lastDictionary = ((Task<Dictionary>)task2).Result;
 
             Assert.IsTrue(lastDictionary == null);
-        }
-
-        [TestMethod()]
-        public void GetWordsByDictionaryAsyncTest()
-        {
-            var dataManager = new DataManager();
-            var dictionaryId = CreateDictionary();
-            var wordId = AddWordToDictionary(dictionaryId);
-
-            var task = dataManager.GetWordsByDictionaryAsync(dictionaryId);
-            task.Wait();
-
-            var words = ((Task<List<Word>>)task).Result;
-
-            DeleteDictionary(dictionaryId);
-            DeleteWord(wordId);
-
-            Assert.IsTrue(words != null && words.Count == 1);
         }
 
         [TestMethod()]

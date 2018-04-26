@@ -40,8 +40,8 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        private string SearchText;
         private int DictionaryId { get; set; }
-        private Dictionary Dictionary { get; set; }
 
         public RelayCommand AddWordCommand { get; private set; }
         public RelayCommand EditWordCommand { get; private set; }
@@ -96,30 +96,20 @@ namespace Enigma.Shell.ViewModel
 
         public override void LoadData(object parameter)
         {
-            var id = -1;
-            if (parameter != null)
-            {
-                Int32.TryParse(parameter.ToString(), out id);
-            }
-
-            DictionaryId = id;
-            GetWords();
+            ParseParam(parameter);
         }
 
         public async Task GetWords()
         {
-            if (DictionaryId >= 0)
-            {
-                Dictionary = await DataManager.GetDictionaryAsync(DictionaryId);
-            }
+            IsLoading = true;
+
             if (Words != null)
             {
                 Words.Clear();
             }
 
-            IsLoading = true;
-            var words = DictionaryId >= 0 ? await DataManager.GetWordsByDictionaryAsync(DictionaryId) : await DataManager.GetAllWordsAsync();
-                
+            var words = await DataManager.SearchWordsAsync(SearchText, DictionaryId);
+
             Words = words != null ? new ObservableCollection<Word>(words) : null;
 
             IsLoading = false;
@@ -127,7 +117,22 @@ namespace Enigma.Shell.ViewModel
 
         public override async Task Navigated(object param)
         {
-            DictionaryId = param is int ? (int)param : -1; ;
+            ParseParam(param);
+        }
+
+        private void ParseParam(object param)
+        {
+            if (param is SearchData)
+            {
+                var searchData = param as SearchData;
+                DictionaryId = searchData.DictionaryId;
+                SearchText = searchData.SearchText;
+            }
+            else
+            {
+                DictionaryId = param is int ? (int)param : -1;
+                SearchText = String.Empty;
+            }
             GetWords();
         }
     }

@@ -13,13 +13,11 @@ namespace Enigma.Data
         Task<Dictionary> AddDictionaryAsynk(string name);
         Task SaveDictionaryAsync(Dictionary dictionary);
         Task<List<Dictionary>> GetAllDictionariesAsync();
-        Task<List<Word>> GetAllWordsAsync();
-        Task<List<Word>> GetWordsByDictionaryAsync(int dictionaryId);
         Task<Word> GetWordAsync(int id);
         Task<Dictionary> GetDictionaryAsync(int id);
         Task SaveWordAsync(Word word);
         Task DeleteWordAsync(int id);
         Task DeleteDictionaryAsync(int id);
-
+        Task<List<Word>> SearchWordsAsync(string searchText = "", int dictionaryId = -1, bool isFullMatching = false);
     }
 }

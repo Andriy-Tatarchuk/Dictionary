@@ -78,7 +78,7 @@ namespace Enigma.Shell.ViewModel
 
         public void OnLoaded()
         {
-            if (!IsDataLoaded)
+            if (!IsDataLoaded && !IsLoading)
             {
                 LoadData(Parameter);
                 IsDataLoaded = true;

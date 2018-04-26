@@ -93,6 +93,10 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\AddEditDictionaryViewModel.cs" />
     <Compile Include="ViewModel\DictionariesViewModel.cs" />
+    <Compile Include="ViewModel\SearchWordsViewModel.cs" />
+    <Compile Include="Views\SearchWordsView.xaml.cs">
+      <DependentUpon>SearchWordsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddEditWordView.xaml.cs">
       <DependentUpon>AddEditWordView.xaml</DependentUpon>
     </Compile>
@@ -126,6 +130,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\CommonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SearchWordsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

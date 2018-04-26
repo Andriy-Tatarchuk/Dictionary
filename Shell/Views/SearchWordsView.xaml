@@ -1,0 +1,57 @@
+﻿<views:BaseView x:Class="Enigma.Shell.Views.SearchWordsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.galasoft.ch/ignore"
+        xmlns:views="clr-namespace:Enigma.Shell.Views"
+        mc:Ignorable="d ignore"
+                DataContext="{Binding SearchWord, Source={StaticResource Locator}}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border HorizontalAlignment="Stretch"
+                Background="GhostWhite">
+            <TextBlock Text="{Binding Header}"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"></TextBlock>
+        </Border>
+
+        <Border Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Text="Text to Search"
+                           Margin="5"></TextBlock>
+                <TextBox Grid.Row="0"
+                         Grid.Column="1"
+                         Text="{Binding SearchData.SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="5"></TextBox>
+
+                <Button Grid.Row="1" 
+                        Content="Search"
+                        Command="{Binding SearchCommand}"></Button>
+            </Grid>
+
+        </Border>
+        
+    </Grid>
+</views:BaseView>
+

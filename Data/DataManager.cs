@@ -105,20 +105,29 @@ namespace Enigma.Data
             }
         }
 
-        public async Task<List<Word>> GetAllWordsAsync()
+        public async Task<List<Word>> SearchWordsAsync(string searchText = "", int dictionaryId = -1, bool isFullMatching = false)
         {
             using (var dataContext = GetDataContext())
             {
-                return await dataContext.Words.ToListAsync();
-            }
-        }
+                var words = dataContext.Words.AsQueryable();
+                if (dictionaryId >= 0)
+                {
+                    words = words.Where(w => w.DictionaryId == dictionaryId);
+                }
 
-        public async Task<List<Word>> GetWordsByDictionaryAsync(int dictionaryId)
-        {
-            using (var dataContext = GetDataContext())
-            {
-                var dictionary = await dataContext.Dictionaries.Include(d=>d.Words).FirstOrDefaultAsync(d=>d.Id == dictionaryId);
-                return dictionary != null ? dictionary.Words : null;
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    if (!isFullMatching)
+                    {
+                        words = words.Where(w => w.Name.Contains(searchText) || w.Translation.Contains(searchText));
+                    }
+                    else
+                    {
+                        words = words.Where(w => w.Name == searchText || w.Translation == searchText);
+                    }
+                }
+
+                return await words.ToListAsync();
             }
         }
 
@@ -174,23 +183,7 @@ namespace Enigma.Data
             }
         }
 
-        //public async Task<Word> GetNewWordFormDictionaryAsync(int dictionaryId)
-        //{
-        //    Word word = null;
-        //    using (var dataContext = GetDataContext())
-        //    {
-        //        var dictionary = dataContext.Dictionaries.Find(dictionaryId);
-        //        if (dictionary != null)
-        //        {
-        //            word = dataContext.Words.Create();
-        //            dictionary.Words.Add(word);
-        //            await dataContext.SaveChangesAsync();
-        //        }
-        //    }
-
-        //    return word;
-        //}
-
+        
         #endregion
     }
 }
