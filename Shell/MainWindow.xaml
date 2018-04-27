@@ -49,7 +49,10 @@
                           ></GridSplitter>
 
         <Frame Name="MainFrame" 
-               Grid.Column="2" Navigated="MainFrame_OnNavigated"
+               Grid.Column="2" 
+               Navigated="MainFrame_OnNavigated"
+               Navigating="MainFrame_OnNavigating"
+               NavigationUIVisibility="Hidden"
                Source="{Binding ElementName=_this, Path=MainFrameSource}"></Frame>
 
             </Grid>

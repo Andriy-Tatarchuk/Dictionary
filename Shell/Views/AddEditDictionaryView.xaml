@@ -43,7 +43,7 @@
                            Margin="5"></TextBlock>
                 <TextBox Grid.Row="0"
                          Grid.Column="1"
-                         Text="{Binding Dictionary.Name}"
+                         Text="{Binding Dictionary.Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="5"></TextBox>
 
             </Grid>
@@ -55,7 +55,7 @@
             </GroupBox>
         </Border>
 
-        <Border Grid.Row="3"
+        <!--<Border Grid.Row="3"
                 HorizontalAlignment="Right">
 
                 <Button HorizontalAlignment="Right"
@@ -63,7 +63,7 @@
                         Command="{Binding GoBackCommand}"
                         Width="70"
                         Margin="5"></Button>
-        </Border>
+        </Border>-->
     </Grid>
 </views:BaseView>
 

@@ -77,13 +77,7 @@ namespace Enigma.Shell.ViewModel
         {
             AddDictionaryCommand = new RelayCommand(AddDictionaryCommandExecuted);
 
-            EditDictionaryCommand = new RelayCommand(() =>
-            {
-                if (SelectedItem != null)
-                {
-                    NavigationService.NavigateTo(ScreenId.AddEditDictionaryView.ToString(), SelectedItem);
-                }
-            });
+            EditDictionaryCommand = new RelayCommand(SelectedDictionaryChanged);
 
             DeleteDictionaryCommand = new RelayCommand(DeleteDictionaryCommandExecuted);
         }
@@ -116,12 +110,13 @@ namespace Enigma.Shell.ViewModel
         {
             var _selectedItem = SelectedItem;
 
+            IsLoading = true;
+
             if (Dictionaries != null)
             {
                 Dictionaries.Clear();
             }
 
-            IsLoading = true;
             var dictionaries = await DataManager.GetAllDictionariesAsync();
             if (dictionaries != null)
             {
@@ -133,12 +128,12 @@ namespace Enigma.Shell.ViewModel
             }
             Dictionaries.Insert(0, new Dictionary("All words"){Id = -1});
 
-            IsLoading = false;
-
             if (_selectedItem != null)
             {
                 SelectedItem = Dictionaries.FirstOrDefault(d => d.Id == _selectedItem.Id);
             }
+
+            IsLoading = false;
         }
 
         private void SelectedDictionaryChanged()

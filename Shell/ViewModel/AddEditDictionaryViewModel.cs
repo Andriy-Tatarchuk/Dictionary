@@ -63,7 +63,7 @@ namespace Enigma.Shell.ViewModel
         public override async Task Save()
         {
             await DataManager.SaveDictionaryAsync(Dictionary);
-            ServiceLocator.Current.GetInstance<DictionariesViewModel>().LoadData(null);
+            //ServiceLocator.Current.GetInstance<DictionariesViewModel>().LoadData(null);
         }
 
         private async void GetDictionary(int id)

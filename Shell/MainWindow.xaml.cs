@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Navigation;
 using Enigma.Shell.ViewModel;
 using Enigma.Shell.Views;
+using Microsoft.Win32;
 
 namespace Enigma.Shell
 {
@@ -27,10 +28,16 @@ namespace Enigma.Shell
         public MainWindow()
         {
             InitializeComponent();
-            Closing += (s, e) => ViewModelLocator.Cleanup();
+            Closing += MainWindow_Closing;
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ViewModelLocator.Cleanup();
+            FireSave();
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
@@ -64,5 +71,32 @@ namespace Enigma.Shell
                 }
             }
         }
+
+        private void MainFrame_OnNavigating(object sender, NavigatingCancelEventArgs e)
+        {
+            var view = MainFrame.Content as BaseView;
+            if (view != null)
+            {
+                var viewModel = view.DataContext as BaseViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.Navigating();
+                }
+            }
+        }
+
+        private void FireSave()
+        {
+            var view = MainFrame.Content as BaseView;
+            if (view != null)
+            {
+                var viewModel = view.DataContext as BaseViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.Save();
+                }
+            }
+        }
+
     }
 }

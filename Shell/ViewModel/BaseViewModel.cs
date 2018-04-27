@@ -64,16 +64,7 @@ namespace Enigma.Shell.ViewModel
 
         private async void GoBackCommandExecuted()
         {
-            IsLoading = true;
-            await Save();
-            IsLoading = false;
-
             NavigationService.GoBack();
-        }
-
-        void DataManager_DataContextInisialized(object sender, System.EventArgs e)
-        {
-            OnLoaded();
         }
 
         public void OnLoaded()
@@ -93,6 +84,11 @@ namespace Enigma.Shell.ViewModel
         public virtual async Task Navigated(object param)
         {
 
+        }
+
+        public virtual async Task Navigating()
+        {
+            await Save();
         }
 
         public virtual async Task Save()
