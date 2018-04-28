@@ -4,12 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:Enigma.Shell.Views"
+        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
+        xmlns:converters="clr-namespace:Enigma.Shell.Converters"
         Height="400"
         Width="600"
         Name="_this"
         Title="Light Dictionary"
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
     
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
@@ -55,9 +60,19 @@
                NavigationUIVisibility="Hidden"
                Source="{Binding ElementName=_this, Path=MainFrameSource}"></Frame>
 
-            </Grid>
+            <Image Grid.Column="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Width="200"
+                   Height="200"
+                   IsEnabled="{Binding ElementName=MainFrame, Path=Content.DataContext.IsLoading, FallbackValue=False}"
+                   Visibility="{Binding ElementName=MainFrame, Path=Content.DataContext.IsLoading, Converter={StaticResource BoolToVisibilityConverter}, FallbackValue={x:Static Visibility.Collapsed}}"
+                   gif:AnimationBehavior.SourceUri="../Images/Loading.gif" />
+
+        </Grid>
 
         <TextBlock Grid.Row="1" 
                    Text="{Binding StatusMsg}"></TextBlock>
+
     </Grid>
 </Window>

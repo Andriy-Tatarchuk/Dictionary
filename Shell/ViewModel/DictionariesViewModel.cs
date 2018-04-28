@@ -1,6 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Enigma.Data;
 using Enigma.Entity.Entities;
 using Enigma.Shell.Model;
@@ -86,9 +88,22 @@ namespace Enigma.Shell.ViewModel
         {
             if (SelectedItem != null)
             {
-                await DataManager.DeleteDictionaryAsync(SelectedItem.Id);
-                GetDictionaries();
+                if (AskForDeleting(SelectedItem.Name))
+                {
+                    IncRequestCounter();
+                    await DataManager.DeleteDictionaryAsync(SelectedItem.Id);
+                    DecRequestCounter();
+
+                    Dictionaries.Remove(SelectedItem);
+                }
             }
+        }
+
+        private bool AskForDeleting(string dictionaryName)
+        {
+            return MessageBox.Show(String.Format("Are you ssure to delte dictionary {0}", dictionaryName),
+                       "Deleting dictionary", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) ==
+                   MessageBoxResult.Yes;
         }
 
         private async void AddDictionaryCommandExecuted()
@@ -106,11 +121,11 @@ namespace Enigma.Shell.ViewModel
             GetDictionaries();
         }
 
-        public async Task GetDictionaries()
+        private async Task GetDictionaries()
         {
             var _selectedItem = SelectedItem;
 
-            IsLoading = true;
+            IncRequestCounter();
 
             if (Dictionaries != null)
             {
@@ -133,7 +148,7 @@ namespace Enigma.Shell.ViewModel
                 SelectedItem = Dictionaries.FirstOrDefault(d => d.Id == _selectedItem.Id);
             }
 
-            IsLoading = false;
+            DecRequestCounter();
         }
 
         private void SelectedDictionaryChanged()

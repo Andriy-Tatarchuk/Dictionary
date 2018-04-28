@@ -15,6 +15,6 @@
         Height="300"
         >
     <Grid x:Name="LayoutRoot">
-        <Image xamlAnimatedGif:AnimationBehavior.SourceUri="../Images/Loading.gif" />
+        <Image xamlAnimatedGif:AnimationBehavior.SourceUri="../Images/StartLoading.gif" />
     </Grid>
 </Window>

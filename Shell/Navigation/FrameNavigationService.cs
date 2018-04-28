@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Automation;
 
 namespace Enigma.Shell.Navigation
 {
@@ -76,6 +77,10 @@ namespace Enigma.Shell.Navigation
                 {
                     //mainWindow.MainFrameSource = _pagesByKey[pageKey];
                     var frame = mainWindow.MainFrame;
+                    if (frame == null)
+                    {
+                        throw new Exception("MainFrame are not accessible");
+                    }
                     frame.Navigate(_pagesByKey[pageKey], parameter);
                 }
 

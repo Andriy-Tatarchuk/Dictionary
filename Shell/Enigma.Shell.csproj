@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -85,6 +86,7 @@
     <Compile Include="Controls\LoadingDialog.xaml.cs">
       <DependentUpon>LoadingDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\Enums\ScreenId.cs" />
     <Compile Include="Navigation\FrameNavigationService.cs" />
@@ -193,9 +195,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Loading.gif">
+    <Resource Include="Images\StartLoading.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Loading.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

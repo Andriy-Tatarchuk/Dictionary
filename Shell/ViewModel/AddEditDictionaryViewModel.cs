@@ -68,13 +68,13 @@ namespace Enigma.Shell.ViewModel
 
         private async void GetDictionary(int id)
         {
-            IsLoading = true;
+            IncRequestCounter();
             var dictionary = await DataManager.GetDictionaryAsync(id);
             if(dictionary != null)
             {
                 Dictionary = dictionary;
             }
-            IsLoading = false;
+            DecRequestCounter();
         }
 
         public override async Task Navigated(object param)

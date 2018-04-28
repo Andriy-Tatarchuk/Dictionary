@@ -46,7 +46,7 @@ namespace Enigma.Shell.ViewModel
             SearchCommand = new RelayCommand(ExecuteSearchCommand);
         }
 
-        private async void ExecuteSearchCommand()
+        private void ExecuteSearchCommand()
         {
             if (!string.IsNullOrEmpty(SearchData.SearchText))
             {

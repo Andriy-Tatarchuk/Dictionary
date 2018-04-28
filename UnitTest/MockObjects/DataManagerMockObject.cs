@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Enigma.Data;
 using Enigma.Entity.Entities;
 
-namespace Enigma.UnitTest
+namespace Enigma.UnitTest.MockObjects
 {
     internal class DataManagerMockObject : IDataManager
     {
@@ -30,11 +30,7 @@ namespace Enigma.UnitTest
 
         public async Task DeleteDictionaryAsync(int id)
         {
-            var dictionary = DictionaryList.FirstOrDefault(d => d.Id == id);
-            if (dictionary != null)
-            {
-                DictionaryList.Remove(dictionary);
-            }
+            
         }
 
         public async Task DeleteWordAsync(int id)
@@ -77,7 +73,14 @@ namespace Enigma.UnitTest
 
         public async Task SaveWordAsync(Word word)
         {
-            
+            var dictionary = DictionaryList.FirstOrDefault(d => d.Id == word.DictionaryId);
+            if (dictionary == null)
+            {
+                dictionary = new Dictionary("") {Id = word.DictionaryId};
+                DictionaryList.Add(dictionary);
+            }
+
+            dictionary.Words.Add(word);
         }
 
         public async Task<List<Word>> SearchWordsAsync(string searchText = "", int dictionaryId = -1, bool isFullMatching = false)

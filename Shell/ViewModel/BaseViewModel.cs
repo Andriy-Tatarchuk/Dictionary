@@ -16,6 +16,7 @@ namespace Enigma.Shell.ViewModel
     /// </summary>
     public class BaseViewModel : ViewModelBase
     {
+        private int _requestCounter = 0;
         public IDataManager DataManager { get; private set; }
         public IFrameNavigationService NavigationService { get; private set; }
 
@@ -24,10 +25,13 @@ namespace Enigma.Shell.ViewModel
         public bool IsLoading
         {
             get { return _IsLoading; }
-            set
+            private set
             {
-                _IsLoading = value;
-                RaisePropertyChanged("IsLoading");
+                if (_IsLoading != value)
+                {
+                    _IsLoading = value;
+                    RaisePropertyChanged("IsLoading");
+                }
             }
         }
 
@@ -100,6 +104,21 @@ namespace Enigma.Shell.ViewModel
         {
             IsDataLoaded = false;
             OnLoaded();
+        }
+
+        public void IncRequestCounter()
+        {
+            _requestCounter++;
+            IsLoading = true;
+        }
+
+        public void DecRequestCounter()
+        {
+            _requestCounter--;
+            if (_requestCounter == 0)
+            {
+                IsLoading = false;
+            }
         }
     }
 }

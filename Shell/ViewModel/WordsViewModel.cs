@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using Enigma.Data;
 using Enigma.Entity.Entities;
 using Enigma.Shell.Model;
@@ -40,7 +41,7 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
-        private string SearchText;
+        private string SearchText { get; set; }
         private int DictionaryId { get; set; }
 
         public RelayCommand AddWordCommand { get; private set; }
@@ -70,8 +71,7 @@ namespace Enigma.Shell.ViewModel
         {
             if (SelectedItem != null)
             {
-                var word = await GetWordById(SelectedItem.Id);
-                NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), word);
+                NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), SelectedItem);
             }
         }
 
@@ -79,9 +79,22 @@ namespace Enigma.Shell.ViewModel
         {
             if (SelectedItem != null)
             {
-                await DataManager.DeleteWordAsync(SelectedItem.Id);
-                GetWords();
+                if (AskForDeleting(SelectedItem.Name))
+                {
+                    IncRequestCounter();
+                    await DataManager.DeleteWordAsync(SelectedItem.Id);
+                    DecRequestCounter();
+
+                    Words.Remove(SelectedItem);
+                }
             }
+        }
+
+        private bool AskForDeleting(string wordName)
+        {
+            return MessageBox.Show(String.Format("Are you ssure to delte word {0}", wordName),
+                       "Deleting word", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) ==
+                   MessageBoxResult.Yes;
         }
 
         private async void ExecuteAddWordCommand()
@@ -89,19 +102,14 @@ namespace Enigma.Shell.ViewModel
             NavigationService.NavigateTo(ScreenId.AddEditWordView.ToString(), DictionaryId);
         }
 
-        private async Task<Word> GetWordById(int id)
-        {
-            return await DataManager.GetWordAsync(id);
-        }
-
         public override void LoadData(object parameter)
         {
             ParseParam(parameter);
         }
 
-        public async Task GetWords()
+        private async Task GetWords()
         {
-            IsLoading = true;
+            IncRequestCounter();
 
             if (Words != null)
             {
@@ -112,7 +120,7 @@ namespace Enigma.Shell.ViewModel
 
             Words = words != null ? new ObservableCollection<Word>(words) : null;
 
-            IsLoading = false;
+            DecRequestCounter();
         }
 
         public override async Task Navigated(object param)

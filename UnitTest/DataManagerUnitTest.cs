@@ -31,17 +31,20 @@ namespace Enigma.UnitTest
         [TestMethod()]
         public void InitializeDataContextAsyncTest()
         {
+            var dataManager = new DataManager();
+            bool result = false;
             try
             {
-                var task = DataManager.InitializeDataContextAsync();
+                var task = dataManager.InitializeDataContextAsync();
                 task.Wait();
+                result = task.Result;
             }
             catch (Exception e)
             {
                 Assert.Fail();
             }
 
-            Assert.IsTrue(true);
+            Assert.IsTrue(result);
         }
 
         [TestMethod()]
