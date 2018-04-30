@@ -87,7 +87,7 @@
       <DependentUpon>LoadingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Model\DataItem.cs" />
+    <Compile Include="Model\SearchData.cs" />
     <Compile Include="Model\Enums\ScreenId.cs" />
     <Compile Include="Navigation\FrameNavigationService.cs" />
     <Compile Include="Navigation\IFrameNavigationService.cs" />
