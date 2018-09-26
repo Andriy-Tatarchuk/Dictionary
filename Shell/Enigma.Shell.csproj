@@ -189,6 +189,10 @@
       <Project>{4166bdf2-492c-4e75-92b3-c652e454d6a8}</Project>
       <Name>Enigma.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Enigma.Translate\Enigma.Translate.csproj">
+      <Project>{a3acd8d1-cd02-42d4-8414-508f0cf7a56b}</Project>
+      <Name>Enigma.Translate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entity\Enigma.Entity.csproj">
       <Project>{5922b156-8590-4749-b64a-13f3cf82013e}</Project>
       <Name>Enigma.Entity</Name>
