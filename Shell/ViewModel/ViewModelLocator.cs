@@ -18,6 +18,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Enigma.Shell.Navigation;
 using System;
+using Enigma.Autocomplete;
 using Enigma.Shell.Model;
 
 namespace Enigma.Shell.ViewModel
@@ -47,6 +48,7 @@ namespace Enigma.Shell.ViewModel
             ////}
 
             SimpleIoc.Default.Register<IDataManager, DataManager>();
+            SimpleIoc.Default.Register<ICompleter, Autocompleter>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<WordsViewModel>();
@@ -112,6 +114,11 @@ namespace Enigma.Shell.ViewModel
             {
                 return ServiceLocator.Current.GetInstance<IDataManager>();
             }
+        }
+
+        public ICompleter AutoCompleter
+        {
+            get { return ServiceLocator.Current.GetInstance<ICompleter>(); }
         }
 
         private static void SetupNavigation()

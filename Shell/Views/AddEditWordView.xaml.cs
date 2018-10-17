@@ -16,9 +16,5 @@ namespace Enigma.Shell.Views
             InitializeComponent();
         }
 
-        private void NameTextBox_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }

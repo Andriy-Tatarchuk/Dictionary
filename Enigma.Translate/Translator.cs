@@ -14,12 +14,12 @@ namespace Enigma.Translate
     {
         public string Translate(string word)
         {
-            return Translate(word, LanguageCodes.English);
+            return Translate(word, LanguageCodes.Ukrainian);
         }
 
         public string Translate(string word, string targetLanguage)
         {
-            return Translate(word, targetLanguage, null);
+            return Translate(word, targetLanguage, LanguageCodes.English);
         }
 
         public string Translate(string word, string targetLanguage, string sourceLanguage)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Enigma.Autocomplete
 {
-    public class Autocompleter
+    public class Autocompleter : ICompleter
     {
         private static bool IsInitialized { get; set; }
         public static List<string> Words { get; private set; }
@@ -37,9 +37,6 @@ namespace Enigma.Autocomplete
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             using (StreamReader reader = new StreamReader(stream))
             {
-                //    var uri = new Uri("pack://application:,,,/Enigma.Autocomplete;component/Resources/words_alpha.txt");
-                //var reader = new StreamReader(uri);
-
                 while (!reader.EndOfStream)
                 {
                     Words.Add(reader.ReadLine());
@@ -47,7 +44,7 @@ namespace Enigma.Autocomplete
             }
         }
 
-        public static async Task<string> GetFirstWordStartedWith(string prefix)
+        public async Task<string> GetFirstWordStartedWith(string prefix)
         {
             int index = await BinarySearchStartsWith(Words, prefix, 0, Words.Count - 1);
             if (index == -1)
@@ -68,7 +65,7 @@ namespace Enigma.Autocomplete
             return Words[index];
         }
 
-        private static async Task<int> BinarySearchStartsWith(List<string> words, string prefix, int min, int max)
+        private async Task<int> BinarySearchStartsWith(List<string> words, string prefix, int min, int max)
         {
             while (max >= min)
             {
@@ -91,7 +88,7 @@ namespace Enigma.Autocomplete
                 }
                 catch (Exception e)
                 {
-
+                    throw e;
                 }
             }
             return -1;
