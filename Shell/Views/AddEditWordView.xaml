@@ -5,9 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:views="clr-namespace:Enigma.Shell.Views"
+        xmlns:controls="clr-namespace:Enigma.Shell.Controls"
         mc:Ignorable="d ignore"
-                DataContext="{Binding AddEditWord, Source={StaticResource Locator}}">
+                DataContext="{Binding AddEditWord, Source={StaticResource Locator}}"
+         x:Name="_this">
 
+    <views:BaseView.CommandBindings>
+        <!--<CommandBinding x:Name="TranslateCmd"
+                        Command="{Binding TranslateCommand}" />-->
+    </views:BaseView.CommandBindings>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -41,10 +48,13 @@
                            Grid.Column="0"
                            Text="Name"
                            Margin="5"></TextBlock>
-                <TextBox Grid.Row="0"
+                <controls:AutoCompleteTextBox 
+                         Grid.Row="0"
                          Grid.Column="1"
+                         x:Name="WordNameTextBox"
                          Text="{Binding Word.Name, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="5"></TextBox>
+                         LostFocus="NameTextBox_OnLostFocus"
+                         Margin="5"></controls:AutoCompleteTextBox>
 
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"

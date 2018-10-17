@@ -14,12 +14,22 @@ namespace Enigma.Translate
     {
         public string Translate(string word)
         {
+            return Translate(word, LanguageCodes.English);
+        }
+
+        public string Translate(string word, string targetLanguage)
+        {
+            return Translate(word, targetLanguage, null);
+        }
+
+        public string Translate(string word, string targetLanguage, string sourceLanguage)
+        {
             var result = string.Empty;
             try
             {
                 var credential = GoogleCredential.FromFile("C:\\Users\\Andriy.Tatarchuk\\Documents\\GitHub\\Enigma-5f1206253fa8.json");
                 var client = TranslationClient.Create(credential);
-                var translaterResult = client.TranslateText(word, LanguageCodes.English);
+                var translaterResult = client.TranslateText(word, targetLanguage, sourceLanguage);
                 result = translaterResult.TranslatedText;
             }
             catch (Exception e)

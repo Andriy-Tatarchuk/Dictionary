@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigma.UnitTest", "UnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigma.Translate", "Enigma.Translate\Enigma.Translate.csproj", "{A3ACD8D1-CD02-42D4-8414-508F0CF7A56B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigma.Autocomplete", "Enigma.Autocomleter\Enigma.Autocomplete.csproj", "{8D05798C-2A19-41A3-92C7-49370E23D17A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A3ACD8D1-CD02-42D4-8414-508F0CF7A56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3ACD8D1-CD02-42D4-8414-508F0CF7A56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3ACD8D1-CD02-42D4-8414-508F0CF7A56B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D05798C-2A19-41A3-92C7-49370E23D17A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D05798C-2A19-41A3-92C7-49370E23D17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D05798C-2A19-41A3-92C7-49370E23D17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D05798C-2A19-41A3-92C7-49370E23D17A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

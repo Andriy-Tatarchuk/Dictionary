@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Enigma.Shell.Views
 {
@@ -13,6 +14,11 @@ namespace Enigma.Shell.Views
         public AddEditWordView()
         {
             InitializeComponent();
+        }
+
+        private void NameTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

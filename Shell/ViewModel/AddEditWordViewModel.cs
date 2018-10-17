@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Enigma.Autocomplete;
 using Enigma.Data;
 using Enigma.Entity.Entities;
 using GalaSoft.MvvmLight;
 using Enigma.Shell.Model;
 using Enigma.Shell.Navigation;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using Enigma.Translate;
 
 namespace Enigma.Shell.ViewModel
@@ -19,6 +20,7 @@ namespace Enigma.Shell.ViewModel
     /// </summary>
     public class AddEditWordViewModel : BaseViewModel
     {
+
         private Word _Word;
         public Word Word
         {
@@ -46,22 +48,35 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        private RelayCommand translateCommand;
+        public RelayCommand TranslateCommand
+        {
+            get { return translateCommand; }
+        }
+
+
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
         /// </summary>
         public AddEditWordViewModel(IDataManager dataMgr, IFrameNavigationService navigationService)
             : base(dataMgr, navigationService)
         {
-            
+            translateCommand = new RelayCommand(TranslateWord);
         }
 
-        private void Word_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void TranslateWord()
+        {
+            var translator = new Translator();
+            Word.Translation = translator.Translate(Word.Name);
+        }
+
+        private async void Word_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             var word = sender as Word;
             if (word != null && e.PropertyName == "Name")
             {
-                var translator = new Translator();
-                word.Translation = translator.Translate(word.Name);
+                //TranslateWord();
+                
             }
         }
 

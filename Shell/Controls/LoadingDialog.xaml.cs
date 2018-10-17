@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using CommonServiceLocator;
 using Enigma.Data;
 using GalaSoft.MvvmLight.Ioc;
+using Enigma.Autocomplete;
 
 namespace Enigma.Shell.Controls
 {
@@ -35,11 +36,17 @@ namespace Enigma.Shell.Controls
         private void LoadingDialog_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeDBConnecction();
+            InitializeAutocompleter();
         }
 
         private async void InitializeDBConnecction()
         {
             DialogResult = _DataManager != null ? await _DataManager.InitializeDataContextAsync() : false;
+        }
+
+        private async void InitializeAutocompleter()
+        {
+            await Autocompleter.InitializeWordsAsync();
         }
     }
 }
