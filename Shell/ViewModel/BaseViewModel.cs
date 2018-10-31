@@ -47,6 +47,18 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        private string _Header;
+
+        public string Header
+        {
+            get { return _Header; }
+            set
+            {
+                _Header = value;
+                RaisePropertyChanged("Header");
+            }
+        }
+
         public bool IsDataLoaded { get; set; }
 
         public RelayCommand GoBackCommand

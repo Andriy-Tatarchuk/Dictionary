@@ -111,6 +111,14 @@
       <Project>{4166BDF2-492C-4E75-92B3-C652E454D6A8}</Project>
       <Name>Enigma.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Enigma.Autocomleter\Enigma.Autocomplete.csproj">
+      <Project>{8d05798c-2a19-41a3-92c7-49370e23d17a}</Project>
+      <Name>Enigma.Autocomplete</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Enigma.Translate\Enigma.Translate.csproj">
+      <Project>{a3acd8d1-cd02-42d4-8414-508f0cf7a56b}</Project>
+      <Name>Enigma.Translate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entity\Enigma.Entity.csproj">
       <Project>{5922b156-8590-4749-b64a-13f3cf82013e}</Project>
       <Name>Enigma.Entity</Name>

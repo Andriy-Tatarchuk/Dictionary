@@ -66,6 +66,12 @@ namespace Enigma.Shell.ViewModel
             private set;
         }
 
+        public RelayCommand ExamDictionaryCommand
+        {
+            get;
+            private set;
+        }
+
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
         /// </summary>
@@ -82,6 +88,17 @@ namespace Enigma.Shell.ViewModel
             EditDictionaryCommand = new RelayCommand(SelectedDictionaryChanged);
 
             DeleteDictionaryCommand = new RelayCommand(DeleteDictionaryCommandExecuted);
+
+            ExamDictionaryCommand = new RelayCommand(ExamDictionaryCommandExecuted);
+        }
+
+        private void ExamDictionaryCommandExecuted()
+        {
+            var selectedId = SelectedItem != null ? SelectedItem.Id : -1;
+            if (selectedId >= 0)
+            {
+                NavigationService.NavigateTo(ScreenId.ExamDictionaryView.ToString(), SelectedItem);
+            }
         }
 
         private async void DeleteDictionaryCommandExecuted()
@@ -90,11 +107,13 @@ namespace Enigma.Shell.ViewModel
             {
                 if (AskForDeleting(SelectedItem.Name))
                 {
+                    var currentItem = SelectedItem;
+                    SelectedItem = null;
                     IncRequestCounter();
-                    await DataManager.DeleteDictionaryAsync(SelectedItem.Id);
+                    await DataManager.DeleteDictionaryAsync(currentItem.Id);
                     DecRequestCounter();
 
-                    Dictionaries.Remove(SelectedItem);
+                    Dictionaries.Remove(currentItem);
                 }
             }
         }

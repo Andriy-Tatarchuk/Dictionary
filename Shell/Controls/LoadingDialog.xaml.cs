@@ -26,10 +26,12 @@ namespace Enigma.Shell.Controls
     public partial class LoadingDialog : Window
     {
         private IDataManager _DataManager;
-        public LoadingDialog(IDataManager dataManager)
+        private ICompleter _Autocompleter;
+        public LoadingDialog(IDataManager dataManager, ICompleter autoCompleter)
         {
             InitializeComponent();
             _DataManager = dataManager;
+            _Autocompleter = autoCompleter;
             Loaded += LoadingDialog_Loaded;
         }
 
@@ -46,7 +48,7 @@ namespace Enigma.Shell.Controls
 
         private async void InitializeAutocompleter()
         {
-            await Autocompleter.InitializeWordsAsync();
+            await _Autocompleter.InitializeWordsAsync();
         }
     }
 }

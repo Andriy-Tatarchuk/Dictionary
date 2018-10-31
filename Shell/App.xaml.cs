@@ -24,8 +24,9 @@ namespace Enigma.Shell
 
             var locator = Resources["Locator"] as ViewModelLocator;
             var dataManager = locator != null ? locator.DataManager : null;
+            var autoCompleter = locator != null ? locator.AutoCompleter : null;
 
-            var dialog = new LoadingDialog(dataManager);
+            var dialog = new LoadingDialog(dataManager, autoCompleter);
             
             if (dialog.ShowDialog() == true)
             {

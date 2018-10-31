@@ -92,11 +92,15 @@
     <Compile Include="Model\Enums\ScreenId.cs" />
     <Compile Include="Navigation\FrameNavigationService.cs" />
     <Compile Include="Navigation\IFrameNavigationService.cs" />
+    <Compile Include="ViewModel\ExamDictionaryViewModel.cs" />
     <Compile Include="ViewModel\AddEditWordViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\AddEditDictionaryViewModel.cs" />
     <Compile Include="ViewModel\DictionariesViewModel.cs" />
     <Compile Include="ViewModel\SearchWordsViewModel.cs" />
+    <Compile Include="Views\ExamDictionaryView.xaml.cs">
+      <DependentUpon>ExamDictionaryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SearchWordsView.xaml.cs">
       <DependentUpon>SearchWordsView.xaml</DependentUpon>
     </Compile>
@@ -133,6 +137,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\CommonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ExamDictionaryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

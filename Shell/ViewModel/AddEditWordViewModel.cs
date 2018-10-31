@@ -20,6 +20,7 @@ namespace Enigma.Shell.ViewModel
     /// </summary>
     public class AddEditWordViewModel : BaseViewModel
     {
+        private ITranslator _Translator;
 
         private Word _Word;
         public Word Word
@@ -58,16 +59,19 @@ namespace Enigma.Shell.ViewModel
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
         /// </summary>
-        public AddEditWordViewModel(IDataManager dataMgr, IFrameNavigationService navigationService)
+        public AddEditWordViewModel(IDataManager dataMgr, IFrameNavigationService navigationService, ITranslator translator)
             : base(dataMgr, navigationService)
         {
             translateCommand = new RelayCommand(TranslateWord);
+            _Translator = translator;
         }
 
         private void TranslateWord()
         {
-            var translator = new Translator();
-            Word.Translation = translator.Translate(Word.Name);
+            if (_Translator != null)
+            {
+                Word.Translation = _Translator.Translate(Word.Name, "uk", "en");
+            }
         }
 
         private async void Word_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -76,7 +80,6 @@ namespace Enigma.Shell.ViewModel
             if (word != null && e.PropertyName == "Name")
             {
                 //TranslateWord();
-                
             }
         }
 

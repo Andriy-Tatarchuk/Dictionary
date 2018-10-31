@@ -56,7 +56,10 @@ namespace Enigma.Shell
         {
             string errorMessage = string.Format("An unhandled exception occurred: {0}", exception.Message);
             MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            Close();
+            Dispatcher.Invoke(() =>
+            {
+                Close();
+            });
         }
 
         private void MainFrame_OnNavigated(object sender, NavigationEventArgs e)

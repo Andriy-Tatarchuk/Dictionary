@@ -19,7 +19,7 @@ namespace Enigma.Autocomplete
             Words = new List<string>();
         }
 
-        public static async Task InitializeWordsAsync()
+        public async Task InitializeWordsAsync()
         {
             if (!IsInitialized)
             {

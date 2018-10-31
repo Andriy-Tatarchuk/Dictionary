@@ -19,6 +19,7 @@ using GalaSoft.MvvmLight.Ioc;
 using Enigma.Shell.Navigation;
 using System;
 using Enigma.Autocomplete;
+using Enigma.Translate;
 using Enigma.Shell.Model;
 
 namespace Enigma.Shell.ViewModel
@@ -49,11 +50,13 @@ namespace Enigma.Shell.ViewModel
 
             SimpleIoc.Default.Register<IDataManager, DataManager>();
             SimpleIoc.Default.Register<ICompleter, Autocompleter>();
+            SimpleIoc.Default.Register<ITranslator, Translator>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<WordsViewModel>();
-            SimpleIoc.Default.Register<DictionariesViewModel>(); 
+            SimpleIoc.Default.Register<DictionariesViewModel>();
             SimpleIoc.Default.Register<AddEditDictionaryViewModel>();
+            SimpleIoc.Default.Register<ExamDictionaryViewModel>();
             SimpleIoc.Default.Register<AddEditWordViewModel>(); 
             SimpleIoc.Default.Register<SearchWordsViewModel>();
 
@@ -108,6 +111,14 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        public ExamDictionaryViewModel ExamDictionary
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ExamDictionaryViewModel>();
+            }
+        }
+
         public IDataManager DataManager
         {
             get
@@ -121,6 +132,11 @@ namespace Enigma.Shell.ViewModel
             get { return ServiceLocator.Current.GetInstance<ICompleter>(); }
         }
 
+        public ITranslator Translator
+        {
+            get { return ServiceLocator.Current.GetInstance<ITranslator>(); }
+        }
+
         private static void SetupNavigation()
         {
             var navigationService = new FrameNavigationService();
@@ -129,6 +145,7 @@ namespace Enigma.Shell.ViewModel
             navigationService.Configure(ScreenId.AddEditDictionaryView.ToString(), new Uri("../Views/AddEditDictionaryView.xaml", UriKind.Relative));
             navigationService.Configure(ScreenId.AddEditWordView.ToString(), new Uri("../Views/AddEditWordView.xaml", UriKind.Relative));
             navigationService.Configure(ScreenId.SearchWordView.ToString(), new Uri("../Views/SearchWordsView.xaml", UriKind.Relative));
+            navigationService.Configure(ScreenId.ExamDictionaryView.ToString(), new Uri("../Views/ExamDictionaryView.xaml", UriKind.Relative));
 
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }

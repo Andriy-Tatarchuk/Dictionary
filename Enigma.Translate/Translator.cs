@@ -7,11 +7,39 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Translate.v2;
 using Google.Cloud.Translation.V2;
+using System.IO;
+using System.Reflection;
 
 namespace Enigma.Translate
 {
-    public class Translator
+    public class Translator : ITranslator
     {
+        static TranslationClient _Client;
+        static bool _IsInitialized;
+
+        public void Initialize()
+        {
+            if (!_IsInitialized)
+            {
+                try
+                {
+                    var assembly = Assembly.GetExecutingAssembly();
+                    var resourceName = "Enigma.Translate.Resources.GoogleCredential.json";
+
+                    using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                    {
+                        var credential = GoogleCredential.FromStream(stream);
+                        _Client = TranslationClient.Create(credential);
+                    }
+                    _IsInitialized = true;
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+        }
+
         public string Translate(string word)
         {
             return Translate(word, LanguageCodes.Ukrainian);
@@ -25,17 +53,15 @@ namespace Enigma.Translate
         public string Translate(string word, string targetLanguage, string sourceLanguage)
         {
             var result = string.Empty;
-            try
+            if(!_IsInitialized)
             {
-                var credential = GoogleCredential.FromFile("C:\\Users\\Andriy.Tatarchuk\\Documents\\GitHub\\Enigma-5f1206253fa8.json");
-                var client = TranslationClient.Create(credential);
-                var translaterResult = client.TranslateText(word, targetLanguage, sourceLanguage);
+                Initialize();
+            }
+            if (_Client != null)
+            {
+                var translaterResult = _Client.TranslateText(word, targetLanguage, sourceLanguage);
                 result = translaterResult.TranslatedText;
-            }
-            catch (Exception e)
-            {
-
-            }
+            }           
 
             return result;
         }

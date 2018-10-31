@@ -46,7 +46,7 @@ namespace Enigma.Shell.ViewModel
         public AddEditDictionaryViewModel(IDataManager dataMgr, IFrameNavigationService navigationService)
             : base(dataMgr, navigationService)
         {
-           
+              
         }
 
         public override void LoadData(object parameter)

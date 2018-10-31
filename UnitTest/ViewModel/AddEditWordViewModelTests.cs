@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Enigma.Data;
 using Enigma.Entity.Entities;
 using Enigma.UnitTest.MockObjects;
+using Enigma.Translate;
 
 namespace Enigma.UnitTest
 {
@@ -20,7 +21,7 @@ namespace Enigma.UnitTest
         public AddEditWordViewModelTests()
         {
             DataManager = new DataManagerMockObject();
-            ViewModel = new AddEditWordViewModel(DataManager, new FrameNavigationMockObject());
+            ViewModel = new AddEditWordViewModel(DataManager, new FrameNavigationMockObject(), new Translator());
         }
 
         [TestMethod()]

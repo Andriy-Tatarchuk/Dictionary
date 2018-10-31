@@ -12,6 +12,7 @@ namespace Enigma.Shell.Model
         DictionariesView,
         AddEditDictionaryView,
         AddEditWordView,
-        SearchWordView
+        SearchWordView,
+        ExamDictionaryView
     }
 }
