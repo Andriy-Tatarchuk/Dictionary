@@ -9,6 +9,40 @@
         DataContext="{Binding ExamDictionary, Source={StaticResource Locator}}"
                 x:Name="_this">
 
+    <views:BaseView.Resources>
+        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="8" BorderBrush="Black" BorderThickness="1" Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="LightBlue"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </views:BaseView.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -47,24 +81,46 @@
                                Grid.ColumnSpan="2"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"></TextBlock>
-                    
-                    <Button Content="{Binding TestValue1}"
-                            Margin="3"
-                            Grid.Row="2"
-                            Grid.Column="0"></Button>
-                    <Button Content="{Binding TestValue2}"
-                            Margin="3"
-                            Grid.Row="2"
-                            Grid.Column="1"></Button>
 
-                    <Button Content="{Binding TestValue3}"
+                    <Button Content="{Binding Answer1.Text}"
+                            Background="{Binding Answer1.Background}"
+                            Style="{StaticResource RoundCorner}"
+                            Tag="0"
+                            Margin="3"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Command="{Binding ShowAnswerCommand}"
+                            CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}">
+                        
+                    </Button>
+                    <Button Content="{Binding Answer2.Text}"
+                            Background="{Binding Answer2.Background}"
+                            Style="{StaticResource RoundCorner}"
+                            Tag="1"
+                            Margin="3"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Command="{Binding ShowAnswerCommand}"
+                            CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"></Button>
+
+                    <Button Content="{Binding Answer3.Text}"
+                            Background="{Binding Answer3.Background}"
+                            Style="{StaticResource RoundCorner}"
+                            Tag="2"
                             Margin="3"
                             Grid.Row="3"
-                            Grid.Column="0"></Button>
-                    <Button Content="{Binding TestValue4}"
+                            Grid.Column="0"
+                            Command="{Binding ShowAnswerCommand}"
+                            CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"></Button>
+                    <Button Content="{Binding Answer4.Text}"
+                            Background="{Binding Answer4.Background}"
+                            Style="{StaticResource RoundCorner}"
+                            Tag="3"
                             Margin="3"
                             Grid.Row="3"
-                            Grid.Column="1"></Button>
+                            Grid.Column="1"
+                            Command="{Binding ShowAnswerCommand}"
+                            CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"></Button>
                 </Grid>
             </GroupBox>
         </Border>
