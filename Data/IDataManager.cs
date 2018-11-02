@@ -15,6 +15,7 @@ namespace Enigma.Data
         Task SaveDictionaryAsync(Dictionary dictionary);
         Task<List<Dictionary>> GetAllDictionariesAsync();
         Task<Word> GetWordAsync(int id);
+        Task<int> GetWordsCountAsync(int dictionaryId);
         Task<Dictionary> GetDictionaryAsync(int id);
         Task SaveWordAsync(Word word);
         Task DeleteWordAsync(int id);

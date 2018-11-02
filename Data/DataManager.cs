@@ -122,6 +122,14 @@ namespace Enigma.Data
             }
         }
 
+        public async Task<int> GetWordsCountAsync(int dictionaryId)
+        {
+            using (var dataContext = GetDataContext())
+            {
+                return await dataContext.Words.CountAsync(w => w.DictionaryId == dictionaryId);
+            }
+        }
+
         public async Task<Dictionary> GetDictionaryAsync(int id)
         {
             using (var dataContext = GetDataContext())

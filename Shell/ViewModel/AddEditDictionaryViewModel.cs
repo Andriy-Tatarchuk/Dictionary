@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows;
 using CommonServiceLocator;
 using Enigma.Data;
 using Enigma.Entity.Entities;
+using Enigma.Shell.Model;
 using Enigma.Shell.Navigation;
+using GalaSoft.MvvmLight.Command;
 
 namespace Enigma.Shell.ViewModel
 {
@@ -39,6 +42,11 @@ namespace Enigma.Shell.ViewModel
             }
         }
 
+        public RelayCommand ExamDictionaryCommand
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Initializes a new instance of the DictionariesViewModel class.
@@ -46,7 +54,21 @@ namespace Enigma.Shell.ViewModel
         public AddEditDictionaryViewModel(IDataManager dataMgr, IFrameNavigationService navigationService)
             : base(dataMgr, navigationService)
         {
-              
+            ExamDictionaryCommand = new RelayCommand(ExamDictionaryCommandExecuted);
+        }
+
+        private async void ExamDictionaryCommandExecuted()
+        {
+            var wordsCount = await DataManager.GetWordsCountAsync(CurrentDictionaryId);
+            if (wordsCount >= 4)
+            {
+                NavigationService.NavigateTo(ScreenId.ExamDictionaryView.ToString(), Dictionary);
+            }
+            else
+            {
+                MessageBox.Show("You need four or more words in the dictionary to start exam",
+                           "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         public override void LoadData(object parameter)

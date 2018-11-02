@@ -107,6 +107,7 @@ namespace Enigma.Shell.ViewModel
         private List<Answer> Answers { get; set; }
 
         public RelayCommand NextWordCommand { get; private set; }
+        public RelayCommand PreviousWordCommand { get; private set; }
         public RelayCommand<string> ShowAnswerCommand { get; private set; }
 
         /// <summary>
@@ -116,8 +117,18 @@ namespace Enigma.Shell.ViewModel
             : base(dataMgr, navigationService)
         {
             NextWordCommand = new RelayCommand(NextWord);
+            PreviousWordCommand = new RelayCommand(PreviousWord);
             ShowAnswerCommand = new RelayCommand<string>(ShowAnswer);
             Answers = new List<Answer>();
+        }
+
+        private void PreviousWord()
+        {
+            if (CurrentWordIndex > 0)
+            {
+                CurrentWordIndex--;
+                ShowWord();
+            }
         }
 
         private void ShowAnswer(string tag)
@@ -166,7 +177,7 @@ namespace Enigma.Shell.ViewModel
         private void StartExam()
         {
             Words.Shuffle();
-            CurrentWordIndex = 0;
+            CurrentWordIndex = -1;
             CurrentWord = null;
             Answers.Clear();
             Answer1 = Answer2 = Answer3 = Answer4 = null;
@@ -176,33 +187,43 @@ namespace Enigma.Shell.ViewModel
 
         private void NextWord()
         {
+            if (CurrentWordIndex < Words.Count)
+            {
+                CurrentWordIndex++;
+                ShowWord();
+            }
+        }
+
+        private void ShowWord()
+        {
             if (CurrentWordIndex < Words.Count && Words.Count >= 4)
             {
                 CurrentWord = Words[CurrentWordIndex];
                 var rnd = new Random();
                 Answers.Clear();
-                for (int i = 0; i < 4; )
+                for (int i = 0; i < 4;)
                 {
                     var index = rnd.Next(0, Words.Count);
-                    if (!Answers.Any(a=> a.Text == Words[index].Translation))
+                    if (!Answers.Any(a => a.Text == Words[index].Translation))
                     {
                         Answers.Add(new Answer(Words[index].Translation));
                         i++;
                     }
                 }
-                if (!Answers.Any(a=> a.Text == Words[CurrentWordIndex].Translation))
+
+                if (!Answers.Any(a => a.Text == Words[CurrentWordIndex].Translation))
                 {
-                    Answers[rnd.Next(0, 4)] = new Answer(Words[CurrentWordIndex].Translation){IsCorrect = true};
+                    Answers[rnd.Next(0, 4)] = new Answer(Words[CurrentWordIndex].Translation) {IsCorrect = true};
                 }
                 else
                 {
                     Answers.FirstOrDefault(a => a.Text == Words[CurrentWordIndex].Translation).IsCorrect = true;
                 }
+
                 Answer1 = Answers[0];
                 Answer2 = Answers[1];
                 Answer3 = Answers[2];
                 Answer4 = Answers[3];
-                CurrentWordIndex++;
             }
         }
 
@@ -250,7 +271,7 @@ namespace Enigma.Shell.ViewModel
         {
             Text = text;
             IsCorrect = false;
-            Background = Brushes.Gray;
+            Background = Brushes.Beige;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

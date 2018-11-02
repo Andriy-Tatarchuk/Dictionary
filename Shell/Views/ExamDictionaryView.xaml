@@ -78,6 +78,7 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{Binding CurrentWord.Name}"
+                               FontWeight="Bold"
                                Grid.ColumnSpan="2"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"></TextBlock>
@@ -131,6 +132,16 @@
             <Button 
                 Content="Next"
                 Command="{Binding NextWordCommand}"
+                Style="{StaticResource LinkButton}"
+                Margin="1,1,3,1"></Button>
+        </Border>
+
+        <Border Grid.Row="3"
+                HorizontalAlignment="Left">
+
+            <Button 
+                Content="Previous"
+                Command="{Binding PreviousWordCommand}"
                 Style="{StaticResource LinkButton}"
                 Margin="1,1,3,1"></Button>
         </Border>
